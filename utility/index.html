@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width">
+
+  <title>Exosite API Documentation</title>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/favicon.png">
+
+  <!-- Style -->
+  <link  href='/assets/theme-white/style.css' rel='stylesheet'>
+  <link href='/assets/style.css' rel='stylesheet'>
+
+  <!-- Meta -->
+  <meta content="Exosite APIs" property="og:title">
+  <meta content="Documentation for Exosite's APIs" name="description">
+
+  <!-- Status Page API Lib -->
+  <script type="text/javascript" src="https://statuspage-production.s3.amazonaws.com/se.js"></script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44116002-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+  <!-- Initializer -->
+  <script></script>
+</head>
+<body role='flatdoc' class="no-literate">
+  <div class='header'>
+    <div class='left'>
+      <a href="/">
+        <img src="/assets/logo-2x.png" id="logo">
+      </a>
+    </div>
+    <div class='links right'>
+      <ul>
+        <li><input id="docsearch" placeholder="Search..."></li>
+        <li><a href='http://status.exosite.com' id="status-text"><div id="status-icon"></div>Status</a></li>
+        <li><a href='https://support.exosite.com'>Support</a></li>
+        <li><a href='https://github.com/exosite/api'>Contribute</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class='content-root'>
+    <div class='menubar'>
+      <ul class='topmenu'>
+        <li><a class="level-0" href="/">Overview</a></li>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Tutorials</p>
+          <li><a class="level-0" href="/tutorials/get-started">Getting Started</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Device APIs</p>
+          <li><a class="level-0" href="/coap">CoAP</a></li>
+          <li><a class="level-0" href="/data">HTTP Data</a></li>
+          <li><a class="level-0" href="/provision/device">Device Provisioning</a></li>
+          <li><a class="level-0" href="/udp">UDP Single Shot</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Application APIs</p>
+          <li><a class="level-0" href="/rpc">Remote Procedure Call - RPC</a></li>
+          <li><a class="level-0" href="/provision/management">Fleet Management</a></li>
+          <li><a class="level-0" href="/scripting">One Platform Scripting</a></li>
+          <li><a class="level-0" href="/widget">Portals Custom Widget</a></li>
+          <li><a class="level-0" href="/portals">Portals API</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Reference</p>
+          <li><a class="level-0" href="https://support.exosite.com/hc/en-us/sections/200072527">One Platform</a></li>
+          <li><a class="level-0" href="https://support.exosite.com/hc/en-us/sections/200072708">Portals Web Application</a></li>
+          <li><a class="level-0" href="https://support.exosite.com/hc/en-us/sections/200054894">Portals Subdomain Admin</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Other</p>
+          <li><a class="level-0" href="/commander">Chat Interface - Commander</a></li>
+          <li><a class="level-0" href="https://github.com/exosite/exoline/blob/master/README.md">Command Line Interface - Exoline</a></li>
+          <li><a class="level-0" href="https://github.com/exosite-labs">Libraries</a></li>
+        </ul>
+      </ul>
+      <div class='menu section' role='flatdoc-menu'></div>
+    </div>
+    <div role='flatdoc-content' class='content'><h2 id="utility-api-procedures">Utility API procedures</h2>
+<p>The following procedures are general purpose utilities on the One Platform.</p>
+<p>For general information about accessing these procedures, see the <a href="../provision/README.md">provisioning API</a>.</p>
+<h3 id="endpoints">Endpoints</h3>
+<p><a href="#ip">/ip</a> - get the server IP</p>
+<p><a href="#jsonp">/jsonp</a> - get data using token</p>
+<p><a href="#jsonpregister">/jsonp/register</a> - create data access token</p>
+<p><a href="#timestamp">/timestamp</a> - get server timestamp</p>
+<h3 id="-ip">/ip</h3>
+<h4 id="get-get-server-ip">GET - get server IP</h4>
+<p>Returns ip address and port of the server, encoded in 6 comma separated octets
+as a string, where the first 4 are the ip and the last 2 are the port,
+e.g.,  &quot;192,168,0,1,0,80&quot;.</p>
+<pre><code>GET /ip HTTP/1.1
+Host: m2.exosite.com
+&lt;blank line&gt;
+</code></pre><h5 id="response">response</h5>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
+Connection: Keep-Alive
+Content-Length: &lt;length&gt;
+Content-Type: text/plain; charset=utf-8
+
+&lt;server ip and port&gt;
+</code></pre><h3 id="-jsonp">/jsonp</h3>
+<h4 id="get-get-data-for-token">GET - get data for token</h4>
+<p>Returns data for a collection of aliases in timestamp-ascending order, 
+starting at <code>&lt;p&gt;</code> * <code>&lt;limit&gt;</code> offset into <code>&lt;starttime&gt;</code> and <code>&lt;endtime&gt;</code> 
+window, limited to <code>&lt;limit&gt;</code> count, as specified by the token, wrapped
+as the parameter to the &#39;callback&#39; function. If <code>&lt;p&gt;</code> is not specified, it 
+defaults to 0. <code>&lt;token&gt;</code> is obtained by the <code>POST /jsonp/register</code> API.</p>
+<pre><code>GET /jsonp?token=&lt;token&gt;&amp;callback=&lt;callback&gt;&amp;show[]=data{&amp;p=&lt;p&gt;} HTTP/1.1
+Host: m2.exosite.com
+&lt;blank line&gt;
+</code></pre><h5 id="response">response</h5>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
+Connection: Keep-Alive
+Content-Length: &lt;length&gt;
+Content-Type: text/plain; charset=utf-8
+
+&lt;callback&gt;({
+      &quot;result&quot;:{
+          &quot;&lt;alias1&gt;&quot;:{&quot;data&quot;:[[&lt;ts1&gt;,&lt;value1&gt;]...,[&lt;tsN&gt;,&lt;valueN&gt;]]},
+          ...
+          &quot;&lt;aliasN&gt;&quot;:{&quot;data&quot;:[[&lt;ts1&gt;,&lt;value1&gt;]...,[&lt;tsN&gt;,&lt;valueN&gt;]]},
+      }});
+</code></pre><h3 id="-jsonp-register">/jsonp/register</h3>
+<h4 id="post-get-data-access-token">POST - get data access token</h4>
+<p>Returns a token that will be valid until <code>&lt;expire&gt;</code> timestamp and can be
+used to read lists of timestamp-value pairs from the specified aliases between
+<code>&lt;starttime&gt;</code> and <code>&lt;endtime&gt;</code>, <code>&lt;limit&gt;</code> count pairs at a time.</p>
+<pre><code>POST /provision/register HTTP/1.1
+Host: m2.exosite.com
+X-Exosite-CIK: &lt;CIK&gt;
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+
+alias[]=&lt;alias1&gt;...&amp;alias[]=&lt;aliasN&gt;&amp;starttime=&lt;starttime&gt;&amp;endtime=&lt;endtime&gt;
+&amp;limit=&lt;limit&gt;&amp;access[]=data&amp;expire=&lt;expire&gt;
+</code></pre><h5 id="response">response</h5>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
+Connection: Keep-Alive
+Content-Length: &lt;length&gt;
+Content-Type: text/plain; charset=utf-8
+
+&lt;token&gt;
+</code></pre><h3 id="-timestamp">/timestamp</h3>
+<h4 id="get-get-server-timestamp">GET - get server timestamp</h4>
+<p>Get the current time according to the server.</p>
+<pre><code>GET /timestamp HTTP/1.1
+Host: m2.exosite.com
+&lt;blank line&gt;
+</code></pre><h5 id="response">response</h5>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
+Connection: Keep-Alive
+Content-Length: &lt;length&gt;
+Content-Type: text/plain; charset=utf-8
+
+&lt;timestamp&gt;
+</code></pre></div>
+  </div>
+
+  <div id="markdown" style="display:none;">
+
+  <div>
+
+  <!-- Custom -->
+  <script src='/assets/main.js'></script>
+
+</body>
+</html>

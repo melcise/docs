@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width">
+
+  <title>Exosite API Documentation</title>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/favicon.png">
+
+  <!-- Style -->
+  <link  href='/assets/theme-white/style.css' rel='stylesheet'>
+  <link href='/assets/style.css' rel='stylesheet'>
+
+  <!-- Meta -->
+  <meta content="Exosite APIs" property="og:title">
+  <meta content="Documentation for Exosite's APIs" name="description">
+
+  <!-- Status Page API Lib -->
+  <script type="text/javascript" src="https://statuspage-production.s3.amazonaws.com/se.js"></script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44116002-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+  <!-- Initializer -->
+  <script></script>
+</head>
+<body role='flatdoc' class="no-literate">
+  <div class='header'>
+    <div class='left'>
+      <a href="/">
+        <img src="/assets/logo-2x.png" id="logo">
+      </a>
+    </div>
+    <div class='links right'>
+      <ul>
+        <li><input id="docsearch" placeholder="Search..."></li>
+        <li><a href='http://status.exosite.com' id="status-text"><div id="status-icon"></div>Status</a></li>
+        <li><a href='https://support.exosite.com'>Support</a></li>
+        <li><a href='https://github.com/exosite/api'>Contribute</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class='content-root'>
+    <div class='menubar'>
+      <ul class='topmenu'>
+        <li><a class="level-0" href="/">Overview</a></li>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Tutorials</p>
+          <li><a class="level-0" href="/tutorials/get-started">Getting Started</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Device APIs</p>
+          <li><a class="level-0" href="/coap">CoAP</a></li>
+          <li><a class="level-0" href="/data">HTTP Data</a></li>
+          <li><a class="level-0" href="/provision/device">Device Provisioning</a></li>
+          <li><a class="level-0" href="/udp">UDP Single Shot</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Application APIs</p>
+          <li><a class="level-0" href="/rpc">Remote Procedure Call - RPC</a></li>
+          <li><a class="level-0" href="/provision/management">Fleet Management</a></li>
+          <li><a class="level-0" href="/scripting">One Platform Scripting</a></li>
+          <li><a class="level-0" href="/widget">Portals Custom Widget</a></li>
+          <li><a class="level-0" href="/portals">Portals API</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Reference</p>
+          <li><a class="level-0" href="https://support.exosite.com/hc/en-us/sections/200072527">One Platform</a></li>
+          <li><a class="level-0" href="https://support.exosite.com/hc/en-us/sections/200072708">Portals Web Application</a></li>
+          <li><a class="level-0" href="https://support.exosite.com/hc/en-us/sections/200054894">Portals Subdomain Admin</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Other</p>
+          <li><a class="level-0" href="/commander">Chat Interface - Commander</a></li>
+          <li><a class="level-0" href="https://github.com/exosite/exoline/blob/master/README.md">Command Line Interface - Exoline</a></li>
+          <li><a class="level-0" href="https://github.com/exosite-labs">Libraries</a></li>
+        </ul>
+      </ul>
+      <div class='menu section' role='flatdoc-menu'></div>
+    </div>
+    <div role='flatdoc-content' class='content'><script>
+$(document).ready(function() {
+  'use strict';
+  function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+          results = regex.exec(location.search);
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
+  var contentEl = $('div[role="flatdoc-content"]')
+  var query = getParameterByName('q');
+  if (query === '') {
+    contentEl.html('Missing query parameter.');
+    return;
+  }
+  contentEl.html('Searching documentation...');
+  var options = {
+    headers: {
+      'Accept': 'application/vnd.github.v3.text-match+json'
+    }
+  };  
+  function toDocPath(path) {
+    var href = path.replace(/README\.md$/, '');
+    href = href.replace(/\.md$/, '');
+    return href;
+  }    
+  $.ajax('https://api.github.com/search/code?q=' + 
+    encodeURIComponent(query) + 
+    '+in:file+repo:exosite/docs', options).done(function(data, status) {
+      console.log(data);
+      var querySpan = '<span class="search-query">' + query + '</span>';
+      if (data.total_count === 0) {
+        contentEl.html('No results for ' + querySpan);
+      } else {
+        var html = '<div><div>Documents matching ' + querySpan + ':</div><ol>';
+        for (var i = 0; i < data.items.length; i++) {
+          var item = data.items[i];
+          var href = toDocPath(item.path);
+          html += ('<li class="search-result"><a href="' + href + '">' + href + '</a>');
+          // show the first text match
+          for (var j = 0; j < item.text_matches.length; j++) {
+            var match = item.text_matches[j];
+            var fragment = '...' + match.fragment.replace(query, querySpan) + '...';
+            html += ('<div class="search-result-fragment">' + fragment + '</div>');
+          }
+          html += '</li>';
+        }
+        html += '</ol></div>';
+        contentEl.html(html);
+      }
+    });
+});
+</script></div>
+  </div>
+
+  <div id="markdown" style="display:none;">
+
+  <div>
+
+  <!-- Custom -->
+  <script src='/assets/main.js'></script>
+
+</body>
+</html>

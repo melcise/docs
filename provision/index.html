@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width">
+
+  <title>Exosite API Documentation</title>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/favicon.png">
+
+  <!-- Style -->
+  <link  href='/assets/theme-white/style.css' rel='stylesheet'>
+  <link href='/assets/style.css' rel='stylesheet'>
+
+  <!-- Meta -->
+  <meta content="Exosite APIs" property="og:title">
+  <meta content="Documentation for Exosite's APIs" name="description">
+
+  <!-- Status Page API Lib -->
+  <script type="text/javascript" src="https://statuspage-production.s3.amazonaws.com/se.js"></script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44116002-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+  <!-- Initializer -->
+  <script></script>
+</head>
+<body role='flatdoc' class="no-literate">
+  <div class='header'>
+    <div class='left'>
+      <a href="/">
+        <img src="/assets/logo-2x.png" id="logo">
+      </a>
+    </div>
+    <div class='links right'>
+      <ul>
+        <li><input id="docsearch" placeholder="Search..."></li>
+        <li><a href='http://status.exosite.com' id="status-text"><div id="status-icon"></div>Status</a></li>
+        <li><a href='https://support.exosite.com'>Support</a></li>
+        <li><a href='https://github.com/exosite/api'>Contribute</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class='content-root'>
+    <div class='menubar'>
+      <ul class='topmenu'>
+        <li><a class="level-0" href="/">Overview</a></li>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Tutorials</p>
+          <li><a class="level-0" href="/tutorials/get-started">Getting Started</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Device APIs</p>
+          <li><a class="level-0" href="/coap">CoAP</a></li>
+          <li><a class="level-0" href="/data">HTTP Data</a></li>
+          <li><a class="level-0" href="/provision/device">Device Provisioning</a></li>
+          <li><a class="level-0" href="/udp">UDP Single Shot</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Application APIs</p>
+          <li><a class="level-0" href="/rpc">Remote Procedure Call - RPC</a></li>
+          <li><a class="level-0" href="/provision/management">Fleet Management</a></li>
+          <li><a class="level-0" href="/scripting">One Platform Scripting</a></li>
+          <li><a class="level-0" href="/widget">Portals Custom Widget</a></li>
+          <li><a class="level-0" href="/portals">Portals API</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Reference</p>
+          <li><a class="level-0" href="https://support.exosite.com/hc/en-us/sections/200072527">One Platform</a></li>
+          <li><a class="level-0" href="https://support.exosite.com/hc/en-us/sections/200072708">Portals Web Application</a></li>
+          <li><a class="level-0" href="https://support.exosite.com/hc/en-us/sections/200054894">Portals Subdomain Admin</a></li>
+        </ul>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Other</p>
+          <li><a class="level-0" href="/commander">Chat Interface - Commander</a></li>
+          <li><a class="level-0" href="https://github.com/exosite/exoline/blob/master/README.md">Command Line Interface - Exoline</a></li>
+          <li><a class="level-0" href="https://github.com/exosite-labs">Libraries</a></li>
+        </ul>
+      </ul>
+      <div class='menu section' role='flatdoc-menu'></div>
+    </div>
+    <div role='flatdoc-content' class='content'><h1 id="device-provisioning-and-fleet-management-api">Device Provisioning and Fleet Management API</h1>
+<p>Procedures in this API fall into one of two categories:</p>
+<ul>
+<li><a href="device.md">Device Provisioning</a> procedures enable devices to authenticate with the One Platform even if they are not pre-programmed with a CIK.</li>
+<li><a href="management.md">Fleet Management</a> procedures enable device OEMs to create custom &quot;cloud profiles&quot; for devices so they can accomplish fleet-level management of devices across different device models. </li>
+</ul>
+<p>Both APIs use the HTTP POST, GET, PUT and DELETE methods to configure the different facets of the provisioning system. Note that the terms &quot;client&quot; and &quot;device&quot; are interchangeable in the text below. There are various HTTP required headers that are inherent to the protocol that are not repeated in each API procedure description. As an example, all of the POST and PUT requests must also contain a correct <code>Content-Length</code> header specifying the body payload size. Also, all responses having a status of 200 will also contain a <code>Content-Length</code> response header.</p>
+<p>API Version: <code>1.1</code></p>
+<p>Host Address: <code>http://m2.exosite.com</code> or <code>https://m2.exosite.com</code></p>
+<p>If you&#39;re completely new to Exosite&#39;s APIs, you may want to read the <a href="../README.md">API overview</a> first.</p>
+<h2 id="libraries-and-sample-code">Libraries and Sample Code</h2>
+<p>Wrapper libraries for this API:</p>
+<ul>
+<li>Python: <a href="https://github.com/exosite-labs/pyonep">pyonep</a> includes a module, provision.py, that wraps the provision API.</li>
+</ul>
+<p>Code samples that use this API:</p>
+<ul>
+<li><a href="https://github.com/exosite-garage/provision_examples">Provision Examples</a> - socket level code intended as a reference for implementation in other languages</li>
+</ul>
+<h2 id="conventions">Conventions</h2>
+<p>This document uses a few notational conventions:</p>
+<ul>
+<li>A name in angle brackets, e.g. <code>&lt;myvar&gt;</code>, is a placeholder that will be defined elsewhere.</li>
+<li>Items in curly braces, e.g., <code>{vendor=&lt;id&gt;}</code>, are optional.</li>
+<li><code>...</code> indicates the previous content is repeated.</li>
+</ul>
+<h2 id="http-responses">HTTP Responses</h2>
+<p>Typical HTTP response codes include:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Code</th>
+<th style="text-align:left">Response</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">200</td>
+<td style="text-align:left">OK</td>
+<td style="text-align:left">Successful request, returning requested values</td>
+</tr>
+<tr>
+<td style="text-align:left">204</td>
+<td style="text-align:left">No Content</td>
+<td style="text-align:left">Successful request, nothing will be returned</td>
+</tr>
+<tr>
+<td style="text-align:left">4xx</td>
+<td style="text-align:left">Client Error</td>
+<td style="text-align:left">There was an error with the request by the client</td>
+</tr>
+<tr>
+<td style="text-align:left">5xx</td>
+<td style="text-align:left">Server Error</td>
+<td style="text-align:left">There way an error with the request on the server</td>
+</tr>
+</tbody>
+</table>
+<h2 id="procedures">Procedures</h2>
+<p>See the <a href="device.md">Device Provisioning</a> and <a href="management.md">Fleet Management</a> pages for information of API procedures.</p>
+</div>
+  </div>
+
+  <div id="markdown" style="display:none;">
+
+  <div>
+
+  <!-- Custom -->
+  <script src='/assets/main.js'></script>
+
+</body>
+</html>
