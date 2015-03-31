@@ -87,15 +87,11 @@
       </ul>
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
-    <div role='flatdoc-content' class='content'><h1 id="device-provisioning-api">Device Provisioning API</h1>
-<p>The following procedures are intended to be accessed from devices to get API keys and initialization content (e.g., firmware images) so that they can access the One Platform from other APIs.</p>
+    <div role='flatdoc-content' class='content'><h1><a name="device-provisioning-api" class="anchor" href="#device-provisioning-api"><span class="header-link"></span></a>Device Provisioning API</h1><p>The following procedures are intended to be accessed from devices to get API keys and initialization content (e.g., firmware images) so that they can access the One Platform from other APIs.</p>
 <p>For general information about accessing this API, see the <a href="README.md">main section</a>.</p>
-<h2 id="endpoints">Endpoints</h2>
-<p><a href="#provisionactivate">/provision/activate</a> - get a CIK for a device and activate it</p>
+<h2><a name="endpoints" class="anchor" href="#endpoints"><span class="header-link"></span></a>Endpoints</h2><p><a href="#provisionactivate">/provision/activate</a> - get a CIK for a device and activate it</p>
 <p><a href="#provisiondownload">/provision/download</a> - list content, get content, get content information</p>
-<h2 id="-provision-activate">/provision/activate</h2>
-<h3 id="post-activate-client">POST - activate client</h3>
-<p>Activates and returns <code>&lt;cik&gt;</code> of client administrated by Vendor <code>&lt;vendor&gt;</code>, of
+<h2><a name="-provision-activate" class="anchor" href="#-provision-activate"><span class="header-link"></span></a>/provision/activate</h2><h3><a name="post-activate-client" class="anchor" href="#post-activate-client"><span class="header-link"></span></a>POST - activate client</h3><p>Activates and returns <code>&lt;cik&gt;</code> of client administrated by Vendor <code>&lt;vendor&gt;</code>, of
 model type <code>&lt;model&gt;</code> associated with Serial Number <code>&lt;sn&gt;</code>. Client must be 
 enabled via <code>/provision/manage/model/&lt;model&gt;/&lt;sn&gt;</code>, the enabled state must not 
 have expired, and the client must not have already been activated.</p>
@@ -105,8 +101,7 @@ Content-Type: application/x-www-form-urlencoded; charset=utf-8
 Content-Length: &lt;length&gt;
 
 vendor=&lt;vendor&gt;&amp;model=&lt;model&gt;&amp;sn=&lt;sn&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
+</code></pre><h4><a name="response" class="anchor" href="#response"><span class="header-link"></span></a>response</h4><pre><code>HTTP/1.1 200 OK
 Date: &lt;date&gt;
 Server: &lt;server&gt;
 Connection: Keep-Alive
@@ -119,22 +114,18 @@ Content-Type: text/plain; charset=utf-8
 <li><code>HTTP/1.1 404 Not Found</code> if the client described by <code>&lt;vendor&gt;</code>, <code>&lt;model&gt;</code>, <code>&lt;sn&gt;</code> is not found on the system.</li>
 <li><code>HTTP/1.1 409 Conflict</code> if the serial number is not enabled for activation.</li>
 </ul>
-<h4 id="example">example</h4>
-<p>This command activates a device with serial number 12345678 and returns its CIK.</p>
+<h4><a name="example" class="anchor" href="#example"><span class="header-link"></span></a>example</h4><p>This command activates a device with serial number 12345678 and returns its CIK.</p>
 <pre><code>$ curl http://m2.exosite.com/provision/activate \
     -H &quot;Content-Type: application/x-www-form-urlencoded; charset=utf-8&quot; \
     -d &quot;vendor=mysubdomain&amp;model=myclientmodel&amp;sn=12345678&quot;
-</code></pre><h2 id="-provision-download">/provision/download</h2>
-<h3 id="get-list-content-ids">GET - list content IDs</h3>
-<p>List content <code>&lt;id&gt;</code>s. Caller with <code>&lt;DeviceCIK&gt;</code> must have an activated 
+</code></pre><h2><a name="-provision-download" class="anchor" href="#-provision-download"><span class="header-link"></span></a>/provision/download</h2><h3><a name="get-list-content-ids" class="anchor" href="#get-list-content-ids"><span class="header-link"></span></a>GET - list content IDs</h3><p>List content <code>&lt;id&gt;</code>s. Caller with <code>&lt;DeviceCIK&gt;</code> must have an activated 
 serial number in given <code>&lt;vendor&gt;</code> <code>&lt;model&gt;</code> name space.</p>
 <pre><code>GET /provision/download?vendor=&lt;vendor&gt;&amp;model=&lt;model&gt; HTTP/1.1
 Host: m2.exosite.com
 X-Exosite-CIK: &lt;CIK&gt;
 Content-Length: &lt;length&gt;
 &lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
+</code></pre><h4><a name="response" class="anchor" href="#response"><span class="header-link"></span></a>response</h4><pre><code>HTTP/1.1 200 OK
 Date: &lt;date&gt;
 Server: &lt;server&gt;
 Connection: Keep-Alive
@@ -148,8 +139,7 @@ Content-Type: text/csv; charset=utf-8
 <ul>
 <li><code>HTTP/1.1 403 Forbidden</code> if the <code>&lt;vendor&gt;</code> and <code>&lt;model&gt;</code> pair is invalid.</li>
 </ul>
-<h3 id="get-get-content">GET - get content</h3>
-<p>If caller with <code>&lt;CIK&gt;</code> has an activated SN in given <code>&lt;vendor&gt;</code> <code>&lt;model&gt;</code> name 
+<h3><a name="get-get-content" class="anchor" href="#get-get-content"><span class="header-link"></span></a>GET - get content</h3><p>If caller with <code>&lt;CIK&gt;</code> has an activated SN in given <code>&lt;vendor&gt;</code> <code>&lt;model&gt;</code> name 
 space, and is authorized for the content, then the <code>&lt;id&gt;</code> content blob, or its 
 requested range, is returned. The header <code>Range: bytes=&lt;range-specifier&gt;</code>, if
 specified, allows the caller to request a chunk of bytes at a time. 
@@ -165,8 +155,7 @@ Host: m2.exosite.com
 X-Exosite-CIK: &lt;CIK&gt;
 {Range: bytes=&lt;range-specifier&gt;}
 &lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
+</code></pre><h4><a name="response" class="anchor" href="#response"><span class="header-link"></span></a>response</h4><pre><code>HTTP/1.1 200 OK
 Date: &lt;date&gt;
 Server: &lt;server&gt;
 Connection: Keep-Alive
@@ -181,8 +170,7 @@ Content-Type: &lt;content-type&gt;
 <li><code>HTTP/1.1 206 Partial Content</code> if the response is partial.</li>
 <li><code>HTTP/1.1 403 Forbidden</code> if the <code>&lt;vendor&gt;</code> and <code>&lt;model&gt;</code> pair is invalid.</li>
 </ul>
-<h3 id="get-get-content-info">GET - get content info</h3>
-<p>If caller with <code>&lt;CIK&gt;</code> has an activated SN in given <code>&lt;vendor&gt;</code> <code>&lt;model&gt;</code> name
+<h3><a name="get-get-content-info" class="anchor" href="#get-get-content-info"><span class="header-link"></span></a>GET - get content info</h3><p>If caller with <code>&lt;CIK&gt;</code> has an activated SN in given <code>&lt;vendor&gt;</code> <code>&lt;model&gt;</code> name
 space, and is authorized for the content, then the <code>&lt;id&gt;</code> content information
 is returned.</p>
 <pre><code>GET /provision/download?vendor=&lt;vendor&gt;&amp;model=&lt;model&gt;&amp;id=&lt;id&gt;&amp;info=true HTTP/1.1
@@ -190,8 +178,7 @@ Host: m2.exosite.com
 X-Exosite-CIK: &lt;CIK&gt;
 Content-Length: &lt;length&gt;
 &lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
+</code></pre><h4><a name="response" class="anchor" href="#response"><span class="header-link"></span></a>response</h4><pre><code>HTTP/1.1 200 OK
 Date: &lt;date&gt;
 Server: &lt;server&gt;
 Connection: Keep-Alive
