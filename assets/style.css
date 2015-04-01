@@ -87,9 +87,3 @@ body.no-literate .content pre > code {
 .search-query { font-weight: bold; }
 .search-result { margin-bottom: 20px; }
 .search-result-fragment { margin-left: 20px; }
-
-a[href$="https://"] {
-    background: url("//upload.wikimedia.org/wikipedia/commons/2/23/Icons-mini-file_acrobat.gif") no-repeat right;
-    /* @noflip */
-    padding-right: 18px;
-}
