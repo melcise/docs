@@ -341,7 +341,7 @@
 <li><code>&quot;email&quot;</code> is the user&#39;s email address. It is a string of fewer than 256 characters.</li>
 <li><code>&quot;fullName&quot;</code> is the user&#39;s full name. It is a string of fewer than 256 characters.</li>
 <li><code>&quot;id&quot;</code> is a numeric identifier for the user.</li>
-<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the user. It MUST be less then 2 megabytes long when it&#39;s seralized to a JSON string.</li>
+<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the user. It MUST be less than 2 megabytes long when it&#39;s seralized to a JSON string.</li>
 <li><code>&quot;phoneNumber&quot;</code> is the user&#39;s phone number. It is a string of fewer than 256 characters.</li>
 <li><code>&quot;userName&quot;</code> is a string identifier for the user. It is a string of fewer than 256 characters.</li>
 </ul>
@@ -481,7 +481,7 @@
 </code></pre><ul>
 <li><code>&quot;id&quot;</code> is a number identifying the group.</li>
 <li><code>&quot;members&quot;</code> is an array of <a href="#permission-object">permission objects</a> listing the members of the group.</li>
-<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the group. It MUST be less then 2 megabytes long when it&#39;s seralized to a JSON string.</li>
+<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the group. It MUST be less than 2 megabytes long when it&#39;s seralized to a JSON string.</li>
 <li><code>&quot;name&quot;</code> is the group name. It is a string of fewer than 256 characters. It MUST be unique among the same user in a domain.</li>
 <li><code>&quot;permissions&quot;</code> is an array of <a href="#permission-object">permission objects</a> describing Portals resources members of the group may access.</li>
 <li><code>&quot;userId&quot;</code> is a number identifying the owner of the group.</li>
@@ -652,7 +652,7 @@
 </li>
 <li><p><code>&quot;id&quot;</code> is a numeric identifier for the user.</p>
 </li>
-<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the user. It MUST be less then 2 megabytes long when it&#39;s seralized to a JSON string.</li>
+<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the user. It MUST be less than 2 megabytes long when it&#39;s seralized to a JSON string.</li>
 <li><code>&quot;permissions&quot;</code> is an array of <a href="#permission-object">permission objects</a> describing Portals resources the user may access.</li>
 <li><code>&quot;phoneNumber&quot;</code> is the user&#39;s phone number. It is a string of fewer than 256 characters.</li>
 <li><code>&quot;userName&quot;</code> is a string identifier for the user. It is a string of fewer than 256 characters.</li>
@@ -750,7 +750,7 @@ Content-Type: application/json; charset=UTF-8
 <h5 id="request">Request</h5>
 <p>Request body is empty.</p>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status 200 and body is a <a href="#client-models-object">client model object</a>.</p>
+<p>On success, response has HTTP status 200 and body is a <a href="#client-model-object">client model object</a>.</p>
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/client-models/myvendor/myname&#39; \
