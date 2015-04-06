@@ -63,13 +63,12 @@
         </ul>
         <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Device APIs</p>
           <li><a class="level-0" href="/coap">CoAP</a></li>
-          <li><a class="level-0" href="/data">HTTP Data</a></li>
-          <li><a class="level-0" href="/provision/device">Device Provisioning</a></li>
+          <li><a class="level-0" href="/http">HTTP</a></li>
           <li><a class="level-0" href="/udp">UDP Single Shot</a></li>
         </ul>
         <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Application APIs</p>
           <li><a class="level-0" href="/rpc">Remote Procedure Call - RPC</a></li>
-          <li><a class="level-0" href="/provision/management">Fleet Management</a></li>
+          <li><a class="level-0" href="/provision">Provision Management</a></li>
           <li><a class="level-0" href="/scripting">One Platform Scripting</a></li>
           <li><a class="level-0" href="/widget">Portals Custom Widget</a></li>
           <li><a class="level-0" href="/portals">Portals API</a></li>
@@ -92,6 +91,20 @@
 <p>The Constrained Application Protocol (CoAP) is a specialized web transfer protocol for use with constrained nodes and constrained (e.g., low-power, lossy) networks. The nodes often have 8-bit microcontrollers with small amounts of ROM and RAM, while constrained networks such as 6LoWPAN often have high packet error rates and a typical throughput of 10s of kbit/s. The protocol is designed for machine-to-machine (M2M) applications such as smart energy and building automation.</p>
 <p>CoAP provides a request/response interaction model between application endpoints, supports built-in discovery of services and resources, and includes key concepts of the Web such as URIs and Internet media types. CoAP is designed to easily interface with HTTP for integration with the Web while meeting specialized requirements such as multicast support, very low overhead and simplicity for constrained environments.</p>
 <p>For more information on the CoAP protocol see <a href="https://tools.ietf.org/html/rfc7252">RFC7252</a>.</p>
+<h2 id="procedures">Procedures</h2>
+<h3 id="timeseries-data-procedures">Timeseries Data Procedures</h3>
+<p><a href="#write">Write</a> - write new data to a set of dataports</p>
+<p><a href="#read">Read</a> - read the latest data from a set of dataports</p>
+<p><a href="#observed-read">Observed Read</a> - be notified immediately when a dataport is updated</p>
+<p><a href="#multiple-read-and-write">Multiple Read and Write</a> - write a set of dataports, then read a set of dataports</p>
+<h3 id="provisioning-procedures">Provisioning Procedures</h3>
+<p><a href="#activate">Activate</a> - activate device and get device&#39;s CIK</p>
+<p><a href="#list-content-ids">List Content IDs</a> - get a list of content available to device</p>
+<p><a href="#get-content-info">Get Content Info</a> - get meta information about content file</p>
+<p><a href="#download-content">Download Content</a> - get content file</p>
+<h3 id="utility-procedures">Utility Procedures</h3>
+<p><a href="#timestamp">Timestamp</a> - get the current unix timestamp</p>
+<p><a href="#remote-procedure-call-proxy">Remote Procedure Call Proxy</a> - proxy CBOR-RPC calls to the <a href="/rpc">JSON-RPC</a> API</p>
 <h2 id="libraries-and-sample-code">Libraries and Sample Code</h2>
 <p>A sample CoAP client written in python is available in the <a href="https://github.com/exosite-garage/CoAPExample">CoAPExample</a> repository.</p>
 <h2 id="notational-conventions">Notational Conventions</h2>
@@ -456,6 +469,23 @@ Block Option: Block2
 <li>2.05 Content: Content Returned as Uploaded.</li>
 <li>4.01 Unauthorized: The given CIK couldn&#39;t be used to authenticate.</li>
 <li>4.04 Not Found: No device or no content found with given information.</li>
+</ul>
+<h2 id="timestamp">Timestamp</h2>
+<p>Get the current time as a unix timestamp.</p>
+<pre><code>GET: coap://coap.exosite.com/ts
+</code></pre><pre><code>  Client                    Server
+      |                        |
+      |   CON GET              |
+      |   uri_path: &quot;ts&quot;       |
+      +-----------------------&gt;|
+      |                        |
+      |   ACK Content (2.05)   |
+      |   &quot;&lt;timestamp&gt;&quot;        |
+      |&lt;-----------------------+
+</code></pre><p><code>&lt;timestamp&gt;</code>: The current unix timestamp. This can either be a UTF-8 string or the binary representation of the timestamp as a signed integer sent in network byte order. However note that using the binary representation may technically violate protocol when used in the uri query option. The default format is a UTF-8 string, to request it as a signed integer, make the request with the option <code>Content-Format</code> set to <code>application/octet-stream</code> (42).</p>
+<h3 id="responses">Responses</h3>
+<ul>
+<li>2.05 Content: The value is returned.</li>
 </ul>
 <h1 id="remote-procedure-call-proxy">Remote Procedure Call Proxy</h1>
 <p>If you need to do more with your data than read the latest value and write new values at the current time, you&#39;ll need to use the <a href="https://github.com/exosite/docs/blob/master/rpc">RPC API</a>. Generally devices don&#39;t use this API since it is relatively complicated and the JSON format is rather heavy and hard to parse and construct, but luckily for you, we&#39;ve setup a proxy that will translate the HTTP + JSON format that that API uses into a CoAP + CBOR format which drastically brings down the requirements needed to use it.</p>
