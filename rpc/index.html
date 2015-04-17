@@ -453,7 +453,7 @@ root node of the One Platform tree.</p>
 }
 </code></pre><hr>
 <h2 id="record">record</h2>
-<p>Records a list of historical entries to the resource specified.</p>
+<p>Records a list of historical entries to the resource specified. NOTE: this API is deprecated. Please use <a href="#recordbatch"><code>recordbatch</code></a> instead.</p>
 <pre><code>{
     &quot;procedure&quot;: &quot;record&quot;,
     &quot;arguments&quot;: [
@@ -482,7 +482,7 @@ root node of the One Platform tree.</p>
 </ul>
 <hr>
 <h2 id="recordbatch">recordbatch</h2>
-<p>Records a list of historical entries to the resource specified. This is a more compact way of recording multiple points compared with combining multiple <code>record</code> calls into a single request.</p>
+<p>Records a list of historical entries to the resource specified. </p>
 <pre><code>{
     &quot;procedure&quot;: &quot;recordbatch&quot;,
     &quot;arguments&quot;: [
