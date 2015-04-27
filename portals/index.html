@@ -96,6 +96,7 @@
 <ul>
 <li><a href="#get-all-user-accounts">Get all user accounts</a></li>
 <li><a href="#get-user-account-by-email">Get user account by email</a></li>
+<li><a href="#get-user-account-by-user-id">Get user account by user id</a></li>
 </ul>
 <h4 id="client-models">Client Models</h4>
 <ul>
@@ -206,12 +207,14 @@
 <li><a href="#get-user-token-for-openid-user">Get user token for OpenID user</a> (For App)</li>
 <li><a href="#reset-password">Reset password</a></li>
 <li><a href="#update-user">Update user</a></li>
+<li><a href="#update-password-by-reset-password-key">Update password by reset password key</a></li>
 </ul>
 <h3 id="api-index">API Index</h3>
 <h4 id="-accounts">/accounts</h4>
 <ul>
 <li>[GET] <a href="#get-all-user-accounts">/api/portals/v1/accounts</a></li>
 <li>[GET] <a href="#get-user-account-by-email">/api/portals/v1/accounts/{user-email}</a></li>
+<li>[GET] <a href="#get-user-account-by-user-id">/api/portals/v1/accounts/{user-id}</a></li>
 </ul>
 <h4 id="-client-models">/client-models</h4>
 <ul>
@@ -309,7 +312,8 @@
 <li>[GET] <a href="#collections-bulk-request">/api/portals/v1/users/_this/devices/[{device-rid},device-rid},...]</a></li>
 <li>[GET] <a href="#collections-bulk-request">/api/portals/v1/users/_this/groups/[{group-id},{group-id},...]</a></li>
 <li>[GET] <a href="#collections-bulk-request">/api/portals/v1/users/_this/users/[{user-id},{user-id},...]</a></li>
-<li>[POST] <a href="#reset-password">/api/portals/v1/users/reset-password</a> (For App)</li>
+<li>[POST] <a href="#reset-password">/api/portals/v1/users/reset-password</a></li>
+<li>[PUT] [/api/portals/v1/users/reset-password] (#update-password-by-reset-password-key)</li>
 </ul>
 <h3 id="rest">REST</h3>
 <p>The API uses a REST-style API, which means that:</p>
@@ -830,7 +834,42 @@ Content-Length: 99
 Content-Type: application/json; charset=UTF-8
 
 {
-    &quot;email&quot;: &quot;updatedemail@gmail.com&quot;,
+    &quot;email&quot;: &quot;useremail@gmail.com&quot;,
+    &quot;fullName&quot;: &quot;&quot;,
+    &quot;id&quot;: &quot;3167859736&quot;,
+    &quot;meta&quot;: null,
+    &quot;phoneNumber&quot;: &quot;&quot;
+}
+</code></pre><h4 id="get-user-account-by-user-id">Get user account by user id</h4>
+<p><code>GET /api/portals/v1/accounts/{user-id}</code></p>
+<p>Get user account by user id.</p>
+<h5 id="request">Request</h5>
+<p>Request body is empty</p>
+<h5 id="response">Response</h5>
+<p>On success, responds with HTTP status 200 if user exists in some domain and the body containing user object.
+user objects contain the following keys:</p>
+<ul>
+<li><code>&quot;email&quot;</code> - User email</li>
+<li><code>&quot;fullName&quot;</code> - User full name</li>
+<li><code>&quot;id&quot;</code> - User ID</li>
+<li><code>&quot;meta&quot;</code> - User meta</li>
+<li><code>&quot;phoneNumber&quot;</code> - User phonenumber</li>
+</ul>
+<p>On failure, responds with HTTP status 404 if user doesn&#39;t exist in any domain.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/accounts/3167859736&#39; \
+     -X GET \
+     -u &#39;adminuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Mon, 17 Nov 2014 09:40:58 GMT
+Status: 200 OK
+Vary: Accept-Encoding
+Content-Length: 99
+Content-Type: application/json; charset=UTF-8
+
+{
+    &quot;email&quot;: &quot;useremail@gmail.com&quot;,
     &quot;fullName&quot;: &quot;&quot;,
     &quot;id&quot;: &quot;3167859736&quot;,
     &quot;meta&quot;: null,
@@ -1452,6 +1491,10 @@ Content-Type: application/json; charset=UTF-8
 <p>Get information about groups.</p>
 <h5 id="request">Request</h5>
 <p>Request body is empty.</p>
+<h5 id="options">options</h5>
+<ul>
+<li><code>&quot;NoPermissions&quot;</code> - The <a href="#user-object">user object</a> will not include permission items.</li>
+</ul>
 <h5 id="response">Response</h5>
 <p>On success,
 If all items are fetched, response has HTTP status 200 and body is a <a href="#group-object">group object</a>.
@@ -1645,6 +1688,30 @@ Content-Type: application/json; charset=UTF-8
                 }
             }
         ]
+    }
+]
+</code></pre><h6 id="if-request-id-is-over-the-response-limit-and-nopermissions">If request ID is over the response limit and NoPermissions</h6>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/_this/users/\[2014970789,2308265000\]?limit=1&amp;NoPermissions&#39; \
+     -X GET \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 206 Partial Content
+Date: Mon, 17 Nov 2014 03:44:42 GMT
+Status: 206 Partial Content
+Link: &lt;https://mydomain.exosite.com/api/portals/v1/users/_this/users/[2014970789,2308265000]?offset=1&amp;limit=1&gt;; rel=&quot;next&quot;
+Vary: Accept-Encoding
+Content-Length: 258
+Content-Type: application/json; charset=UTF-8
+
+[
+    {
+        &quot;email&quot;: &quot;testing+2014+0805+0309+0953+7449@exosite.com&quot;,
+        &quot;fullName&quot;: &quot;&quot;,
+        &quot;id&quot;: &quot;2014970789&quot;,
+        &quot;meta&quot;: null,
+        &quot;phoneNumber&quot;: &quot;&quot;,
+        &quot;activated&quot;: true,
+        &quot;groups&quot;: []
     }
 ]
 </code></pre><h3 id="data-sources">Data Sources</h3>
@@ -3172,8 +3239,7 @@ Content-Type: application/json; charset=UTF-8
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/themes/1083890176&#39; \
-     -X PUT \
-     -d &#39;{&quot;name&quot;: &quot;update_theme&quot;}&#39; \
+     -X DELETE \
      -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
      -i
 </code></pre><pre><code>HTTP/1.1 200 OK
@@ -3456,7 +3522,9 @@ Content-Type: application/json; charset=UTF-8
     &quot;code&quot;:202,
     &quot;message&quot;:&quot;Thank you. We have sent an email to your account&#39;s registered email address. The email contains a link that will allow you to complete the password reset process.&quot;
 }
-</code></pre><p>Step 2 of 2: Activate a reset password email.</p>
+</code></pre><h4 id="update-password-by-reset-password-key">Update password by reset password key</h4>
+<p><code>PUT /api/portals/v1/users/reset-password</code></p>
+<p>Step 2 of 2: Activate a reset password email.</p>
 <h5 id="request">Request</h5>
 <p>Request body is a JSON object.  Currently only the following keys may be included:</p>
 <ul>
@@ -3469,7 +3537,7 @@ Content-Type: application/json; charset=UTF-8
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/reset-password&#39; \
-     -X POST \
+     -X PUT \
      -d &#39;{&quot;resetPasswordRegkey&quot;:&quot;21c2bdc303c23f5841b35fd0935efca42803fdeb&quot;, &quot;newPassword&quot;:&quot;newPassword&quot;}&#39; \
      -i
 </code></pre><pre><code>HTTP/1.1 200 OK
@@ -3579,6 +3647,10 @@ Content-Type: application/json; charset=UTF-8
 <p>Get user have access to as a manager or private viewer.</p>
 <h5 id="request">Request</h5>
 <p>Request body is empty.</p>
+<h5 id="options">options</h5>
+<ul>
+<li><code>&quot;NoPermissions&quot;</code> - The <a href="#user-object">user object</a> will not include permission items.</li>
+</ul>
 <h5 id="response">Response</h5>
 <p>On success, response has HTTP status 200 and a body containing an array of portal object.
 Portal objects contain the following keys:</p>
@@ -3861,13 +3933,51 @@ Content-Type: application/json; charset=UTF-8
 <p>Request body is empty.</p>
 <h5 id="options">Options</h5>
 <ul>
-<li><code>&quot;type&quot;</code> - if you just want get what kind of permissions and we support <code>Domain</code>,<code>Portal</code>,<code>Device</code>,<code>DataSource</code>,<code>Group</code>and this option must a array.</li>
+<li><code>&quot;type&quot;</code> - it&#39;s the type of permission you would like to retrieve and we support <code>Domain</code>,<code>Portal</code>,<code>Device</code>,<code>DataSource</code>,<code>Group</code>and this option must an array.</li>
 </ul>
 <h5 id="response">Response</h5>
 <p>On success, response has HTTP status 200 and a body containing an array of permission object.
 On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/3167859736/permissions?type%5B%5D=Portal&amp;type%5B%5D=Domain&#39; \
+     -u &#39;domainadminemail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Mon, 17 Nov 2014 08:45:53 GMT
+Status: 200 OK
+Vary: Accept-Encoding
+Content-Type: application/json; charset=UTF-8
+
+[
+  {
+    &quot;access&quot;: &quot;___admin&quot;,
+    &quot;oid&quot;: {
+      &quot;type&quot;: &quot;Domain&quot;,
+      &quot;id&quot;: &quot;1231234567&quot;
+    }
+  },
+  {
+    &quot;access&quot;: &quot;___admin&quot;,
+    &quot;oid&quot;: {
+      &quot;type&quot;: &quot;Portal&quot;,
+      &quot;id&quot;: &quot;2490770768&quot;
+    }
+  }
+]
+</code></pre><h4 id="get-user-permission">Get user permission</h4>
+<p>`GET /api/portals/v1/users/{user-id}/permissions</p>
+<p>Get user have all the permissions.</p>
+<h5 id="request">Request</h5>
+<p>Request body is empty.</p>
+<h5 id="options">Options</h5>
+<ul>
+<li><code>&quot;type&quot;</code> - if you just want get what kind of permissions and we support <code>Domain</code>,<code>Portal</code>,<code>Device</code>,<code>DataSource</code>,<code>Group</code>and this option must a array.</li>
+</ul>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 200 and a body containing an array of permission object.
+On failure, response has HTTP status of 400 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/&lt;user_id&gt;/permissions?type%5B%5D=Portal&amp;type%5B%5D=Domain&#39; \
      -u &#39;domainadminemail@gmail.com:adminuserP4ssword&#39; \
      -i
 </code></pre><pre><code>HTTP/1.1 200 OK
