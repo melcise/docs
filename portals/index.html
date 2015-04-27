@@ -96,7 +96,7 @@
 <ul>
 <li><a href="#get-all-user-accounts">Get all user accounts</a></li>
 <li><a href="#get-user-account-by-email">Get user account by email</a></li>
-<li><a href="#get-user-account-by-user-id">Get user account by user id</a></li>
+<li><a href="#get-user-account-by-user-id">Get user account by user ID</a></li>
 </ul>
 <h4 id="client-models">Client Models</h4>
 <ul>
@@ -198,7 +198,7 @@
 <li><a href="#get-all-users-portals-shares">Get all users portals shares</a></li>
 <li><a href="#get-multiple-users">Get multiple users</a></li>
 <li><a href="#get-user">Get user</a></li>
-<li><a href="#get-user-permission">Get user permission</a></li>
+<li><a href="#get-user-permissions">Get user permissions</a></li>
 <li><a href="#get-user-portal">Get user portal</a></li>
 <li><a href="#get-user-portal-shares">Get user portal shares</a></li>
 <li><a href="#get-user-readtoken">Get user readtoken</a></li>
@@ -352,7 +352,7 @@
 <li><code>&quot;email&quot;</code> is the user&#39;s email address. It is a string of fewer than 256 characters.</li>
 <li><code>&quot;fullName&quot;</code> is the user&#39;s full name. It is a string of fewer than 256 characters.</li>
 <li><code>&quot;id&quot;</code> is a numeric identifier for the user.</li>
-<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the user. It MUST be less then 2 megabytes long when it&#39;s serialized to a JSON string.</li>
+<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the user. It MUST be less than 2 megabytes long when it is serialized to a JSON string.</li>
 <li><code>&quot;phoneNumber&quot;</code> is the user&#39;s phone number. It is a string of fewer than 256 characters.</li>
 <li><code>&quot;userName&quot;</code> is a string identifier for the user. It is a string of fewer than 256 characters.</li>
 </ul>
@@ -492,7 +492,7 @@
 </code></pre><ul>
 <li><code>&quot;id&quot;</code> is a number identifying the group.</li>
 <li><code>&quot;members&quot;</code> is an array of <a href="#permission-object">permission objects</a> listing the members of the group.</li>
-<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the group. It MUST be less then 2 megabytes long when it&#39;s serialized to a JSON string.</li>
+<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the group. It MUST be less than 2 megabytes long when it is serialized to a JSON string.</li>
 <li><code>&quot;name&quot;</code> is the group name. It is a string of fewer than 256 characters. It MUST be unique among the same user in a domain.</li>
 <li><code>&quot;permissions&quot;</code> is an array of <a href="#permission-object">permission objects</a> describing Portals resources members of the group may access.</li>
 <li><code>&quot;userId&quot;</code> is a number identifying the owner of the group.</li>
@@ -751,7 +751,7 @@ Content-Type: application/json; charset=UTF-8
 </li>
 <li><p><code>&quot;id&quot;</code> is a numeric identifier for the user.</p>
 </li>
-<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the user. It MUST be less then 2 megabytes long when it&#39;s serialized to a JSON string.</li>
+<li><code>&quot;meta&quot;</code> may be any type. It contains application-specific information describing the user. It MUST be less than 2 megabytes long when it is serialized to a JSON string.</li>
 <li><code>&quot;permissions&quot;</code> is an array of <a href="#permission-object">permission objects</a> describing Portals resources the user may access.</li>
 <li><code>&quot;phoneNumber&quot;</code> is the user&#39;s phone number. It is a string of fewer than 256 characters.</li>
 <li><code>&quot;userName&quot;</code> is a string identifier for the user. It is a string of fewer than 256 characters.</li>
@@ -811,8 +811,8 @@ Content-Type: application/json; charset=UTF-8
 <h5 id="request">Request</h5>
 <p>Request body is empty</p>
 <h5 id="response">Response</h5>
-<p>On success, responds with HTTP status 200 if user exists in some domain and the body containing user object.
-user objects contain the following keys:</p>
+<p>On success, responds with HTTP status 200 if user exists in some domain and the body contains a user object.
+User objects contain the following keys:</p>
 <ul>
 <li><code>&quot;email&quot;</code> - User email</li>
 <li><code>&quot;fullName&quot;</code> - User full name</li>
@@ -840,9 +840,9 @@ Content-Type: application/json; charset=UTF-8
     &quot;meta&quot;: null,
     &quot;phoneNumber&quot;: &quot;&quot;
 }
-</code></pre><h4 id="get-user-account-by-user-id">Get user account by user id</h4>
+</code></pre><h4 id="get-user-account-by-user-id">Get user account by user ID</h4>
 <p><code>GET /api/portals/v1/accounts/{user-id}</code></p>
-<p>Get user account by user id.</p>
+<p>Get user account by user ID.</p>
 <h5 id="request">Request</h5>
 <p>Request body is empty</p>
 <h5 id="response">Response</h5>
@@ -1690,7 +1690,7 @@ Content-Type: application/json; charset=UTF-8
         ]
     }
 ]
-</code></pre><h6 id="if-request-id-is-over-the-response-limit-and-nopermissions">If request ID is over the response limit and NoPermissions</h6>
+</code></pre><h6 id="if-request-id-is-over-the-response-limit-and-nopermissions-is-set">If request ID is over the response limit and NoPermissions is set</h6>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/_this/users/\[2014970789,2308265000\]?limit=1&amp;NoPermissions&#39; \
      -X GET \
      -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
@@ -2154,7 +2154,7 @@ Content-Type: application/json; charset=UTF-8
 <li><code>&quot;sn&quot;</code> - Serial number (required)</li>
 <li><code>&quot;vendor&quot;</code> - Vendor name (required)</li>
 <li><code>&quot;model&quot;</code> - Model name (required)</li>
-<li><code>&quot;type&quot;</code> - Device type, must be &#39;vendor&#39; for this moment (required)</li>
+<li><code>&quot;type&quot;</code> - Device type, must be &#39;vendor&#39; (required)</li>
 </ul>
 <p>If you send any keys besides these, it will do nothing.</p>
 <h5 id="response">Response</h5>
@@ -3926,55 +3926,17 @@ Content-Type: application/json; charset=UTF-8
     ]
   }
 ]
-</code></pre><h4 id="get-user-permission">Get user permission</h4>
-<p>`GET /api/portals/v1/users/{user-id}/permissions</p>
-<p>Get user have all the permissions.</p>
+</code></pre><h4 id="get-user-permissions">Get user permissions</h4>
+<p><code>GET /api/portals/v1/users/{user-id}/permissions</code></p>
+<p>Get the user&#39;s permissions.</p>
 <h5 id="request">Request</h5>
 <p>Request body is empty.</p>
 <h5 id="options">Options</h5>
 <ul>
-<li><code>&quot;type&quot;</code> - it&#39;s the type of permission you would like to retrieve and we support <code>Domain</code>,<code>Portal</code>,<code>Device</code>,<code>DataSource</code>,<code>Group</code>and this option must an array.</li>
+<li><code>&quot;type&quot;</code> is an array of permission types to retrieve. The supported types are <code>Domain</code>, <code>Portal</code>, <code>Device</code>, <code>DataSource</code>, and <code>Group</code>.</li>
 </ul>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status 200 and a body containing an array of permission object.
-On failure, response has HTTP status of 400 or greater.</p>
-<h5 id="example">Example</h5>
-<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/3167859736/permissions?type%5B%5D=Portal&amp;type%5B%5D=Domain&#39; \
-     -u &#39;domainadminemail@gmail.com:adminuserP4ssword&#39; \
-     -i
-</code></pre><pre><code>HTTP/1.1 200 OK
-Date: Mon, 17 Nov 2014 08:45:53 GMT
-Status: 200 OK
-Vary: Accept-Encoding
-Content-Type: application/json; charset=UTF-8
-
-[
-  {
-    &quot;access&quot;: &quot;___admin&quot;,
-    &quot;oid&quot;: {
-      &quot;type&quot;: &quot;Domain&quot;,
-      &quot;id&quot;: &quot;1231234567&quot;
-    }
-  },
-  {
-    &quot;access&quot;: &quot;___admin&quot;,
-    &quot;oid&quot;: {
-      &quot;type&quot;: &quot;Portal&quot;,
-      &quot;id&quot;: &quot;2490770768&quot;
-    }
-  }
-]
-</code></pre><h4 id="get-user-permission">Get user permission</h4>
-<p>`GET /api/portals/v1/users/{user-id}/permissions</p>
-<p>Get user have all the permissions.</p>
-<h5 id="request">Request</h5>
-<p>Request body is empty.</p>
-<h5 id="options">Options</h5>
-<ul>
-<li><code>&quot;type&quot;</code> - if you just want get what kind of permissions and we support <code>Domain</code>,<code>Portal</code>,<code>Device</code>,<code>DataSource</code>,<code>Group</code>and this option must a array.</li>
-</ul>
-<h5 id="response">Response</h5>
-<p>On success, response has HTTP status 200 and a body containing an array of permission object.
+<p>On success, response has HTTP status 200 and a body containing an array of permission objects.
 On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/&lt;user_id&gt;/permissions?type%5B%5D=Portal&amp;type%5B%5D=Domain&#39; \
