@@ -646,9 +646,10 @@ response:
 </code></pre><ul>
 <li><code>&quot;format&quot;</code> is the format in which the dataport will store its data.</li>
 <li><code>&quot;meta&quot;</code>, <code>&quot;name&quot;</code>, and <code>&quot;public&quot;</code> are described in <a href="#create-client">create (client)</a></li>
-<li><p><code>&quot;preprocess&quot;</code> is a list of <code>[&lt;operation&gt;, &lt;value&gt;]</code> pairs describing operations to be performed on incoming data.</p>
+<li><p><code>&quot;preprocess&quot;</code> is a list of <code>[&lt;operation&gt;, &lt;value&gt; | &lt;ResourceID&gt;]</code> pairs describing operations to be performed on incoming data.</p>
 <p>  <code>&lt;operation&gt;</code> may be <code>&quot;add&quot;</code>, <code>&quot;sub&quot;</code>, <code>&quot;mul&quot;</code>, <code>&quot;div&quot;</code>, <code>&quot;mod&quot;</code>, <code>&quot;gt&quot;</code>, <code>&quot;geq&quot;</code>, <code>&quot;lt&quot;</code>, <code>&quot;leq&quot;</code>, <code>&quot;eq&quot;</code>, <code>&quot;neq&quot;</code>, or <code>&quot;value&quot;</code></p>
 <p>  <code>&lt;value&gt;</code> is the value to use in the operation.</p>
+<p>  <code>&lt;ResourceID&gt;</code> is a an resource identifier of any resource in this client, will use the value of that resource in this operation.</p>
 </li>
 <li><p><code>&quot;retention&quot;</code></p>
 <p>  <code>&quot;count&quot;</code> is the maximum number of entries this resource will retain.</p>
