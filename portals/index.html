@@ -179,6 +179,7 @@
 <li><a href="#delete-portal-by-rid">Delete portal by rid</a></li>
 <li><a href="#get-portal">Get portal</a></li>
 <li><a href="#list-portal-by-domain">List portal by domain</a></li>
+<li><a href="#list-portal-device">List portal device</a></li>
 <li><a href="#update-portal">Update portal</a></li>
 </ul>
 <h4 id="serial-numbers-sn-">Serial Numbers (sn)</h4>
@@ -281,6 +282,7 @@
 <h4 id="-portals">/portals</h4>
 <ul>
 <li>[GET] <a href="#list-portal-by-domain">/api/portals/v1/portals</a></li>
+<li>[GET] <a href="#list-portal-device">/api/portals/v1/portals/{portal-id}/devices</a></li>
 <li>[GET] <a href="#get-portal">/api/portals/v1/portals/{portal-id}</a></li>
 <li>[GET] <a href="#list-portal-data-source">/api/portals/v1/portals/{portal-id}/data-sources</a></li>
 <li>[PUT] <a href="#update-portal">/api/portals/v1/portals/{portal-id}</a></li>
@@ -329,7 +331,7 @@
 <li>[GET] <a href="#get-user-readtoken">/api/portals/v1/users/{user-id}/readtoken</a></li>
 <li>[GET] <a href="#get-user-token-for-openid-user">/api/portals/v1/users/_this/token</a> (For App)</li>
 <li>[GET] <a href="#collections-bulk-request">/api/portals/v1/users/_this/data-sources/[{data-source-rid},{data-source-rid},...]</a></li>
-<li>[GET] <a href="#collections-bulk-request">/api/portals/v1/users/_this/devices/[{device-rid},device-rid},...]</a></li>
+<li>[GET] <a href="#collections-bulk-request">/api/portals/v1/users/_this/devices/[{device-rid},{device-rid},...]</a></li>
 <li>[GET] <a href="#collections-bulk-request">/api/portals/v1/users/_this/groups/[{group-id},{group-id},...]</a></li>
 <li>[GET] <a href="#collections-bulk-request">/api/portals/v1/users/_this/users/[{user-id},{user-id},...]</a></li>
 <li>[POST] <a href="#reset-password">/api/portals/v1/users/reset-password</a></li>
@@ -1235,7 +1237,7 @@ Content-Type: application/json; charset=UTF-8
     }
 ]
 </code></pre><h4 id="get-multiple-devices">Get multiple devices</h4>
-<p><code>GET /users/_this/devices/[{device-rid},device-rid},...]</code></p>
+<p><code>GET /users/_this/devices/[{device-rid},{device-rid},...]</code></p>
 <p>Get information for devices.</p>
 <h5 id="request">Request</h5>
 <p>Request body is empty.</p>
@@ -1535,7 +1537,7 @@ Content-Type: application/json; charset=UTF-8
 <p>Request body is empty.</p>
 <h5 id="options">options</h5>
 <ul>
-<li><code>&quot;NoPermissions&quot;</code> - The <a href="#user-object">user object</a> will not include permission items.</li>
+<li><code>&quot;NoPermissions&quot;</code> - The <a href="#group-object">group object</a> will not include permission items.</li>
 </ul>
 <h5 id="response">Response</h5>
 <p>On success,
@@ -1589,6 +1591,50 @@ Content-Type: application/json; charset=UTF-8
         &quot;permissions&quot;: []
     }
 ]
+</code></pre><h6 id="if-all-items-are-fetched-and-nopermissions">If all items are fetched and NoPermissions</h6>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/_this/groups/\[2581071857,2937453355\]?NoPermissions&#39; \
+     -X GET \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Mon, 17 Nov 2014 03:35:46 GMT
+Status: 200 OK
+Vary: Accept-Encoding
+Content-Length: 343
+Content-Type: application/json; charset=UTF-8
+
+[
+    {
+        &quot;id&quot;: &quot;2581071857&quot;,
+        &quot;userId&quot;: &quot;1026285982&quot;,
+        &quot;members&quot;: [
+            {
+                &quot;access&quot;: &quot;___admin&quot;,
+                &quot;oid&quot;: {
+                    &quot;type&quot;: &quot;User&quot;,
+                    &quot;id&quot;: &quot;1026285982&quot;
+                }
+            }
+        ],
+        &quot;meta&quot;: null,
+        &quot;name&quot;: &quot;test group 10883&quot;
+    },
+    {
+        &quot;id&quot;: &quot;2937453355&quot;,
+        &quot;userId&quot;: &quot;1026285982&quot;,
+        &quot;members&quot;: [
+            {
+                &quot;access&quot;: &quot;___admin&quot;,
+                &quot;oid&quot;: {
+                    &quot;type&quot;: &quot;User&quot;,
+                    &quot;id&quot;: &quot;1026285982&quot;
+                }
+            }
+        ],
+        &quot;meta&quot;: null,
+        &quot;name&quot;: &quot;test group 13553&quot;
+    }
+]
 </code></pre><h6 id="if-request-id-is-over-the-response-limit">If request ID is over the response limit</h6>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/_this/groups/\[2581071857,2937453355\]?limit=1&#39; \
      -X GET \
@@ -1625,6 +1671,10 @@ Content-Type: application/json; charset=UTF-8
 <p>Get information about users.</p>
 <h5 id="request">Request</h5>
 <p>Request body is empty.</p>
+<h5 id="options">options</h5>
+<ul>
+<li><code>&quot;NoPermissions&quot;</code> - The <a href="#user-object">user object</a> will not include permission items.</li>
+</ul>
 <h5 id="response">Response</h5>
 <p>On success,
 If all items are fetched, response has HTTP status 200 and body is a <a href="#user-object">user object</a>.
@@ -2384,16 +2434,83 @@ Content-Type: application/json; charset=UTF-8
 <h5 id="request">Request</h5>
 <p>Request body is a <a href="#device-object">device object</a>. Currently only the following keys are supported:</p>
 <ul>
-<li><code>&quot;sn&quot;</code> - Serial number (required)</li>
-<li><code>&quot;vendor&quot;</code> - Vendor name (required)</li>
-<li><code>&quot;model&quot;</code> - Model name (required)</li>
-<li><code>&quot;type&quot;</code> - Device type, must be &#39;vendor&#39; (required)</li>
+<li><code>&quot;type&quot;</code> - Device type, could be either <code>generic</code> or <code>vendor</code> (required)</li>
+</ul>
+<p>If <code>&quot;type&quot;</code> is <code>vendor</code>, the following keys are required:</p>
+<ul>
+<li><code>&quot;model&quot;</code> - Model name (optional)</li>
+<li><code>&quot;sn&quot;</code> - Serial number (optional)</li>
+<li><code>&quot;vendor&quot;</code> - Vendor name (optional)</li>
 </ul>
 <p>If you send any keys besides these, it will do nothing.</p>
 <h5 id="response">Response</h5>
 <p>On success, response has HTTP status 201 and the created device object.</p>
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
+<p>Generic type</p>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/portals/1284862590/devices&#39; \
+     -X POST \
+     -d &#39;{&quot;type&quot;:&quot;generic&quot;}&#39; \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 201 Created
+Date: Tue, 28 Apr 2015 11:11:56 GMT
+Status: 201 Created
+Vary: Accept-Encoding
+Content-Length: 877
+Content-Type: application/json; charset=UTF-8
+
+{
+    &quot;rid&quot;: &quot;446a943cdf4d7b2e113c8673d1d27323764427f4&quot;,
+    &quot;members&quot;: [{
+        &quot;access&quot;: &quot;___admin&quot;,
+        &quot;oid&quot;: {
+            &quot;type&quot;: &quot;User&quot;,
+            &quot;id&quot;: &quot;1075526687&quot;
+        }
+    }],
+    &quot;info&quot;: {
+        &quot;aliases&quot;: [],
+        &quot;basic&quot;: {
+            &quot;modified&quot;: 1430219273,
+            &quot;subscribers&quot;: 0,
+            &quot;type&quot;: &quot;client&quot;,
+            &quot;status&quot;: &quot;activated&quot;
+        },
+        &quot;description&quot;: {
+            &quot;limits&quot;: {
+                &quot;client&quot;: 0,
+                &quot;dataport&quot;: &quot;inherit&quot;,
+                &quot;datarule&quot;: &quot;inherit&quot;,
+                &quot;disk&quot;: &quot;inherit&quot;,
+                &quot;dispatch&quot;: &quot;inherit&quot;,
+                &quot;email&quot;: &quot;inherit&quot;,
+                &quot;email_bucket&quot;: &quot;inherit&quot;,
+                &quot;http&quot;: &quot;inherit&quot;,
+                &quot;http_bucket&quot;: &quot;inherit&quot;,
+                &quot;share&quot;: &quot;inherit&quot;,
+                &quot;sms&quot;: &quot;inherit&quot;,
+                &quot;sms_bucket&quot;: &quot;inherit&quot;,
+                &quot;xmpp&quot;: &quot;inherit&quot;,
+                &quot;xmpp_bucket&quot;: &quot;inherit&quot;
+            },
+            &quot;locked&quot;: false,
+            &quot;meta&quot;: &quot;{\&quot;timezone\&quot;:\&quot;Asia\\\/Taipei\&quot;,\&quot;location\&quot;:\&quot;\&quot;,\&quot;device\&quot;:{\&quot;type\&quot;:\&quot;generic\&quot;}}&quot;,
+            &quot;name&quot;: &quot;New Device@2015-04-28T11:11:56+00:00 1430219516.9894&quot;,
+            &quot;public&quot;: false
+        },
+        &quot;key&quot;: &quot;519cc84b04b0144b479c7644d0defd45127983dd&quot;,
+        &quot;shares&quot;: [],
+        &quot;subscribers&quot;: [],
+        &quot;tags&quot;: []
+    },
+    &quot;dataSources&quot;: [],
+    &quot;model&quot;: null,
+    &quot;sn&quot;: null,
+    &quot;type&quot;: &quot;generic&quot;,
+    &quot;vendor&quot;: null
+}
+</code></pre><p>Vendor type</p>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/portals/2853566858/devices&#39; \
      -X POST \
      -d &#39;{&quot;sn&quot;:&quot;123&quot;, &quot;vendor&quot;:&quot;mydomain&quot;, &quot;model&quot;:&quot;apimodel&quot;, &quot;type&quot;:&quot;vendor&quot;}&#39; \
@@ -3320,6 +3437,81 @@ Content-Type: application/json; charset=UTF-8
 
 [{
     &quot;id&quot;: &quot;2590421429&quot;
+}]
+</code></pre><h4 id="list-portal-device">List portal device</h4>
+<p><code>GET /api/portals/v1/portals/{portal-id}/devices</code></p>
+<p>List portal device.</p>
+<h5 id="query-string">Query string</h5>
+<ul>
+<li><code>&quot;limit&quot;</code> - Number of items to limit (optional)</li>
+<li><code>&quot;offset&quot;</code> - Number of items to skip, only available when <code>&quot;limit&quot;</code> is valid (optional)</li>
+</ul>
+<h5 id="request">Request</h5>
+<p>Request body is empty.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 200 and the body is an array of <a href="#device-object">device object</a>.</p>
+<p>On failure, response has HTTP status of 400 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/portals/1284862590/devices&#39; \
+     -X GET \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Tue, 28 Apr 2015 11:16:14 GMT
+Status: 200 OK
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+Content-Type: application/json; charset=UTF-8
+
+[{
+    &quot;rid&quot;: &quot;446a943cdf4d7b2e113c8673d1d27323764427f4&quot;,
+    &quot;members&quot;: [{
+        &quot;access&quot;: &quot;___admin&quot;,
+        &quot;oid&quot;: {
+            &quot;type&quot;: &quot;User&quot;,
+            &quot;id&quot;: &quot;1075526687&quot;
+        }
+    }],
+    &quot;info&quot;: {
+        &quot;aliases&quot;: [],
+        &quot;basic&quot;: {
+            &quot;modified&quot;: 1430219273,
+            &quot;subscribers&quot;: 0,
+            &quot;type&quot;: &quot;client&quot;,
+            &quot;status&quot;: &quot;activated&quot;
+        },
+        &quot;description&quot;: {
+            &quot;limits&quot;: {
+                &quot;client&quot;: 0,
+                &quot;dataport&quot;: &quot;inherit&quot;,
+                &quot;datarule&quot;: &quot;inherit&quot;,
+                &quot;disk&quot;: &quot;inherit&quot;,
+                &quot;dispatch&quot;: &quot;inherit&quot;,
+                &quot;email&quot;: &quot;inherit&quot;,
+                &quot;email_bucket&quot;: &quot;inherit&quot;,
+                &quot;http&quot;: &quot;inherit&quot;,
+                &quot;http_bucket&quot;: &quot;inherit&quot;,
+                &quot;share&quot;: &quot;inherit&quot;,
+                &quot;sms&quot;: &quot;inherit&quot;,
+                &quot;sms_bucket&quot;: &quot;inherit&quot;,
+                &quot;xmpp&quot;: &quot;inherit&quot;,
+                &quot;xmpp_bucket&quot;: &quot;inherit&quot;
+            },
+            &quot;locked&quot;: false,
+            &quot;meta&quot;: &quot;{\&quot;timezone\&quot;:\&quot;Asia\\\/Taipei\&quot;,\&quot;location\&quot;:\&quot;\&quot;,\&quot;device\&quot;:{\&quot;type\&quot;:\&quot;generic\&quot;}}&quot;,
+            &quot;name&quot;: &quot;New Device@2015-04-28T11:11:56+00:00 1430219516.9894&quot;,
+            &quot;public&quot;: false
+        },
+        &quot;key&quot;: &quot;519cc84b04b0144b479c7644d0defd45127983dd&quot;,
+        &quot;shares&quot;: [],
+        &quot;subscribers&quot;: [],
+        &quot;tags&quot;: []
+    },
+    &quot;dataSources&quot;: [],
+    &quot;model&quot;: null,
+    &quot;sn&quot;: null,
+    &quot;type&quot;: &quot;generic&quot;,
+    &quot;vendor&quot;: null
 }]
 </code></pre><h4 id="delete-portal-by-id">Delete portal by id</h4>
 <p><code>DELETE /api/portals/v1/portals/{portal-id}</code></p>
