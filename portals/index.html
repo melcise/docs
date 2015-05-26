@@ -102,6 +102,7 @@
 <ul>
 <li><a href="#delete-client-model">Delete client model</a></li>
 <li><a href="#get-client-model">Get client model</a></li>
+<li><a href="#get-serial-number">Get serial number</a></li>
 <li><a href="#list-client-models">List client models</a></li>
 <li><a href="#update-client-model">Update client model</a></li>
 </ul>
@@ -182,9 +183,19 @@
 <li><a href="#list-portal-device">List portal device</a></li>
 <li><a href="#update-portal">Update portal</a></li>
 </ul>
-<h4 id="serial-numbers-sn-">Serial Numbers (sn)</h4>
+<h4 id="scripts">Scripts</h4>
 <ul>
-<li><a href="#get-serial-number">Get serial number</a></li>
+<li><a href="#create-device-script">Create device script</a></li>
+<li><a href="#create-portal-script">Create portal script</a></li>
+<li><a href="#delete-script">Delete script</a></li>
+<li><a href="#get-script">Get script</a></li>
+<li><a href="#list-device-script">List device script</a></li>
+<li><a href="#list-portal-script">List portal script</a></li>
+<li><a href="#update-script">Update script</a></li>
+</ul>
+<h4 id="scripts-data">Scripts Data</h4>
+<ul>
+<li><a href="#get-script-data">Get script data</a></li>
 </ul>
 <h4 id="themes">Themes</h4>
 <ul>
@@ -206,6 +217,7 @@
 <li><a href="#create-user">Create user</a></li>
 <li><a href="#create-user-portal-share">Create user portal share</a></li>
 <li><a href="#delete-user">Delete user</a></li>
+<li><a href="#delete-user-datastorage">Delete user datastorage</a></li>
 <li><a href="#delete-user-permission">Delete user permission</a></li>
 <li><a href="#delete-user-portal-shares">Delete user portal share</a></li>
 <li><a href="#get-all-user-portals">Get all user portals</a></li>
@@ -213,7 +225,10 @@
 <li><a href="#get-all-users-portals-shares">Get all users portals shares</a></li>
 <li><a href="#get-multiple-users">Get multiple users</a></li>
 <li><a href="#get-user">Get user</a></li>
+<li><a href="#get-user-datastorage">Get user datastorage</a></li>
+<li><a href="#get-user-datastorage-list">Get user datastorage list</a></li>
 <li><a href="#get-user-permissions">Get user permissions</a></li>
+<li><a href="#get-user-profile-picture">Get user profile picture</a></li>
 <li><a href="#get-user-portal">Get user portal</a></li>
 <li><a href="#get-user-portal-shares">Get user portal shares</a></li>
 <li><a href="#get-user-readtoken">Get user readtoken</a></li>
@@ -221,6 +236,9 @@
 <li><a href="#get-user-token">Get user token</a></li>
 <li><a href="#get-user-token-for-openid-user">Get user token for OpenID user</a> (For App)</li>
 <li><a href="#reset-password">Reset password</a></li>
+<li><a href="#reset-user-profile-picture">Reset user profile picture</a></li>
+<li><a href="#set-user-profile-picture">Set user profile picture</a></li>
+<li><a href="#set-user-datastorage">Set user datastorage</a></li>
 <li><a href="#update-user">Update user</a></li>
 <li><a href="#update-password-by-reset-password-key">Update password by reset password key</a></li>
 </ul>
@@ -237,6 +255,7 @@
 <li>[GET] <a href="#list-client-models">/api/portals/v1/client-models/{vendor}/{name}</a></li>
 <li>[PUT] <a href="#update-client-model">/api/portals/v1/client-models/{vendor}/{name}</a></li>
 <li>[DELETE] <a href="#delete-client-model">/api/portals/v1/client-models/{vendor}/{name}</a></li>
+<li>[GET] <a href="#get-serial-number">/api/portals/v1/client-models/{vendor}/{name}/sn/{serial-number}</a></li>
 </ul>
 <h4 id="-data-sources">/data-sources</h4>
 <ul>
@@ -291,9 +310,16 @@
 <li>[POST] <a href="#create-portal-data-source">/api/portals/v1/portals/{portal-id}/data-sources</a></li>
 <li>[POST] <a href="#create-device">/api/portals/v1/portals/{portal-id}/devices</a></li>
 </ul>
-<h4 id="-sn">/sn</h4>
+<h4 id="-scripts">/scripts</h4>
 <ul>
-<li>[GET] <a href="#get-serial-number">/api/portals/v1/client-models/{vendor}/{name}/sn/{serial-number}</a></li>
+<li>[DELETE] <a href="#delete-script">/api/portals/v1/scripts/{script-rid}</a></li>
+<li>[GET] <a href="#list-device-script">/api/portals/v1/devices/{device-rid}/scripts</a></li>
+<li>[GET] <a href="#list-portal-script">/api/portals/v1/portals/{portal-id}/scripts</a></li>
+<li>[GET] <a href="#get-script-data">/api/portals/v1/scripts/{script-rid}/data</a></li>
+<li>[GET] <a href="#get-script">/api/portals/v1/scripts/{script-rid}</a></li>
+<li>[POST] <a href="#create-device-script">/api/portals/v1/devices/{device-rid}/scripts</a></li>
+<li>[POST] <a href="#create-portal-script">/api/portals/v1/portals/{portal-id}/scripts</a></li>
+<li>[PUT] <a href="#update-script">/api/portals/v1/scripts/{script-rid}</a></li>
 </ul>
 <h4 id="-themes">/themes</h4>
 <ul>
@@ -315,6 +341,10 @@
 <li>[GET] <a href="#get-user">/api/portals/v1/users/{user-id}</a></li>
 <li>[GET] <a href="#get-user-through-readtoken">/api/portals/v1/users/{user-id}?readtoken={user-readtoken}</a></li>
 <li>[PUT] <a href="#update-user">/api/portals/v1/users/{user-id}</a></li>
+<li>[GET] <a href="#get-user-datastorage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
+<li>[POST] <a href="#set-user-datastorage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
+<li>[DELETE] <a href="#delete-user-datastorage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
+<li>[GET] <a href="#get-user-datastorage-list">/api/portals/v1/users/{user-id}/ds/{subdirectory/*}</a></li>
 <li>[DELETE] <a href="#delete-user">/api/portals/v1/users/{user-id}</a></li>
 <li>[POST] <a href="#create-group-under-user">/api/portals/v1/users/{user-id}/groups</a></li>
 <li>[GET] <a href="#get-user-permission">/api/portals/v1/users/{user-id}/permissions</a></li>
@@ -327,6 +357,9 @@
 <li>[POST]<a href="#create-user-portal-share">/api/portals/v1/users/{user-id}/portals/{portal-id}/shares</a></li>
 <li>[GET] <a href="#get-user-portal-shares">/api/portals/v1/users/{user-id}/portals/{portal-id}/shares</a></li>
 <li>[DELETE] <a href="#delete-user-portal-shares">/api/portals/v1/users/{user-id}/portals/{portal-id}/shares</a></li>
+<li>[GET] <a href="#get-user-profile-picture">/api/portals/v1/users/{user-id}/profile/picture</a></li>
+<li>[POST] <a href="#set-user-profile-picture">/api/portals/v1/users/{user-id}/profile/picture</a></li>
+<li>[DELETE] <a href="#reset-user-profile-picture">/api/portals/v1/users/{user-id}/profile/picture</a></li>
 <li>[GET] <a href="#get-user-token">/api/portals/v1/users/{user-id}/token</a></li>
 <li>[GET] <a href="#get-user-readtoken">/api/portals/v1/users/{user-id}/readtoken</a></li>
 <li>[GET] <a href="#get-user-token-for-openid-user">/api/portals/v1/users/_this/token</a> (For App)</li>
@@ -707,6 +740,18 @@ Content-Type: application/json; charset=UTF-8
 <li><p><code>&quot;planId&quot;</code> is a numeric identifier for the plan of the portal.</p>
 </li>
 </ul>
+<h3 id="script-object">Script object</h3>
+<p>A sample script object.</p>
+<pre><code>{
+    &quot;rid&quot;: &lt;rid&gt;,
+    &quot;data&quot;: &lt;data&gt;,
+    &quot;info&quot;: &lt;info&gt;
+}
+</code></pre><ul>
+<li><code>&lt;rid&gt;</code> is a 40 digit resource identifier.</li>
+<li><code>&lt;data&gt;</code> is a list of timestamp, value pairs.</li>
+<li><code>&lt;info&gt;</code> is information about an existing resource.</li>
+</ul>
 <h3 id="theme-object">Theme object</h3>
 <p>A sample theme object looks like this:</p>
 <pre><code>{
@@ -1073,6 +1118,34 @@ Status: 200 OK
 Vary: Accept-Encoding
 Content-Length: 0
 Content-Type: application/json; charset=UTF-8
+</code></pre><h4 id="get-serial-number">Get serial number</h4>
+<p><code>GET /api/portals/v1/client-models/{vendor}/{name}/sn/{serial-number}</code></p>
+<p>Get information about a serial number.</p>
+<ul>
+<li>A device owner as a non-admin user can get serial number extra field by the domain&#39;s &quot;Allow customer to use the API to get the Serial Number extra field.&quot; setting is turned On</li>
+</ul>
+<h5 id="request">Request</h5>
+<p>Request body is empty.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 200 and return associated client id, status and extra info.</p>
+<p>On failure, response has HTTP status of 404 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/client-models/myvendor/mymodel/sn/123&#39; \
+     -X GET \
+     -u &#39;domainuseremail@gmail.com:adminuserPassword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Tue, 18 Nov 2014 06:10:30 GMT
+Status: 200 OK
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+Content-Type: application/json; charset=UTF-8
+
+{
+    &quot;status&quot;: &quot;expired&quot;,
+    &quot;rid&quot;: &quot;847699a4667a64a42eaca6ecd0f564374e64b9f7&quot;,
+    &quot;extra&quot;: &quot;test for extra info&quot;,
+}
 </code></pre><h3 id="collections-bulk-request-">Collections (bulk request)</h3>
 <h4 id="querystring">Querystring</h4>
 <ul>
@@ -3203,7 +3276,7 @@ Content-Type: application/json; charset=UTF-8
 </code></pre><h3 id="portals">Portals</h3>
 <h4 id="create-portal">Create portal</h4>
 <p><code>POST /api/portals/v1/users/{user-id}/portals</code></p>
-<p>Create a portal under a user.</p>
+<p>Create a portal under a user. The create portal will have the same device, data sources, events, alerts and scripts as the Default Portal Template in /admin/portaltemplate if Default Portal Template is not &quot;no template&quot;.</p>
 <h5 id="request">Request</h5>
 <p>Request body is a <a href="#portal-object">portal object</a>.  Currently only the following keys may be included:</p>
 <ul>
@@ -3555,33 +3628,397 @@ Content-Length: 52
 Content-Type: application/json; charset=UTF-8
 
 [&quot;myportal has been successfully deleted.&quot;]
-</code></pre><h4 id="get-serial-number">Get serial number</h4>
-<p><code>GET /api/portals/v1/client-models/{vendor}/{name}/sn/{serial-number}</code></p>
-<p>Get information about a serial number.</p>
+</code></pre><h3 id="scripts">Scripts</h3>
+<h4 id="create-device-script">Create device script</h4>
+<p><code>POST /api/portals/v1/devices/{device-rid}/scripts</code></p>
+<p>Create a device script.</p>
+<h5 id="request">Request</h5>
+<pre><code>{
+    &quot;info&quot;: {
+        &quot;description&quot;: {
+            &quot;name&quot;: string = &quot;&quot;,
+            &quot;rule&quot;: {
+                &quot;script&quot;: string = &quot;&quot;
+            }
+        }
+    }
+}
+</code></pre><p>See <a href="https://github.com/exosite/docs/blob/master/rpc/README.md#create-datarule">create datarule API</a>.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 201 and the body is a <a href="#script-object">script object</a>.</p>
+<p>On failure, response has HTTP status of 404 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/devices/bbc295c0dc98f8518b784867bae4a1b168c77f1b/scripts&#39; \
+     -X POST \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 201 Created
+Date: Mon, 11 May 2015 08:31:37 GMT
+Status: 201 Created
+Vary: Accept-Encoding
+Content-Length: 403
+Content-Type: application/json; charset=UTF-8
+
+{
+    &quot;rid&quot;: &quot;8e628a6c2018fdff9a9a6feae198adad6f7fe126&quot;,
+    &quot;data&quot;: [],
+    &quot;info&quot;: {
+        &quot;basic&quot;: {
+            &quot;modified&quot;: 1431332795,
+            &quot;subscribers&quot;: 0,
+            &quot;type&quot;: &quot;datarule&quot;,
+            &quot;status&quot;: &quot;running&quot;,
+            &quot;activity&quot;: [
+                [1431332794, [&quot;running&quot;]]
+            ]
+        },
+        &quot;description&quot;: {
+            &quot;format&quot;: &quot;string&quot;,
+            &quot;meta&quot;: &quot;&quot;,
+            &quot;name&quot;: &quot;&quot;,
+            &quot;preprocess&quot;: [],
+            &quot;public&quot;: false,
+            &quot;retention&quot;: {
+                &quot;count&quot;: 1000,
+                &quot;duration&quot;: &quot;infinity&quot;
+            },
+            &quot;rule&quot;: {
+                &quot;script&quot;: &quot;&quot;
+            },
+            &quot;subscribe&quot;: null
+        },
+        &quot;shares&quot;: [],
+        &quot;subscribers&quot;: [],
+        &quot;tags&quot;: []
+    }
+}
+</code></pre><h4 id="create-portal-script">Create portal script</h4>
+<p><code>POST /api/portals/v1/portals/{portal-id}/scripts</code></p>
+<p>Create a portal script.</p>
+<h5 id="request">Request</h5>
+<p>See <a href="#create-device-script">Create device script</a>.</p>
+<h5 id="response">Response</h5>
+<p>See <a href="#create-device-script">Create device script</a>.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/portals/1284862590/scripts&#39; \
+     -X POST \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 201 Created
+Date: Mon, 11 May 2015 08:41:56 GMT
+Status: 201 Created
+Vary: Accept-Encoding
+Content-Length: 403
+Content-Type: application/json; charset=UTF-8
+
+{
+    &quot;rid&quot;: &quot;c2a2bdfa83b0a8c6eeca438ce895fa4913b48f87&quot;,
+    &quot;data&quot;: [],
+    &quot;info&quot;: {
+        &quot;basic&quot;: {
+            &quot;modified&quot;: 1431333414,
+            &quot;subscribers&quot;: 0,
+            &quot;type&quot;: &quot;datarule&quot;,
+            &quot;status&quot;: &quot;running&quot;,
+            &quot;activity&quot;: [
+                [1431333413, [&quot;running&quot;]]
+            ]
+        },
+        &quot;description&quot;: {
+            &quot;format&quot;: &quot;string&quot;,
+            &quot;meta&quot;: &quot;&quot;,
+            &quot;name&quot;: &quot;&quot;,
+            &quot;preprocess&quot;: [],
+            &quot;public&quot;: false,
+            &quot;retention&quot;: {
+                &quot;count&quot;: 1000,
+                &quot;duration&quot;: &quot;infinity&quot;
+            },
+            &quot;rule&quot;: {
+                &quot;script&quot;: &quot;&quot;
+            },
+            &quot;subscribe&quot;: null
+        },
+        &quot;shares&quot;: [],
+        &quot;subscribers&quot;: [],
+        &quot;tags&quot;: []
+    }
+}
+</code></pre><h4 id="delete-script">Delete script</h4>
+<p><code>DELETE /api/portals/v1/scripts/{script-rid}</code></p>
+<p>Delete a script.</p>
+<h5 id="request">Request</h5>
+<p>Request body is empty.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 204 and the body is empty.</p>
+<p>On failure, response has HTTP status of 404 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/scripts/c2a2bdfa83b0a8c6eeca438ce895fa4913b48f87&#39; \
+     -X DELETE \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 204 No Content
+Date: Mon, 11 May 2015 08:57:09 GMT
+Status: 204 No Content
+Vary: Accept-Encoding
+Content-Length: 0
+Content-Type: application/json; charset=UTF-8
+</code></pre><h4 id="get-script-data">Get script data</h4>
+<p><code>GET /api/portals/v1/scripts/{script-rid}/data</code></p>
+<p>See <a href="#get-data-source-data">Get data source data</a>.</p>
+<h5 id="request">Request</h5>
+<p>See <a href="#get-data-source-data">Get data source data</a>.</p>
+<h5 id="response">Response</h5>
+<p>See <a href="#get-data-source-data">Get data source data</a>.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/scripts/28571049e6bf6de245012957171da9e83926d897/data&#39; \
+     -X GET \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Mon, 11 May 2015 09:15:20 GMT
+Status: 200 OK
+Vary: Accept-Encoding
+Content-Length: 49
+Content-Type: application/json; charset=UTF-8
+
+[
+    [1431316854, &quot;line 4: 8\nline 4: 9\nline 4: 10&quot;]
+]
+</code></pre><h4 id="get-script">Get script</h4>
+<p><code>GET /api/portals/v1/scripts/{script-rid}</code></p>
+<p>Get a script.</p>
+<h5 id="request">Request</h5>
+<p>Request body is empty.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 200 and the body is a <a href="#script-object">script object</a>.</p>
+<p>On failure, response has HTTP status of 404 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/scripts/28571049e6bf6de245012957171da9e83926d897&#39; \
+     -X GET \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Mon, 11 May 2015 09:17:31 GMT
+Status: 200 OK
+Vary: Accept-Encoding
+Content-Length: 547
+Content-Type: application/json; charset=UTF-8
+
+{
+    &quot;rid&quot;: &quot;28571049e6bf6de245012957171da9e83926d897&quot;,
+    &quot;data&quot;: [
+        [1431316854, &quot;line 4: 8\nline 4: 9\nline 4: 10&quot;]
+    ],
+    &quot;info&quot;: {
+        &quot;basic&quot;: {
+            &quot;modified&quot;: 1431316848,
+            &quot;subscribers&quot;: 0,
+            &quot;type&quot;: &quot;datarule&quot;,
+            &quot;status&quot;: &quot;completed&quot;,
+            &quot;activity&quot;: [
+                [1431316855, [&quot;completed&quot;]],
+                [1431316853, [&quot;running&quot;]]
+            ]
+        },
+        &quot;description&quot;: {
+            &quot;format&quot;: &quot;string&quot;,
+            &quot;meta&quot;: &quot;&quot;,
+            &quot;name&quot;: &quot;&quot;,
+            &quot;preprocess&quot;: [],
+            &quot;public&quot;: false,
+            &quot;retention&quot;: {
+                &quot;count&quot;: 1000,
+                &quot;duration&quot;: &quot;infinity&quot;
+            },
+            &quot;rule&quot;: {
+                &quot;script&quot;: &quot;local n = 0\nwhile n &lt; 10 do\n\tn = n + 1\n\tdebug(tostring(n))\nend&quot;
+            },
+            &quot;subscribe&quot;: null
+        },
+        &quot;shares&quot;: [],
+        &quot;subscribers&quot;: [],
+        &quot;tags&quot;: []
+    }
+}
+</code></pre><h4 id="list-device-script">List device script</h4>
+<p><code>GET /api/portals/v1/devices/{device-rid}/scripts</code></p>
+<p>List device script.</p>
+<h5 id="query-string">Query string</h5>
 <ul>
-<li>A device owner as a non-admin user can get serial number extra field by the domain&#39;s &quot;Allow customer to use the API to get the Serial Number extra field.&quot; setting is turned On</li>
+<li><code>&quot;limit&quot;</code> - Number of items to limit (optional)</li>
+<li><code>&quot;offset&quot;</code> - Number of items to skip, only available when <code>&quot;limit&quot;</code> is valid (optional)</li>
 </ul>
 <h5 id="request">Request</h5>
 <p>Request body is empty.</p>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status 200 and return associated client id, status and extra info.</p>
+<p>On success, response has HTTP status 200 and the body is an array of <a href="#script-object">script object</a>.</p>
 <p>On failure, response has HTTP status of 404 or greater.</p>
 <h5 id="example">Example</h5>
-<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/client-models/myvendor/mymodel/sn/123&#39; \
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/devices/bbc295c0dc98f8518b784867bae4a1b168c77f1b/scripts&#39; \
      -X GET \
-     -u &#39;domainuseremail@gmail.com:adminuserPassword&#39; \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
      -i
 </code></pre><pre><code>HTTP/1.1 200 OK
-Date: Tue, 18 Nov 2014 06:10:30 GMT
+Date: Mon, 11 May 2015 10:23:35 GMT
 Status: 200 OK
 Vary: Accept-Encoding
-Transfer-Encoding: chunked
+Content-Length: 434
+Content-Type: application/json; charset=UTF-8
+
+[{
+    &quot;rid&quot;: &quot;8e628a6c2018fdff9a9a6feae198adad6f7fe126&quot;,
+    &quot;data&quot;: [],
+    &quot;info&quot;: {
+        &quot;basic&quot;: {
+            &quot;modified&quot;: 1431332795,
+            &quot;subscribers&quot;: 0,
+            &quot;type&quot;: &quot;datarule&quot;,
+            &quot;status&quot;: &quot;completed&quot;,
+            &quot;activity&quot;: [
+                [1431332798, [&quot;completed&quot;]],
+                [1431332794, [&quot;running&quot;]]
+            ]
+        },
+        &quot;description&quot;: {
+            &quot;format&quot;: &quot;string&quot;,
+            &quot;meta&quot;: &quot;&quot;,
+            &quot;name&quot;: &quot;&quot;,
+            &quot;preprocess&quot;: [],
+            &quot;public&quot;: false,
+            &quot;retention&quot;: {
+                &quot;count&quot;: 1000,
+                &quot;duration&quot;: &quot;infinity&quot;
+            },
+            &quot;rule&quot;: {
+                &quot;script&quot;: &quot;&quot;
+            },
+            &quot;subscribe&quot;: null
+        },
+        &quot;shares&quot;: [],
+        &quot;subscribers&quot;: [],
+        &quot;tags&quot;: []
+    }
+}]
+</code></pre><h4 id="list-portal-script">List portal script</h4>
+<p><code>GET /api/portals/v1/portals/{portal-id}/scripts</code></p>
+<p>List portal script.</p>
+<h5 id="query-string">Query string</h5>
+<p>See <a href="#list-device-script">List device script</a>.</p>
+<h5 id="request">Request</h5>
+<p>See <a href="#list-device-script">List device script</a>.</p>
+<h5 id="response">Response</h5>
+<p>See <a href="#list-device-script">List device script</a>.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/portals/1284862590/scripts&#39; \
+     -X GET \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Mon, 11 May 2015 10:28:37 GMT
+Status: 200 OK
+Vary: Accept-Encoding
+Content-Length: 1912
+Content-Type: application/json; charset=UTF-8
+
+[{
+    &quot;rid&quot;: &quot;28571049e6bf6de245012957171da9e83926d897&quot;,
+    &quot;data&quot;: [
+        [1431316854, &quot;line 4: 8\nline 4: 9\nline 4: 10&quot;]
+    ],
+    &quot;info&quot;: {
+        &quot;basic&quot;: {
+            &quot;modified&quot;: 1431316848,
+            &quot;subscribers&quot;: 0,
+            &quot;type&quot;: &quot;datarule&quot;,
+            &quot;status&quot;: &quot;completed&quot;,
+            &quot;activity&quot;: [
+                [1431316855, [&quot;completed&quot;]],
+                [1431316853, [&quot;running&quot;]]
+            ]
+        },
+        &quot;description&quot;: {
+            &quot;format&quot;: &quot;string&quot;,
+            &quot;meta&quot;: &quot;&quot;,
+            &quot;name&quot;: &quot;&quot;,
+            &quot;preprocess&quot;: [],
+            &quot;public&quot;: false,
+            &quot;retention&quot;: {
+                &quot;count&quot;: 1000,
+                &quot;duration&quot;: &quot;infinity&quot;
+            },
+            &quot;rule&quot;: {
+                &quot;script&quot;: &quot;local n = 0\nwhile n &lt; 10 do\n\tn = n + 1\n\tdebug(tostring(n))\nend&quot;
+            },
+            &quot;subscribe&quot;: null
+        },
+        &quot;shares&quot;: [],
+        &quot;subscribers&quot;: [],
+        &quot;tags&quot;: []
+    }
+}]
+</code></pre><h4 id="update-script">Update script</h4>
+<p><code>PUT /api/portals/v1/scripts/{script-rid}</code></p>
+<p>Update a script.</p>
+<h5 id="request">Request</h5>
+<pre><code>{
+    &quot;info&quot;: {
+        &quot;description&quot;: &lt;description&gt;
+    }
+}
+</code></pre><ul>
+<li><code>&lt;description&gt;</code> - See <a href="https://github.com/exosite/docs/blob/master/rpc/README.md#update">update API</a></li>
+</ul>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 200 and the body is a <a href="#script-object">script object</a>.</p>
+<p>On failure, response has HTTP status of 404 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/scripts/28571049e6bf6de245012957171da9e83926d897&#39; \
+     -X PUT \
+     -d &#39;{&quot;info&quot;:{&quot;description&quot;:{&quot;rule&quot;:{&quot;script&quot;:&quot;debug(\&quot;Hello World!\&quot;)&quot;}}}}&#39; \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Mon, 11 May 2015 11:25:04 GMT
+Status: 200 OK
+Vary: Accept-Encoding
+Content-Length: 473
 Content-Type: application/json; charset=UTF-8
 
 {
-    &quot;status&quot;: &quot;expired&quot;,
-    &quot;rid&quot;: &quot;847699a4667a64a42eaca6ecd0f564374e64b9f7&quot;,
-    &quot;extra&quot;: &quot;test for extra info&quot;,
+    &quot;rid&quot;: &quot;28571049e6bf6de245012957171da9e83926d897&quot;,
+    &quot;data&quot;: [
+        [1431316854, &quot;line 4: 8\nline 4: 9\nline 4: 10&quot;]
+    ],
+    &quot;info&quot;: {
+        &quot;basic&quot;: {
+            &quot;modified&quot;: 1431343202,
+            &quot;subscribers&quot;: 0,
+            &quot;type&quot;: &quot;datarule&quot;,
+            &quot;status&quot;: &quot;running&quot;,
+            &quot;activity&quot;: [
+                [1431343201, [&quot;running&quot;]]
+            ]
+        },
+        &quot;description&quot;: {
+            &quot;format&quot;: &quot;string&quot;,
+            &quot;meta&quot;: &quot;&quot;,
+            &quot;name&quot;: &quot;&quot;,
+            &quot;preprocess&quot;: [],
+            &quot;public&quot;: false,
+            &quot;retention&quot;: {
+                &quot;count&quot;: 1000,
+                &quot;duration&quot;: &quot;infinity&quot;
+            },
+            &quot;rule&quot;: {
+                &quot;script&quot;: &quot;debug(\&quot;Hello World!\&quot;)&quot;
+            },
+            &quot;subscribe&quot;: null
+        },
+        &quot;shares&quot;: [],
+        &quot;subscribers&quot;: [],
+        &quot;tags&quot;: []
+    }
 }
 </code></pre><h3 id="themes">Themes</h3>
 <p>Themes are designs that are applied to your domain. Only a domain administrator user can use these Theme APIs. All theme APIs share the same prefix: <code>/api/portals/v1/themes/</code>.
@@ -4148,6 +4585,44 @@ Content-Type: application/json; charset=UTF-8
     &quot;code&quot;:202,
     &quot;message&quot;:&quot;Thank you. We have sent an email to your account&#39;s registered email address. The email contains a link that will allow you to complete the password reset process.&quot;
 }
+</code></pre><h4 id="reset-user-profile-picture">Reset user profile picture</h4>
+<p><code>DELETE /api/portals/v1/users/{user-id}/profile/picture</code></p>
+<p>Reset user profile picture to default.</p>
+<h5 id="request">Request</h5>
+<p>Request body is empty.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 202.</p>
+<p>On failure, response has HTTP status of 400 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/&lt;user_id&gt;/profile/picture&#39; \
+     -u &#39;domainadminemail@gmail.com:adminuserP4ssword&#39; \
+     -i -X DELETE
+</code></pre><pre><code>HTTP/1.1 202 Accepted
+Date: Fri, 22 May 2015 06:20:40 GMT
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
+</code></pre><h4 id="set-user-profile-picture">Set user profile picture</h4>
+<p><code>POST /api/portals/v1/users/{user-id}/profile/picture</code></p>
+<p>Set user profile picture by you upload file.</p>
+<h5 id="request">Request</h5>
+<p>Request body is file upload and only support png image file.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 201.</p>
+<p>On failure, response has HTTP status of 400 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/&lt;user_id&gt;/profile/picture&#39; \
+     -u &#39;domainadminemail@gmail.com:adminuserP4ssword&#39; \
+     -i -X POST -F myfile=@&quot;~/Downloads/user1-64x64.png&quot;
+</code></pre><pre><code>HTTP/1.1 100 Continue
+
+HTTP/1.1 201 Created
+Date: Fri, 22 May 2015 06:30:51 GMT
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
 </code></pre><h4 id="update-password-by-reset-password-key">Update password by reset password key</h4>
 <p><code>PUT /api/portals/v1/users/reset-password</code></p>
 <p>Step 2 of 2: Activate a reset password email.</p>
@@ -4503,6 +4978,113 @@ Content-Length: 16
 Content-Type: application/json; charset=UTF-8
 
 &quot;MzE2Nzg1OTczNq==&quot;
+</code></pre><h4 id="get-user-datastorage">Get user datastorage</h4>
+<p><code>GET /api/portals/v1/users/{user-id}/ds/{subdirectory}</code></p>
+<p>Get user data storge.</p>
+<h5 id="request">Request</h5>
+<p>Request body is empty.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 200 and a body containing is dependent upon whatever you set.</p>
+<p>On failure, response has HTTP status of 400 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/_this/ds&#39; \
+     -X GET \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Fri, 22 May 2015 09:01:46 GMT
+Content-Type: application/json
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
+
+{&quot;myTest&quot;:&quot;123123&quot;}
+</code></pre><pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/_this/ds/apple/456&#39; \
+     -X GET \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Fri, 22 May 2015 09:03:54 GMT
+Content-Type: image/png
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
+
+�PNG
+
+:���s���=;�q���t�&#39;�)��x����n�M����63��4�d��]��;wd�oݖ�as������gj����j=��D����Ԅ�KO��_
+</code></pre><h4 id="get-user-datastorage-list">Get user datastorage list</h4>
+<p><code>GET /api/portals/v1/users/{user-id}/ds/{subdirectory}/*</code></p>
+<p>Get user data storge of list.</p>
+<h5 id="request">Request</h5>
+<p>Request body is empty.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 200 and a body containing a list child of array.</p>
+<p>On failure, response has HTTP status of 400 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/_this/ds/*&#39; \
+     -X GET \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Fri, 22 May 2015 09:15:10 GMT
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
+
+[&quot;apple&quot;,&quot;dog&quot;]
+</code></pre><h4 id="set-user-datastorage">Set user datastorage</h4>
+<p><code>POST /api/portals/v1/users/{user-id}/ds/{subdirectory}</code></p>
+<p>Set a user data storge key.</p>
+<h5 id="request">Request</h5>
+<p>Request body is value of you want set.</p>
+<p>Supported Content-Type is &#39;application/json&#39;,&#39;text/plain&#39;,&#39;image/gif&#39;,&#39;image/jpg&#39;,&#39;image/png&#39;,&#39;image/bmp&#39;,&#39;image/jpeg&#39;,&#39;application/octet-stream&#39;.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 201,202 and body is empty.</p>
+<p>On failure, response has HTTP status of 400 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/_this/ds/dog&#39; \
+     -X POST -d &#39;{&quot;myTest&quot;:&quot;1231443534523&quot;}&#39; -H &#39;Content-Type: application/json&#39; \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 201 Created
+Date: Fri, 22 May 2015 09:16:10 GMT
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
+</code></pre><h5 id="example-for-upload-file">Example for upload file</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/_this/ds/dog&#39; \
+     -X POST -F myfile=@&quot;/Volumes/exosite/review/public/static/png/bullet_go.png&quot; \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 100 Continue
+
+HTTP/1.1 201 Created
+Date: Fri, 22 May 2015 09:03:31 GMT
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
+</code></pre><h4 id="delete-user-datastorage">Delete user datastorage</h4>
+<p><code>DELETE /api/portals/v1/users/{user-id}/ds/{subdirectory}</code></p>
+<p>Delete a user data storge key.</p>
+<h5 id="request">Request</h5>
+<p>Request body is empty.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 204 and body is empty.</p>
+<p>On failure, response has HTTP status of 400 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/_this/ds/dog&#39; \
+     -X DELETE \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 204 No Content
+Date: Fri, 22 May 2015 09:33:28 GMT
+Content-Type: application/json; charset=UTF-8
+Connection: keep-alive
+Keep-Alive: timeout=2
 </code></pre><h4 id="get-user-portal">Get user portal</h4>
 <p><code>GET /api/portals/v1/users/{user-id}/portals/{portal-id}</code></p>
 <p>Get user have access to as a manager or private viewer.</p>
@@ -4630,6 +5212,49 @@ Status: 204 No Content
 Location: https://mydomain.exosite.com/api/portals/v1/users/3167859736/permissions
 Vary: Accept-Encoding
 Content-Type: application/json; charset=UTF-8
+</code></pre><h4 id="get-user-profile-picture">Get user profile picture</h4>
+<p><code>GET /api/portals/v1/users/{user-id}/profile/picture</code></p>
+<p>Get the user&#39;s profile picture.</p>
+<h5 id="request">Request</h5>
+<p>Request body is empty or picture.</p>
+<h5 id="response">Response</h5>
+<p>On success, default response has HTTP status 303 and location is picture url.
+On success, response has HTTP status 200 and a body containing an picture image.
+On failure, response has HTTP status of 400 or greater.</p>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/&lt;user_id&gt;/profile/picture&#39; \
+     -u &#39;domainadminemail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 303 See Other
+Date: Fri, 22 May 2015 06:21:16 GMT
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
+Location: https://mydomain.exosite.com/static/png/user-64x64.png
+</code></pre><p>or </p>
+<pre><code>HTTP/1.1 200 OK
+Date: Fri, 22 May 2015 06:31:31 GMT
+Content-Type: image/png
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
+
+�PNG
+
+IHDR@�iq�DATx��˫NQ����IFH�qI&#39;�B��ɉ    �0�����@R���\21!��P�bD�)�$���e-�o��o������������Ok���6��������XQ�
+                                                                                                         `%,�{W��ϋ��$�,�#�|��d�ˎ;7�!�P���&gt;K���r!����پJ63�hs�d�`rN�Q`�s�K�Z��    �ɟ&lt;�|`G��D1@2�J�
+                                        ��D�0�
+                                              ��.YF�ˀŁ���_�2 F��2`JE4�cɪ�28^�h����:�f4Bͽv��    �3`
+                                                                                                   xP�q@�&amp;��w�À�!����-p3��ZM�4�z �/�p ���i��m�a�|��h8��H�
+��JԢ�dk�{9$Ɓٕ�����gb&amp;�m��Q�����MR�уCe�
+                                     ɖ&amp;e�N��lj�M(�!����&amp;��s&gt;�&gt;&quot;����|���yѢ�B
+                                                                           H
+�[��e�d#�S,�M��H��I���?�E��K�&quot;���K�I67V�Aw��q�v+J;�&gt;p��
+                                                       %���f��=4��c���Y�s&gt;J��-����br���8O{/�iɖ���nվKvE=�T��+ �
+                                                                                                              �8��ۇ�N:}5:2 �ܮ�8��ρM��g�.lk@�&#39;,
+                                                                                                                                               X�����U�Nv�G�^���&#39;�]�9$�&lt;��-]�O-ʴ{�v��:ۍ��3�����Ԫ3uH���&#39;��
+ ֥uf����R��d�?�2Y�e��Eju9ˀi)��\�
+                               ����;E�&gt;kjjjjjj*��H:˪��YIEND�B`�%
 </code></pre><h4 id="get-all-users-portals-shares">Get all users portals shares</h4>
 <p><code>GET /api/portals/v1/users/{user-id}/portals/shares</code></p>
 <p>Get user own portals and portal shares information.</p>
