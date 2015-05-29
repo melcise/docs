@@ -688,7 +688,7 @@ response:
     &quot;id&quot;: 1
 }
 </code></pre><ul>
-<li><code>&quot;format&quot;</code> is the format in which the datarule will store its data.  Script (Lua Script) datarules should be format &#39;string&#39;.</li>
+<li><code>&quot;format&quot;</code> is the format in which the datarule will store its data.  Lua script datarules should be format <code>&quot;string&quot;</code>.</li>
 <li><code>&quot;meta&quot;</code>, <code>&quot;name&quot;</code>, and <code>&quot;public&quot;</code> are described in <a href="#create-client">create (client)</a></li>
 <li><code>&quot;preprocess&quot;</code>, <code>&quot;retention&quot;</code>, and <code>&quot;subscribe&quot;</code> are described in <a href="#create-dataport">create (dataport)</a></li>
 <li><code>&quot;rule&quot;</code> is a JSON object describing the main processing this resource will do on each incoming datapoint. It may be one of the following:</li>
@@ -871,7 +871,7 @@ previous value.</li>
             &quot;meta&quot;: string = &quot;&quot;,
             &quot;method&quot;: &quot;email&quot; | &quot;http_get&quot; | &quot;http_post&quot; | &quot;http_put&quot; | &quot;sms&quot; | &quot;xmpp&quot;,
             &quot;name&quot;: string = &quot;&quot;,
-            &quot;preprocess&quot;: Preprocess = [],
+            &quot;preprocess&quot;: list = [],
             &quot;public&quot;: boolean = false,
             &quot;recipient&quot;: string,
             &quot;retention&quot;: {
