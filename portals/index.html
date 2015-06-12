@@ -129,6 +129,7 @@
 <li><a href="#appendinsert-data-source-data">Append/insert data source data</a></li>
 <li><a href="#append-data-source-data-in-json-format">Append data source data in JSON format</a></li>
 <li><a href="#get-data-source-data">Get data source data</a></li>
+<li><a href="#get-data-source-data-bulk-request">Get data sources collection data</a></li>
 <li><a href="#delete-data-source-data">Delete data source data</a></li>
 </ul>
 <h4 id="device">Device</h4>
@@ -263,7 +264,9 @@
 <li>[PUT] <a href="#update-data-sources">/api/portals/v1/data-sources/{data-source-rid}</a></li>
 <li>[GET] <a href="#get-data-source-data">/api/portals/v1/data-sources/{data-source-rid}/data</a></li>
 <li>[POST] <a href="#appendinsert-data-source-data">/api/portals/v1/data-sources/{data-source-rid}/data</a></li>
+<li>[GET] <a href="#get-data-source-data-bulk-request">/api/portals/v1/data-sources/[{data-source-rid},{data-source-rid},...]/data</a></li>
 <li>[POST] <a href="#append-data-source-data-in-json-format">/api/portals/v1/data-sources/{data-source-rid}/json</a></li>
+<li>[GET] <a href="#get-data-source-data-bulk-request">/api/portals/v1/data-sources/[{data-source-rid},{data-source-rid},...]/json</a></li>
 <li>[DELETE] <a href="#delete-data-source">/api/portals/v1/data-sources/{data-source-rid}</a></li>
 <li>[DELETE] <a href="#delete-data-source-data">/api/portals/v1/data-sources/{data-source-rid}/data</a></li>
 </ul>
@@ -606,6 +609,7 @@
 <li><code>&quot;d_s_cont&quot;</code> means the owner can update the domain information.</li>
 <li><code>&quot;d_s_crea&quot;</code> means the owner can create a group to the domain.</li>
 <li><code>&quot;d_p_list&quot;</code> means the owner can create a portal to the domain.</li>
+<li><code>&quot;d_p_crea&quot;</code> means the owner can just create a portal to himself.</li>
 <li><code>&quot;d_u_list&quot;</code> means the owner can get user, get users list, and delete user form the domain.</li>
 <li><code>&quot;d_u_view&quot;</code> means the owner can get user, get users list form the domain.</li>
 <li><code>&quot;d_____fs&quot;</code> means the owner can create, update and delete the file systems in the domain.</li>
@@ -622,6 +626,7 @@
 <ul>
 <li><code>&quot;p_manage&quot;</code> means the owner can get, update portal information and create device, data source to the portal.</li>
 <li><code>&quot;p_m_crea&quot;</code> means the owner can create device to the portal.</li>
+<li><code>&quot;p___view&quot;</code> means the owner can get portal information, get device and get data source under the portal.</li>
 <li><code>&quot;p_contac&quot;</code> means the owner can receive alerts from the portal.</li>
 </ul>
 </li>
@@ -1892,7 +1897,7 @@ Content-Type: application/json; charset=UTF-8
 </ul>
 <p>If you send any keys besides these, it will do nothing.</p>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status 201 and the created data source object.</p>
+<p>On success, response has HTTP status 201 and the <a href="#data-source-object">data source object</a>.</p>
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/portals/2853566858/data-sources&#39; \
@@ -1950,7 +1955,7 @@ Content-Type: application/json; charset=UTF-8
 </ul>
 <p>If you send any keys besides these, it will do nothing.</p>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status of 200 and body is the updated data source object.</p>
+<p>On success, response has HTTP status of 200 and body is the updated <a href="#data-source-object">data source object</a>.</p>
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/data-sources/4f39859d41a66468cf1e5e28d08ad2cab45b498f&#39; \
@@ -2305,6 +2310,49 @@ Content-Length: 41
 Content-Type: application/json; charset=UTF-8
 
 [[1416278417,&quot;5.00&quot;],[1416278080,&quot;1000&quot;]]
+</code></pre><h4 id="get-data-source-data-bulk-request">Get data source data bulk request</h4>
+<p><code>GET /api/portals/v1/data-sources/[{data-source-rid},{data-source-rid},...]/data</code></p>
+<p>This API can retrieve multiple data points. The options below can be included to modify the results of an API call:</p>
+<ul>
+<li><p><code>&quot;starttime&quot;</code> and <code>&quot;endtime&quot;</code> are Unix timestamps that specify the window of time to read.</p>
+</li>
+<li><p><code>&quot;sort&quot;</code> defines the order in which data points will be displayed.</p>
+</li>
+<li><p><code>&quot;limit&quot;</code> sets the a maximum on the number of data points to return.</p>
+</li>
+</ul>
+<p>For more details about these options, see the <a href="https://github.com/exosite/docs/tree/master/rpc#read">read API</a>.</p>
+<h5 id="request">Request</h5>
+<p>Request body is empty.</p>
+<h5 id="response">Response</h5>
+<p>On success, response has HTTP status 200 and body is a array list of data points. See the contents of <code>&quot;data&quot;</code>.</p>
+<ul>
+<li><p><code>&quot;data&quot;</code> is an array of data points. A data point has a unit timestamp and a value.</p>
+<ul>
+<li><p><code>{unix-timestamp}</code> is a <a href="http://en.wikipedia.org/wiki/Unix_time">Unix timestamp</a>, measured in number of seconds since the epoch.</p>
+</li>
+<li><p><code>{value}</code> may be a string, int, or float depending on the data source type.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>On failure, response has HTTP status of 400 or greater.</p>
+<h5 id="example">Example</h5>
+<ul>
+<li>Get data with no option</li>
+</ul>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/data-sources/\[3218552df19a93a3f1b85c29fd0f46ddff2f7071,437240fba025d3416a60ef1a160e5424d4138fdc\]/data&#39; \
+     -X GET \
+     -u &#39;domainuseremail@gmail.com:adminuserP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Fri, 22 May 2015 10:22:30 GMT
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
+
+{&quot;3218552df19a93a3f1b85c29fd0f46ddff2f7071&quot;:[],&quot;437240fba025d3416a60ef1a160e5424d4138fdc&quot;:[]}
 </code></pre><h4 id="append-insert-data-source-data">Append/insert data source data</h4>
 <p><code>POST /api/portals/v1/data-sources/{data-source-rid}/data</code></p>
 <p>Append data</p>
@@ -2517,7 +2565,7 @@ Content-Type: application/json; charset=UTF-8
 </ul>
 <p>If you send any keys besides these, it will do nothing.</p>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status 201 and the created device object.</p>
+<p>On success, response has HTTP status 201 and the created <a href="#device-object">device object</a>.</p>
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <p>Generic type</p>
@@ -2659,7 +2707,7 @@ Content-Type: application/json; charset=UTF-8
 </ul>
 <p>If you send any keys besides these, it will do nothing.</p>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status of 200 and body is the updated device object.</p>
+<p>On success, response has HTTP status of 200 and body is the updated <a href="#device-object">device object</a>.</p>
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/devices/5d4bacb783b10600e12b759bb1ae80b43666085b&#39; \
@@ -3090,7 +3138,7 @@ Content-Type: application/json
 </ul>
 <p>If you send keys besides these, it will do nothing.</p>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status 201 and the created group object.</p>
+<p>On success, response has HTTP status 201 and the created <a href="#group-object">group object</a>.</p>
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/3167859736/groups&#39; \
@@ -3135,7 +3183,7 @@ Content-Type: application/json; charset=UTF-8
 </ul>
 <p>If you send any keys besides these, it will do nothing.</p>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status 200 and group object.</p>
+<p>On success, response has HTTP status 200 and <a href="#group-object">group object</a>.</p>
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/groups/1206252898&#39; \
@@ -3366,7 +3414,7 @@ Content-Type: application/json; charset=UTF-8
 </ul>
 <p>If you send any keys besides these, it will do nothing.</p>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status 200 and the updated portal object.</p>
+<p>On success, response has HTTP status 200 and the updated <a href="#portal-object">portal object</a>.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/portals/3882920427&#39; \
      -X PUT \
@@ -4256,8 +4304,8 @@ Content-Type: application/json; charset=UTF-8
 <h5 id="request">Request</h5>
 <p>Body contains a <a href="#theme-object">theme object</a>. Currently only the following keys may be updated:</p>
 <ul>
-<li><code>&quot;name&quot;</code> - theme name (requsted)</li>
-<li><code>&quot;description&quot;</code> - theme permissions (requsted)</li>
+<li><code>&quot;name&quot;</code> - theme name (required)</li>
+<li><code>&quot;description&quot;</code> - theme permissions (required)</li>
 </ul>
 <p>If you send any keys besides these, it will do nothing.</p>
 <h5 id="response">Response</h5>
@@ -4519,7 +4567,7 @@ Content-Type: text/html
 <li><code>&quot;silence&quot;</code> - On success, response has HTTP status 202 and the <a href="#user-object">user object</a> will not be returned in the response body.</li>
 </ul>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status 200 and the updated user object.</p>
+<p>On success, response has HTTP status 200 and the updated <a href="#user-object">user object</a>.</p>
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/3167859736&#39; \
@@ -4594,7 +4642,7 @@ Content-Type: application/json; charset=UTF-8
 <p>On success, response has HTTP status 202.</p>
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
-<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/&lt;user_id&gt;/profile/picture&#39; \
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/3167859736/profile/picture&#39; \
      -u &#39;domainadminemail@gmail.com:adminuserP4ssword&#39; \
      -i -X DELETE
 </code></pre><pre><code>HTTP/1.1 202 Accepted
@@ -4612,7 +4660,7 @@ Keep-Alive: timeout=2
 <p>On success, response has HTTP status 201.</p>
 <p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
-<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/&lt;user_id&gt;/profile/picture&#39; \
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/3167859736/profile/picture&#39; \
      -u &#39;domainadminemail@gmail.com:adminuserP4ssword&#39; \
      -i -X POST -F myfile=@&quot;~/Downloads/user1-64x64.png&quot;
 </code></pre><pre><code>HTTP/1.1 100 Continue
@@ -5141,13 +5189,17 @@ Content-Type: application/json; charset=UTF-8
 <p>Request body is empty.</p>
 <h5 id="options">Options</h5>
 <ul>
-<li><code>&quot;type&quot;</code> is an array of permission types to retrieve. The supported types are <code>Domain</code>, <code>Portal</code>, <code>Device</code>, <code>DataSource</code>, and <code>Group</code>.</li>
+<li><p><code>&quot;type&quot;</code> is an array of permission types to retrieve. The supported types are <code>Domain</code>, <code>Portal</code>, <code>Device</code>, <code>DataSource</code>, and <code>Group</code>.</p>
+<ul>
+<li>For example, type%5B%5D=Group (Square brackets ([ and ]) are replaced with %5B and %5D respectively)</li>
+</ul>
+</li>
 </ul>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status 200 and a body containing an array of permission objects.
-On failure, response has HTTP status of 400 or greater.</p>
+<p>On success, response has HTTP status 200 and a body containing an array of permission objects.</p>
+<p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
-<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/&lt;user_id&gt;/permissions?type%5B%5D=Portal&amp;type%5B%5D=Domain&#39; \
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/3167859736/permissions?type%5B%5D=Portal&amp;type%5B%5D=Domain&#39; \
      -u &#39;domainadminemail@gmail.com:adminuserP4ssword&#39; \
      -i
 </code></pre><pre><code>HTTP/1.1 200 OK
@@ -5218,11 +5270,11 @@ Content-Type: application/json; charset=UTF-8
 <h5 id="request">Request</h5>
 <p>Request body is empty or picture.</p>
 <h5 id="response">Response</h5>
-<p>On success, default response has HTTP status 303 and location is picture url.
-On success, response has HTTP status 200 and a body containing an picture image.
-On failure, response has HTTP status of 400 or greater.</p>
+<p>On success, default response has HTTP status 303 and location is picture url.</p>
+<p>On success, response has HTTP status 200 and a body containing an picture image.</p>
+<p>On failure, response has HTTP status of 400 or greater.</p>
 <h5 id="example">Example</h5>
-<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/&lt;user_id&gt;/profile/picture&#39; \
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/users/3167859736/profile/picture&#39; \
      -u &#39;domainadminemail@gmail.com:adminuserP4ssword&#39; \
      -i
 </code></pre><pre><code>HTTP/1.1 303 See Other
@@ -5239,29 +5291,16 @@ Transfer-Encoding: chunked
 Connection: keep-alive
 Keep-Alive: timeout=2
 
-�PNG
+▒PNG
 
-IHDR@�iq�DATx��˫NQ����IFH�qI&#39;�B��ɉ    �0�����@R���\21!��P�bD�)�$���e-�o��o������������Ok���6��������XQ�
-                                                                                                         `%,�{W��ϋ��$�,�#�|��d�ˎ;7�!�P���&gt;K���r!����پJ63�hs�d�`rN�Q`�s�K�Z��    �ɟ&lt;�|`G��D1@2�J�
-                                        ��D�0�
-                                              ��.YF�ˀŁ���_�2 F��2`JE4�cɪ�28^�h����:�f4Bͽv��    �3`
-                                                                                                   xP�q@�&amp;��w�À�!����-p3��ZM�4�z �/�p ���i��m�a�|��h8��H�
-��JԢ�dk�{9$Ɓٕ�����gb&amp;�m��Q�����MR�уCe�
-                                     ɖ&amp;e�N��lj�M(�!����&amp;��s&gt;�&gt;&quot;����|���yѢ�B
-                                                                           H
-�[��e�d#�S,�M��H��I���?�E��K�&quot;���K�I67V�Aw��q�v+J;�&gt;p��
-                                                       %���f��=4��c���Y�s&gt;J��-����br���8O{/�iɖ���nվKvE=�T��+ �
-                                                                                                              �8��ۇ�N:}5:2 �ܮ�8��ρM��g�.lk@�&#39;,
-                                                                                                                                               X�����U�Nv�G�^���&#39;�]�9$�&lt;��-]�O-ʴ{�v��:ۍ��3�����Ԫ3uH���&#39;��
- ֥uf����R��d�?�2Y�e��Eju9ˀi)��\�
-                               ����;E�&gt;kjjjjjj*��H:˪��YIEND�B`�%
+IHDR%▒V▒PLTEA▒▒▒▒V▒
+IDATx▒cb67|▒IEND▒B`▒
 </code></pre><h4 id="get-all-users-portals-shares">Get all users portals shares</h4>
 <p><code>GET /api/portals/v1/users/{user-id}/portals/shares</code></p>
 <p>Get user own portals and portal shares information.</p>
 <h5 id="request">Request</h5>
 <p>Request body is empty.</p>
 <h5 id="response">Response</h5>
-<p>On success, response has HTTP status 200 and the portals object.</p>
 <p>On success, response has HTTP status 200 and a body containing an array of portal object include shares.
 Portal objects contain the following keys:</p>
 <ul>
