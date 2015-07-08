@@ -236,7 +236,7 @@
 <li><a href="#create-user">Create user</a></li>
 <li><a href="#create-user-portal-share">Create user portal share</a></li>
 <li><a href="#delete-user">Delete user</a></li>
-<li><a href="#delete-user-datastorage">Delete user datastorage</a></li>
+<li><a href="#delete-user-data-storage">Delete user data storage</a></li>
 <li><a href="#delete-user-permission">Delete user permission</a></li>
 <li><a href="#delete-user-portal-shares">Delete user portal share</a></li>
 <li><a href="#get-all-user-portals">Get all user portals</a></li>
@@ -244,8 +244,8 @@
 <li><a href="#get-all-users-portals-shares">Get all users portals shares</a></li>
 <li><a href="#get-multiple-users">Get multiple users</a></li>
 <li><a href="#get-user">Get user</a></li>
-<li><a href="#get-user-datastorage">Get user datastorage</a></li>
-<li><a href="#get-user-datastorage-list">Get user datastorage list</a></li>
+<li><a href="#get-user-data-storage">Get user data storage</a></li>
+<li><a href="#get-user-data-storage-list">Get user data storage list</a></li>
 <li><a href="#get-user-permission">Get user permission</a></li>
 <li><a href="#get-user-profile-picture">Get user profile picture</a></li>
 <li><a href="#get-user-portal">Get user portal</a></li>
@@ -256,7 +256,7 @@
 <li><a href="#get-user-token-for-openid-user">Get user token for OpenID user</a> (For App)</li>
 <li><a href="#reset-password">Reset password</a></li>
 <li><a href="#reset-user-profile-picture">Reset user profile picture</a></li>
-<li><a href="#set-user-datastorage">Set user datastorage</a></li>
+<li><a href="#set-user-data-storage">Set user data storage</a></li>
 <li><a href="#set-user-profile-picture">Set user profile picture</a></li>
 <li><a href="#update-user">Update user</a></li>
 <li><a href="#update-password-by-reset-password-key">Update password by reset password key</a></li>
@@ -370,10 +370,10 @@
 <li>[GET] <a href="#get-user">/api/portals/v1/users/{user-id}</a></li>
 <li>[GET] <a href="#get-user-through-readtoken">/api/portals/v1/users/{user-id}?readtoken={user-readtoken}</a></li>
 <li>[PUT] <a href="#update-user">/api/portals/v1/users/{user-id}</a></li>
-<li>[GET] <a href="#get-user-datastorage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
-<li>[POST] <a href="#set-user-datastorage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
-<li>[DELETE] <a href="#delete-user-datastorage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
-<li>[GET] <a href="#get-user-datastorage-list">/api/portals/v1/users/{user-id}/ds/{subdirectory/*}</a></li>
+<li>[GET] <a href="#get-user-data-storage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
+<li>[POST] <a href="#set-user-data-storage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
+<li>[DELETE] <a href="#delete-user-data-storage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
+<li>[GET] <a href="#get-user-data-storage-list">/api/portals/v1/users/{user-id}/ds/{subdirectory/*}</a></li>
 <li>[DELETE] <a href="#delete-user">/api/portals/v1/users/{user-id}</a></li>
 <li>[POST] <a href="#create-group-under-user">/api/portals/v1/users/{user-id}/groups</a></li>
 <li>[GET] <a href="#get-user-permission">/api/portals/v1/users/{user-id}/permissions</a></li>
@@ -4032,10 +4032,10 @@ Content-Type: application/json
 {&quot;info&quot;:[{&quot;description&quot;:{&quot;name&quot;:&quot;hello&quot;}}]}
 </code></pre><h4 id="list-files">List files</h4>
 <p><code>GET /api/portals/v1/fs</code></p>
-<p>Get all files whitch under the same directory. </p>
+<p>Get all files which under the same directory.</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>User must have authenticated in the domain.</li>
+<li>Anyone can use this endpoint to get a file content.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -4083,7 +4083,7 @@ Content-Type: application/json
 <p><code>GET /api/portals/v1/fs/{directory-path}/{subdirectory}/{field-name}</code></p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>User must have authenticated in the domain.</li>
+<li>Anyone can use this endpoint to get a file content.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -5868,7 +5868,7 @@ Content-Type: application/json; charset=UTF-8
 <p>Signs up a new user account, sending an activation email to the specified address.</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>Any one can use this endpoint to create a new user.</li>
+<li>Anyone can use this endpoint to create a new user.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -5918,7 +5918,7 @@ Content-Type: text/html
 <p>Sends a password reset email for this user.</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>Any one can use this endpoint to reset password.</li>
+<li>Anyone can use this endpoint to reset password.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -5977,7 +5977,7 @@ Content-Type: text/html
 </ul>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>Any one can use this endpoint to create a new user.</li>
+<li>Anyone can use this endpoint to create a new user.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -6056,7 +6056,7 @@ Content-Type: application/json; charset=UTF-8
 </ul>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>Any one can use this endpoint to activate an activation email.</li>
+<li>Anyone can use this endpoint to activate an activation email.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -6184,7 +6184,7 @@ Content-Type: application/json; charset=UTF-8
 <p>Step 1 of 2: Send a reset password email to user account.</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>Any one can use this endpoint to reset password.</li>
+<li>Anyone can use this endpoint to reset password.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -6298,7 +6298,7 @@ Keep-Alive: timeout=2
 <p>Step 2 of 2: Activate a reset password email.</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>Any one can use this endpoint to reset password.</li>
+<li>Anyone can use this endpoint to reset password.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -6819,7 +6819,7 @@ Content-Length: 16
 Content-Type: application/json; charset=UTF-8
 
 &quot;MzE2Nzg1OTczNq==&quot;
-</code></pre><h4 id="get-user-datastorage">Get user datastorage</h4>
+</code></pre><h4 id="get-user-data-storage">Get user data storage</h4>
 <p><code>GET /api/portals/v1/users/{user-id}/ds/{subdirectory}</code></p>
 <p>Get user data storage.</p>
 <h5 id="permissions">Permissions</h5>
@@ -6874,7 +6874,7 @@ Keep-Alive: timeout=2
 �PNG
 
 :���s���=;�q���t�&#39;�)��x����n�M����63��4�d��]��;wd�oݖ�as������gj����j=��D����Ԅ�KO��_
-</code></pre><h4 id="get-user-datastorage-list">Get user datastorage list</h4>
+</code></pre><h4 id="get-user-data-storage-list">Get user data storage list</h4>
 <p><code>GET /api/portals/v1/users/{user-id}/ds/{subdirectory}/*</code></p>
 <p>Get user data storage of list.</p>
 <h5 id="permissions">Permissions</h5>
@@ -6911,7 +6911,7 @@ Connection: keep-alive
 Keep-Alive: timeout=2
 
 [&quot;apple&quot;,&quot;dog&quot;]
-</code></pre><h4 id="create-user-datastorage">Create user datastorage</h4>
+</code></pre><h4 id="create-user-data-storage">Create user data storage</h4>
 <p><code>POST /api/portals/v1/users/{user-id}/ds/{subdirectory}</code></p>
 <p>Set a user data storage key.</p>
 <h5 id="permissions">Permissions</h5>
@@ -6977,7 +6977,7 @@ Content-Type: application/json; charset=UTF-8
 Transfer-Encoding: chunked
 Connection: keep-alive
 Keep-Alive: timeout=2
-</code></pre><h4 id="delete-user-datastorage">Delete user datastorage</h4>
+</code></pre><h4 id="delete-user-data-storage">Delete user data storage</h4>
 <p><code>DELETE /api/portals/v1/users/{user-id}/ds/{subdirectory}</code></p>
 <p>Delete a user data storage key.</p>
 <h5 id="permissions">Permissions</h5>
@@ -7260,7 +7260,7 @@ Transfer-Encoding: chunked
 Connection: keep-alive
 Keep-Alive: timeout=2
 Location: https://mydomain.exosite.com/static/png/user-64x64.png
-</code></pre><p>or </p>
+</code></pre><p>or</p>
 <pre><code>HTTP/1.1 200 OK
 Date: Fri, 22 May 2015 06:31:31 GMT
 Content-Type: image/png
