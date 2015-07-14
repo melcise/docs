@@ -87,7 +87,7 @@
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
     <div role='flatdoc-content' class='content'><h1 id="portals-api-beta-">Portals API (BETA)</h1>
-<p><strong>This API is in beta testing and may be to subject to the occasional tweak. Any such tweaks will be documented here.</strong></p>
+<p><strong>This API is in beta testing and may be subject to the occasional tweak. Any such tweaks will be documented here.</strong></p>
 <p>Portals provides a user authentication and management system on top of the One Platform. The Portals API provides access to Portals functionality using a REST-style HTTP API, using the JSON format in request and response bodies, and basic authentication where a Portals account is required.</p>
 <h2 id="overview">Overview</h2>
 <p>Below are some documents that will help you understand the basics of all Portals API.</p>
@@ -97,14 +97,14 @@
 <li><a href="#rest">REST</a></li>
 <li><a href="#request-and-response-format">Request and Response Format</a></li>
 <li><a href="#authentication">Authentication</a></li>
-<li><a href="#domain">Domain</a></li>
+<li><a href="#definition-of-domain">Definition of domain</a></li>
 <li><a href="#objects">Objects</a></li>
 <li><a href="#resources">Resources</a></li>
 </ul>
 <h2 id="api-endpoints">API Endpoints</h2>
 <h4 id="accounts">Accounts</h4>
 <ul>
-<li><a href="#get-all-user-accounts">Get all user accounts</a></li>
+<li><a href="#get-all-user-accounts">Get all user accounts</a> (Deprecated)</li>
 <li><a href="#get-user-account-by-email">Get user account by email</a></li>
 <li><a href="#get-user-account-by-user-id">Get user account by user ID</a></li>
 </ul>
@@ -177,8 +177,9 @@
 <h4 id="file-systems">File Systems</h4>
 <ul>
 <li><a href="#append-to-a-directory">Append to a directory</a></li>
-<li><a href="#list-files">List files</a></li>
+<li><a href="#get-a-file">Get a file</a></li>
 <li><a href="#get-a-file-content">Get a file content</a></li>
+<li><a href="#list-files">List files</a></li>
 </ul>
 <h4 id="groups">Groups</h4>
 <ul>
@@ -312,6 +313,8 @@
 </ul>
 <h4 id="-fs">/fs</h4>
 <ul>
+<li>[GET] <a href="#list-files">/api/portals/v1/fs</a></li>
+<li>[POST] <a href="#append-to-a-directory">/api/portals/v1/fs</a></li>
 <li>[GET] <a href="#get-a-file">/api/portals/v1/fs/{directory-path}/{subdirectory}</a></li>
 <li>[GET] <a href="#get-a-file-content">/api/portals/v1/fs/{directory-path}/{subdirectory}/{field-name}</a></li>
 </ul>
@@ -383,7 +386,7 @@
 <li>[POST] <a href="#create-portal">/api/portals/v1/users/{user-id}/portals</a></li>
 <li>[GET] <a href="#get-all-users-portals-shares">/api/portals/v1/users/{user-id}/portals/shares</a></li>
 <li>[GET] <a href="#get-user-portal">/api/portals/v1/users/{user-id}/portals/{portal-id}</a></li>
-<li>[POST]<a href="#create-user-portal-share">/api/portals/v1/users/{user-id}/portals/{portal-id}/shares</a></li>
+<li>[POST] <a href="#create-user-portal-share">/api/portals/v1/users/{user-id}/portals/{portal-id}/shares</a></li>
 <li>[GET] <a href="#get-user-portal-shares">/api/portals/v1/users/{user-id}/portals/{portal-id}/shares</a></li>
 <li>[DELETE] <a href="#delete-user-portal-shares">/api/portals/v1/users/{user-id}/portals/{portal-id}/shares</a></li>
 <li>[GET] <a href="#get-user-profile-picture">/api/portals/v1/users/{user-id}/profile/picture</a></li>
@@ -421,7 +424,7 @@
 </code></pre><h2 id="authentication">Authentication</h2>
 <p>Some API endpoints require a Portals email and password also username and password to combination for authentication. These are passed using basic access authentication. See this link for details about this method of authentication:</p>
 <p><a href="http://en.wikipedia.org/wiki/Basic_access_authentication">http://en.wikipedia.org/wiki/Basic_access_authentication</a></p>
-<h2 id="domain">Domain</h2>
+<h2 id="definition-of-domain">Definition of domain</h2>
 <p>For some API endpoints, the domain of the request URL indicates information about which domain should be affected. For example, a GET request to:</p>
 <pre><code>https://mydomain.exosite.com/api/portals/v1/portal/
 </code></pre><p>...will return a different array of portals than a GET request to:</p>
@@ -928,6 +931,9 @@ Content-Type: application/json; charset=UTF-8
 <h3 id="accounts">Accounts</h3>
 <h4 id="get-all-user-accounts">Get all user accounts</h4>
 <p><code>GET /api/portals/v1/accounts</code></p>
+<blockquote>
+<p><strong>Deprecated.</strong> This API is deprecated and should not be used.</p>
+</blockquote>
 <p>Get account information about all users.</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
@@ -3072,7 +3078,7 @@ Keep-Alive: timeout=2
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/data-sources/4f39859d41a66468cf1e5e28d08ad2cab45b498f/data&#39; \
      -X POST \
-     -d &#39;&quot;1000&quot;&#39; \
+     -d &#39;1000&#39; \
      -u &#39;useremail@gmail.com:userP4ssword&#39; \
      -i
 </code></pre><pre><code>HTTP/1.1 201 Created
@@ -4040,17 +4046,14 @@ Content-Type: application/json
 <h5 id="request">Request</h5>
 <ul>
 <li>Request body is empty.</li>
-<li>Requires authentication.</li>
 </ul>
 <h5 id="response">Response</h5>
 <ul>
 <li><code>200 OK</code>: Returned along with a body containing a JSON entity.</li>
-<li><code>403 Forbidden</code>: Returned if the caller user is not authenticated.</li>
 </ul>
 <h5 id="example">Example</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/fs&#39; \
      -X GET \
-     -u &#39;useremail@gmail.com:userP4ssword&#39; \
      -i
 </code></pre><pre><code>HTTP/1.1 200 OK
 Date: Wed, 19 Nov 2014 09:09:03 GMT
@@ -4079,6 +4082,35 @@ Content-Type: application/json
         ]
     }
 }
+</code></pre><h4 id="get-a-file">Get a file</h4>
+<p><code>GET /api/portals/v1/fs/{directory-path}/{subdirectory}</code></p>
+<h5 id="permissions">Permissions</h5>
+<ul>
+<li>Anyone can use this endpoint to get a file.</li>
+</ul>
+<h5 id="request">Request</h5>
+<ul>
+<li>Request body is empty.</li>
+</ul>
+<h5 id="response">Response</h5>
+<ul>
+<li><code>200 OK</code>: Returned with a body containing the object previously uploaded by the user.</li>
+<li><code>404 Not Found</code>: Returned if the directory of field is invalid.</li>
+</ul>
+<h5 id="example">Example</h5>
+<ul>
+<li>IF the myfile is a image file:</li>
+</ul>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/fs/path/141517041216756400&#39; \
+     -X GET \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Tue, 18 Nov 2014 06:41:13 GMT
+Status: 200 OK
+Content-Length: 82
+Content-Type: image/png
+
+{&quot;myfile&quot;:&quot;image\/png&quot;}
 </code></pre><h4 id="get-a-file-content">Get a file content</h4>
 <p><code>GET /api/portals/v1/fs/{directory-path}/{subdirectory}/{field-name}</code></p>
 <h5 id="permissions">Permissions</h5>
@@ -4088,21 +4120,18 @@ Content-Type: application/json
 <h5 id="request">Request</h5>
 <ul>
 <li>Request body is empty.</li>
-<li>Requires authentication.</li>
 </ul>
 <h5 id="response">Response</h5>
 <ul>
 <li><code>200 OK</code>: Returned with a body containing the object previously uploaded by the user.</li>
-<li><code>403 Forbidden</code>: Returned if the caller user is not authenticated.</li>
 <li><code>404 Not Found</code>: Returned if the directory of field is invalid.</li>
 </ul>
 <h5 id="example">Example</h5>
 <ul>
 <li>IF the myfile is a image file:</li>
 </ul>
-<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/fs/141517041216756400/myfile&#39; \
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/fs/path/141517041216756400/myfile&#39; \
      -X GET \
-     -u &#39;useremail@gmail.com:userP4ssword&#39; \
      -i
 </code></pre><pre><code>HTTP/1.1 200 OK
 Date: Tue, 18 Nov 2014 06:41:13 GMT
@@ -4119,7 +4148,6 @@ IDATx▒cb67|▒IEND▒B`▒
 </ul>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/fs/path/141517041216756401/myfile&#39; \
      -X GET \
-     -u &#39;useremail@gmail.com:userP4ssword&#39; \
      -i
 </code></pre><pre><code>HTTP/1.1 200 OK
 Date: Tue, 18 Nov 2014 06:58:14 GMT
