@@ -1130,9 +1130,20 @@ Content-Type: text/csv; charset=utf-8
 <li><code>HTTP/1.1 204 No-Content</code> if log is empty.</li>
 </ul>
 <h3 id="post-create-client-from-model">POST - create client from model</h3>
-<p>Creates a client based on <code>&lt;model&gt;</code> under <code>owner</code>, associates it with <code>&lt;sn&gt;</code>,
-and returns its <code>&lt;ClientRID&gt;</code>. Owner <code>&lt;rid&gt;</code> must be a descendant of the 
-<code>&lt;model&gt;</code>&#39;s creator, and <code>&lt;sn&gt;</code> must not already have an associated client.</p>
+<p>Creates a client based on <code>&lt;model&gt;</code> under the resource indicated by <code>owner</code>, 
+associates it with <code>&lt;sn&gt;</code>, and returns its <code>&lt;ClientRID&gt;</code>. Owner <code>&lt;rid&gt;</code> must 
+be a descendant of the <code>&lt;model&gt;</code>&#39;s creator, and <code>&lt;sn&gt;</code> must not already have 
+an associated client.</p>
+<p>A few definitions:</p>
+<ul>
+<li>the <code>owner</code> of a One Platform resource is its direct parent in the hierarchy. 
+For exmple, in the Portals application the owner of a device is a portal, so <code>&lt;rid&gt;</code> is
+set to the RID of the portal.</li>
+<li>the <code>&lt;model&gt;</code>&#39;s creator is the resource used for auth when creating the model.
+For example, in the Portals application the vendor token is typically used to 
+create models. That token is associated with the domain client, which is an 
+ancestor of all portals in the domain.</li>
+</ul>
 <pre><code>POST /provision/manage/model/&lt;model&gt;/&lt;sn&gt; HTTP/1.1
 Host: m2.exosite.com
 {X-Exosite-Vendor: &lt;VendorName&gt;}
