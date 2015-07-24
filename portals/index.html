@@ -161,6 +161,7 @@
 <li><a href="#get-device">Get device</a></li>
 <li><a href="#get-multiple-devices">Get multiple devices</a></li>
 <li><a href="#update-device">Update device</a></li>
+<li><a href="#bulk-update-device">bulk update device</a></li>
 </ul>
 <h4 id="domain">Domain</h4>
 <ul>
@@ -180,6 +181,7 @@
 <li><a href="#get-a-file">Get a file</a></li>
 <li><a href="#get-a-file-content">Get a file content</a></li>
 <li><a href="#list-files">List files</a></li>
+<li><a href="#update-a-file-content">Update a file content</a></li>
 </ul>
 <h4 id="groups">Groups</h4>
 <ul>
@@ -239,7 +241,7 @@
 <li><a href="#delete-user">Delete user</a></li>
 <li><a href="#delete-user-data-storage">Delete user data storage</a></li>
 <li><a href="#delete-user-permission">Delete user permission</a></li>
-<li><a href="#delete-user-portal-shares">Delete user portal share</a></li>
+<li><a href="#delete-user-portal-share">Delete user portal share</a></li>
 <li><a href="#get-all-user-portals">Get all user portals</a></li>
 <li><a href="#get-all-users">Get all users</a></li>
 <li><a href="#get-all-users-portals-shares">Get all users portals shares</a></li>
@@ -257,7 +259,7 @@
 <li><a href="#get-user-token-for-openid-user">Get user token for OpenID user</a> (For App)</li>
 <li><a href="#reset-password">Reset password</a></li>
 <li><a href="#reset-user-profile-picture">Reset user profile picture</a></li>
-<li><a href="#set-user-data-storage">Set user data storage</a></li>
+<li><a href="#create-user-data-storage">Create user data storage</a></li>
 <li><a href="#set-user-profile-picture">Set user profile picture</a></li>
 <li><a href="#update-user">Update user</a></li>
 <li><a href="#update-password-by-reset-password-key">Update password by reset password key</a></li>
@@ -305,6 +307,7 @@
 <li>[GET] <a href="#list-device-data-source">/api/portals/v1/devices/{device-rid}/data-sources</a></li>
 <li>[POST] <a href="#create-device-data-source">/api/portals/v1/devices/{device-rid}/data-sources</a></li>
 <li>[PUT] <a href="#update-device">/api/portals/v1/devices/{device-rid}</a></li>
+<li>[PUT] <a href="#bulk-update-device">/api/portals/v1/devices/[{device-rid},{device-rid},...]</a></li>
 <li>[DELETE] <a href="#delete-device">/api/portals/v1/devices/{device-rid}</a></li>
 </ul>
 <h4 id="-domain">/domain</h4>
@@ -317,6 +320,7 @@
 <li>[POST] <a href="#append-to-a-directory">/api/portals/v1/fs</a></li>
 <li>[GET] <a href="#get-a-file">/api/portals/v1/fs/{directory-path}/{subdirectory}</a></li>
 <li>[GET] <a href="#get-a-file-content">/api/portals/v1/fs/{directory-path}/{subdirectory}/{field-name}</a></li>
+<li>[PUT] <a href="#update-a-file-content">/api/portals/v1/fs/{directory-path}</a></li>
 </ul>
 <h4 id="-groups">/groups</h4>
 <ul>
@@ -374,9 +378,9 @@
 <li>[GET] <a href="#get-user-through-readtoken">/api/portals/v1/users/{user-id}?readtoken={user-readtoken}</a></li>
 <li>[PUT] <a href="#update-user">/api/portals/v1/users/{user-id}</a></li>
 <li>[GET] <a href="#get-user-data-storage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
-<li>[POST] <a href="#set-user-data-storage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
+<li>[POST] <a href="#create-user-data-storage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
 <li>[DELETE] <a href="#delete-user-data-storage">/api/portals/v1/users/{user-id}/ds/{subdirectory}</a></li>
-<li>[GET] <a href="#get-user-data-storage-list">/api/portals/v1/users/{user-id}/ds/{subdirectory/*}</a></li>
+<li>[GET] <a href="#get-user-data-storage-list">/api/portals/v1/users/{user-id}/ds/{subdirectory}/*}</a></li>
 <li>[DELETE] <a href="#delete-user">/api/portals/v1/users/{user-id}</a></li>
 <li>[POST] <a href="#create-group-under-user">/api/portals/v1/users/{user-id}/groups</a></li>
 <li>[GET] <a href="#get-user-permission">/api/portals/v1/users/{user-id}/permissions</a></li>
@@ -388,7 +392,7 @@
 <li>[GET] <a href="#get-user-portal">/api/portals/v1/users/{user-id}/portals/{portal-id}</a></li>
 <li>[POST] <a href="#create-user-portal-share">/api/portals/v1/users/{user-id}/portals/{portal-id}/shares</a></li>
 <li>[GET] <a href="#get-user-portal-shares">/api/portals/v1/users/{user-id}/portals/{portal-id}/shares</a></li>
-<li>[DELETE] <a href="#delete-user-portal-shares">/api/portals/v1/users/{user-id}/portals/{portal-id}/shares</a></li>
+<li>[DELETE] <a href="#delete-user-portal-share">/api/portals/v1/users/{user-id}/portals/{portal-id}/shares</a></li>
 <li>[GET] <a href="#get-user-profile-picture">/api/portals/v1/users/{user-id}/profile/picture</a></li>
 <li>[POST] <a href="#set-user-profile-picture">/api/portals/v1/users/{user-id}/profile/picture</a></li>
 <li>[DELETE] <a href="#reset-user-profile-picture">/api/portals/v1/users/{user-id}/profile/picture</a></li>
@@ -3598,6 +3602,257 @@ Content-Type: application/json; charset=UTF-8
     &quot;type&quot;: &quot;generic&quot;,
     &quot;vendor&quot;: null
 }
+</code></pre><h4 id="bulk-update-device">Bulk Update device</h4>
+<p><code>PUT /api/portals/v1/devices/[{device-rid},{device-rid}..]</code></p>
+<p>Update a device</p>
+<h5 id="permissions">Permissions</h5>
+<ul>
+<li>User must have at least <code>d_update</code> <a href="#permission-object">permission</a> to the device.</li>
+</ul>
+<h5 id="request">Request</h5>
+<ul>
+<li><p>Request body is a object of <a href="#device-object">device object</a>. Currently only the following keys may be updated:</p>
+<ul>
+<li><code>&quot;info&quot;: {&quot;description&quot;: ...}</code> - description under info (optional)
+If you send any keys besides these, it will do nothing.</li>
+</ul>
+</li>
+<li><p>Requires authentication.</p>
+</li>
+</ul>
+<h5 id="response">Response</h5>
+<ul>
+<li><code>200 OK</code>: Returned along with a body containing an object <a href="#device-object">device object</a> if the device is updated successfully. However if any devices fails to update it would still return 200 OK along with an error object included in the response body. (see error exmaple)</li>
+<li><code>403 Forbidden</code>: one of the following:<ul>
+<li>Returned if the caller user is not authenticated.</li>
+<li>Returned if the caller user does not have permission to update the device.</li>
+</ul>
+</li>
+<li><code>404 Not Found</code>: Returned if the device rid is invalid.</li>
+</ul>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/devices/\[d13da92f1f73f9c5dcf14ef4ce7f43636c277fa6,b2618de3b54cab517a3a347e1cba5a014ae26d62\]&#39; -H &#39;Host: portals.review.portalsapp&#39; \
+     -u &#39;useremail@gmail.com:userP4ssword&#39; \
+     -X PUT \
+     -d &#39;{&quot;d13da92f1f73f9c5dcf14ef4ce7f43636c277fa6&quot;:{&quot;info&quot;: {&quot;description&quot;: {&quot;name&quot;: &quot;device update12311123 name&quot;}}},&quot;b2618de3b54cab517a3a347e1cba5a014ae26d62&quot;:{&quot;info&quot;: {&quot;description&quot;: {&quot;name&quot;: &quot;device updataaaaaaaaa name&quot;}}} }&#39;
+     -H &#39;Content-Type: application/json&#39;
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Tue, 07 Jul 2015 06:27:57 GMT
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
+
+{
+  &quot;d13da92f1f73f9c5dcf14ef4ce7f43636c277fa6&quot;: {
+    &quot;rid&quot;: &quot;d13da92f1f73f9c5dcf14ef4ce7f43636c277fa6&quot;,
+    &quot;members&quot;: [
+
+    ],
+    &quot;info&quot;: {
+      &quot;aliases&quot;: {
+        &quot;9a89a449b55c514164e7e721aa2733f452502d54&quot;: [
+          &quot;1122&quot;
+        ]
+      },
+      &quot;basic&quot;: {
+        &quot;modified&quot;: 1434614230,
+        &quot;subscribers&quot;: 0,
+        &quot;type&quot;: &quot;client&quot;,
+        &quot;status&quot;: &quot;expired&quot;
+      },
+      &quot;description&quot;: {
+        &quot;limits&quot;: {
+          &quot;client&quot;: 0,
+          &quot;dataport&quot;: &quot;inherit&quot;,
+          &quot;datarule&quot;: &quot;inherit&quot;,
+          &quot;disk&quot;: &quot;inherit&quot;,
+          &quot;dispatch&quot;: &quot;inherit&quot;,
+          &quot;email&quot;: &quot;inherit&quot;,
+          &quot;email_bucket&quot;: &quot;inherit&quot;,
+          &quot;http&quot;: &quot;inherit&quot;,
+          &quot;http_bucket&quot;: &quot;inherit&quot;,
+          &quot;share&quot;: &quot;inherit&quot;,
+          &quot;sms&quot;: &quot;inherit&quot;,
+          &quot;sms_bucket&quot;: &quot;inherit&quot;,
+          &quot;xmpp&quot;: &quot;inherit&quot;,
+          &quot;xmpp_bucket&quot;: &quot;inherit&quot;
+        },
+        &quot;locked&quot;: false,
+        &quot;meta&quot;: &quot;{\&quot;DeviceType\&quot;:\&quot;generic\&quot;,\&quot;DeviceTypeID\&quot;:\&quot;0000000002\&quot;,\&quot;Timezone\&quot;:\&quot;Pacific\\\/Gambier\&quot;,\&quot;Location\&quot;:\&quot;\&quot;,\&quot;activetime\&quot;:\&quot;5\&quot;,\&quot;DeviceTypeName\&quot;:\&quot;generic\&quot;,\&quot;timezone\&quot;:\&quot;Asia\\\/Taipei\&quot;,\&quot;location\&quot;:\&quot;Taiwan\&quot;,\&quot;device\&quot;:{\&quot;type\&quot;:\&quot;vendor\&quot;,\&quot;model\&quot;:\&quot;Test0615\&quot;,\&quot;vendor\&quot;:\&quot;review\&quot;,\&quot;sn\&quot;:\&quot;111\&quot;}}&quot;,
+        &quot;name&quot;: &quot;device update12311123 name&quot;,
+        &quot;public&quot;: false
+      },
+      &quot;key&quot;: &quot;361b4c37730d614fe53f6be722a48ceced88a08a&quot;,
+      &quot;shares&quot;: [
+
+      ],
+      &quot;subscribers&quot;: [
+
+      ],
+      &quot;tags&quot;: [
+
+      ]
+    },
+    &quot;dataSources&quot;: [
+      &quot;9a89a449b55c514164e7e721aa2733f452502d54&quot;
+    ],
+    &quot;model&quot;: &quot;Test0615&quot;,
+    &quot;sn&quot;: &quot;111&quot;,
+    &quot;type&quot;: &quot;vendor&quot;,
+    &quot;vendor&quot;: &quot;review&quot;
+  },
+  &quot;b2618de3b54cab517a3a347e1cba5a014ae26d62&quot;: {
+    &quot;rid&quot;: &quot;b2618de3b54cab517a3a347e1cba5a014ae26d62&quot;,
+    &quot;members&quot;: [
+
+    ],
+    &quot;info&quot;: {
+      &quot;aliases&quot;: {
+        &quot;e83839c0a22cb33673f4c6bb9e51433995d4ee46&quot;: [
+          &quot;1122&quot;
+        ]
+      },
+      &quot;basic&quot;: {
+        &quot;modified&quot;: 1436250476,
+        &quot;subscribers&quot;: 0,
+        &quot;type&quot;: &quot;client&quot;,
+        &quot;status&quot;: &quot;activated&quot;
+      },
+      &quot;description&quot;: {
+        &quot;limits&quot;: {
+          &quot;client&quot;: 0,
+          &quot;dataport&quot;: &quot;inherit&quot;,
+          &quot;datarule&quot;: &quot;inherit&quot;,
+          &quot;disk&quot;: &quot;inherit&quot;,
+          &quot;dispatch&quot;: &quot;inherit&quot;,
+          &quot;email&quot;: &quot;inherit&quot;,
+          &quot;email_bucket&quot;: &quot;inherit&quot;,
+          &quot;http&quot;: &quot;inherit&quot;,
+          &quot;http_bucket&quot;: &quot;inherit&quot;,
+          &quot;share&quot;: &quot;inherit&quot;,
+          &quot;sms&quot;: &quot;inherit&quot;,
+          &quot;sms_bucket&quot;: &quot;inherit&quot;,
+          &quot;xmpp&quot;: &quot;inherit&quot;,
+          &quot;xmpp_bucket&quot;: &quot;inherit&quot;
+        },
+        &quot;locked&quot;: false,
+        &quot;meta&quot;: &quot;{\&quot;timezone\&quot;:\&quot;Pacific\\\/Gambier\&quot;,\&quot;location\&quot;:\&quot;\&quot;,\&quot;device\&quot;:{\&quot;type\&quot;:\&quot;generic\&quot;},\&quot;activetime\&quot;:\&quot;5\&quot;}&quot;,
+        &quot;name&quot;: &quot;device updataaaaaaaaa name&quot;,
+        &quot;public&quot;: false
+      },
+      &quot;key&quot;: &quot;6bad08a4b8b24dc6e62a7b9248872aadc94b4e91&quot;,
+      &quot;shares&quot;: [
+        {
+          &quot;code&quot;: &quot;8e727c19df0cf4f4c7aea40e97ec06f643f71039&quot;,
+          &quot;meta&quot;: &quot;[\&quot;review\&quot;,\&quot;Test0615\&quot;]&quot;,
+          &quot;activator&quot;: null
+        },
+        {
+          &quot;code&quot;: &quot;86ca167b9a9ca8ae365eb427433cf26e9ec1dec0&quot;,
+          &quot;meta&quot;: &quot;[\&quot;review\&quot;,\&quot;test0511\&quot;]&quot;,
+          &quot;activator&quot;: null
+        }
+      ],
+      &quot;subscribers&quot;: [
+
+      ],
+      &quot;tags&quot;: [
+
+      ]
+    },
+    &quot;dataSources&quot;: [
+      &quot;e83839c0a22cb33673f4c6bb9e51433995d4ee46&quot;
+    ],
+    &quot;model&quot;: null,
+    &quot;sn&quot;: null,
+    &quot;type&quot;: &quot;generic&quot;,
+    &quot;vendor&quot;: null
+  }
+}
+</code></pre><h5 id="error-example">Error Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/devices/\[d13da92f1f73f9c5dcf14ef4ce7f43636c277fa6,b2618de3b54cab517a3a347e1cba5a014ae26d62\]&#39; -H &#39;Host: portals.review.portalsapp&#39; \
+     -u &#39;useremail@gmail.com:userP4ssword&#39; \
+     -X PUT \
+     -d &#39;{&quot;d13da92f1f73f9c5dcf14ef4ce7f43636c277fa6&quot;:{&quot;info&quot;: {&quot;description&quot;: {&quot;name&quot;: &quot;device update12311123 name&quot;}}}}&#39;
+     -H &#39;Content-Type: application/json&#39;
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Tue, 07 Jul 2015 06:35:25 GMT
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=2
+
+{
+  &quot;error&quot;: {
+    &quot;b2618de3b54cab517a3a347e1cba5a014ae26d62&quot;: [
+      {
+        &quot;code&quot;: 404,
+        &quot;message&quot;: &quot;Not found update data&quot;
+      }
+    ]
+  },
+  &quot;d13da92f1f73f9c5dcf14ef4ce7f43636c277fa6&quot;: {
+    &quot;rid&quot;: &quot;d13da92f1f73f9c5dcf14ef4ce7f43636c277fa6&quot;,
+    &quot;members&quot;: [
+
+    ],
+    &quot;info&quot;: {
+      &quot;aliases&quot;: {
+        &quot;9a89a449b55c514164e7e721aa2733f452502d54&quot;: [
+          &quot;1122&quot;
+        ]
+      },
+      &quot;basic&quot;: {
+        &quot;modified&quot;: 1434614230,
+        &quot;subscribers&quot;: 0,
+        &quot;type&quot;: &quot;client&quot;,
+        &quot;status&quot;: &quot;expired&quot;
+      },
+      &quot;description&quot;: {
+        &quot;limits&quot;: {
+          &quot;client&quot;: 0,
+          &quot;dataport&quot;: &quot;inherit&quot;,
+          &quot;datarule&quot;: &quot;inherit&quot;,
+          &quot;disk&quot;: &quot;inherit&quot;,
+          &quot;dispatch&quot;: &quot;inherit&quot;,
+          &quot;email&quot;: &quot;inherit&quot;,
+          &quot;email_bucket&quot;: &quot;inherit&quot;,
+          &quot;http&quot;: &quot;inherit&quot;,
+          &quot;http_bucket&quot;: &quot;inherit&quot;,
+          &quot;share&quot;: &quot;inherit&quot;,
+          &quot;sms&quot;: &quot;inherit&quot;,
+          &quot;sms_bucket&quot;: &quot;inherit&quot;,
+          &quot;xmpp&quot;: &quot;inherit&quot;,
+          &quot;xmpp_bucket&quot;: &quot;inherit&quot;
+        },
+        &quot;locked&quot;: false,
+        &quot;meta&quot;: &quot;{\&quot;DeviceType\&quot;:\&quot;generic\&quot;,\&quot;DeviceTypeID\&quot;:\&quot;0000000002\&quot;,\&quot;Timezone\&quot;:\&quot;Pacific\\\/Gambier\&quot;,\&quot;Location\&quot;:\&quot;\&quot;,\&quot;activetime\&quot;:\&quot;5\&quot;,\&quot;DeviceTypeName\&quot;:\&quot;generic\&quot;,\&quot;timezone\&quot;:\&quot;Asia\\\/Taipei\&quot;,\&quot;location\&quot;:\&quot;Taiwan\&quot;,\&quot;device\&quot;:{\&quot;type\&quot;:\&quot;vendor\&quot;,\&quot;model\&quot;:\&quot;Test0615\&quot;,\&quot;vendor\&quot;:\&quot;review\&quot;,\&quot;sn\&quot;:\&quot;111\&quot;}}&quot;,
+        &quot;name&quot;: &quot;device update12311123 name&quot;,
+        &quot;public&quot;: false
+      },
+      &quot;key&quot;: &quot;361b4c37730d614fe53f6be722a48ceced88a08a&quot;,
+      &quot;shares&quot;: [
+
+      ],
+      &quot;subscribers&quot;: [
+
+      ],
+      &quot;tags&quot;: [
+
+      ]
+    },
+    &quot;dataSources&quot;: [
+      &quot;9a89a449b55c514164e7e721aa2733f452502d54&quot;
+    ],
+    &quot;model&quot;: &quot;Test0615&quot;,
+    &quot;sn&quot;: &quot;111&quot;,
+    &quot;type&quot;: &quot;vendor&quot;,
+    &quot;vendor&quot;: &quot;review&quot;
+  }
+}
 </code></pre><h4 id="get-device">Get device</h4>
 <p><code>GET /api/portals/v1/devices/{device-rid}</code></p>
 <p>Get information for a device.
@@ -3998,6 +4253,8 @@ Content-Type: application/json; charset=UTF-8
 <li><code>{field-content-type-1}</code> is the content type of the file as the value of field 1.</li>
 <li><code>{field-value-2}</code> is the value of <code>{field-name-2}</code>.</li>
 </ul>
+<p>The file system sets the Content-Type of a GET response according to its file extension. Supported file extensions are:</p>
+<p>ai, bmp, cab, css, doc, eps, exe, flv, gif, htm, html, ico, jpe, jpeg, jpg, js, json, mov, mp3, msi, ods, odt, pdf, php, png, ppt, ps, psd, qt, rar, rtf, svg, svgz, swf, tif, tiff, txt, xls, xml, zip.</p>
 <h4 id="append-to-a-directory">Append to a directory</h4>
 <p><code>POST /api/portals/v1/fs</code></p>
 <h5 id="permissions">Permissions</h5>
@@ -4051,7 +4308,7 @@ Content-Type: application/json
 <ul>
 <li><code>200 OK</code>: Returned along with a body containing a JSON entity.</li>
 </ul>
-<h5 id="example">Example</h5>
+<h5 id="example-without-file-extension">Example without file extension</h5>
 <pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/fs&#39; \
      -X GET \
      -i
@@ -4082,6 +4339,18 @@ Content-Type: application/json
         ]
     }
 }
+</code></pre><h5 id="example-with-file-extension">Example with file extension</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/fs.js&#39; \
+     -X GET \
+     -i
+</code></pre><pre><code>HTTP/1.1 200 OK
+Date: Wed, 19 Nov 2014 09:09:03 GMT
+Status: 200 OK
+Vary: Accept-Encoding
+Content-Length: 21
+Content-Type: application/javascript
+
+console.log(&quot;Hello JavaScript&quot;);
 </code></pre><h4 id="get-a-file">Get a file</h4>
 <p><code>GET /api/portals/v1/fs/{directory-path}/{subdirectory}</code></p>
 <h5 id="permissions">Permissions</h5>
@@ -4281,6 +4550,23 @@ Content-Type: application/json; charset=UTF-8
 <ul>
 <li>User must have at least <code>g_update</code> <a href="#permission-object">permission</a> to the group.</li>
 </ul>
+<h5 id="query-string">Query String</h5>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">String</th>
+<th style="text-align:left">Description</th>
+<th style="text-align:left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>force</code></td>
+<td style="text-align:left">The update group permission will now ignore all bad and non existing permissions.</td>
+<td style="text-align:left"><code>/{group-id}?force=true</code></td>
+</tr>
+</tbody>
+</table>
 <h5 id="request">Request</h5>
 <ul>
 <li><p>Body contains a <a href="#group-object">group object</a>. Currently only the following keys may be updated:</p>
@@ -4424,7 +4710,7 @@ Content-Type: application/json; charset=UTF-8
 <p>Get an array of portals for the specified user on the domain specified in the URL of the request.</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>User must have authenticated in the domain.</li>
+<li>User must be authenticated in the domain.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -4879,7 +5165,7 @@ Content-Type: application/json; charset=UTF-8
 <p>Delete a portal through portal ID.</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>User must have authenticated in the domain.</li>
+<li>User must be authenticated in the domain.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -4914,7 +5200,7 @@ Content-Type: application/json; charset=UTF-8
 <p>Delete a portal through portal ID.</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>User must have authenticated in the domain.</li>
+<li>User must be authenticated in the domain.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
