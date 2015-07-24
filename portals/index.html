@@ -179,9 +179,9 @@
 <ul>
 <li><a href="#append-to-a-directory">Append to a directory</a></li>
 <li><a href="#get-a-file">Get a file</a></li>
-<li><a href="#get-a-file-content">Get a file content</a></li>
+<li><a href="#get-file-content">Get file content</a></li>
 <li><a href="#list-files">List files</a></li>
-<li><a href="#update-a-file-content">Update a file content</a></li>
+<li><a href="#update-file-content">Update file content</a></li>
 </ul>
 <h4 id="groups">Groups</h4>
 <ul>
@@ -319,8 +319,8 @@
 <li>[GET] <a href="#list-files">/api/portals/v1/fs</a></li>
 <li>[POST] <a href="#append-to-a-directory">/api/portals/v1/fs</a></li>
 <li>[GET] <a href="#get-a-file">/api/portals/v1/fs/{directory-path}/{subdirectory}</a></li>
-<li>[GET] <a href="#get-a-file-content">/api/portals/v1/fs/{directory-path}/{subdirectory}/{field-name}</a></li>
-<li>[PUT] <a href="#update-a-file-content">/api/portals/v1/fs/{directory-path}</a></li>
+<li>[GET] <a href="#get-file-content">/api/portals/v1/fs/{directory-path}/{subdirectory}/{field-name}</a></li>
+<li>[PUT] <a href="#update-file-content">/api/portals/v1/fs/{directory-path}</a></li>
 </ul>
 <h4 id="-groups">/groups</h4>
 <ul>
@@ -4298,7 +4298,7 @@ Content-Type: application/json
 <p>Get all files which under the same directory.</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>Anyone can use this endpoint to get a file content.</li>
+<li>Anyone can use this endpoint to get file content.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -4380,11 +4380,11 @@ Content-Length: 82
 Content-Type: image/png
 
 {&quot;myfile&quot;:&quot;image\/png&quot;}
-</code></pre><h4 id="get-a-file-content">Get a file content</h4>
+</code></pre><h4 id="get-file-content">Get file content</h4>
 <p><code>GET /api/portals/v1/fs/{directory-path}/{subdirectory}/{field-name}</code></p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>Anyone can use this endpoint to get a file content.</li>
+<li>Anyone can use this endpoint to get file content.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
@@ -4426,7 +4426,7 @@ Content-Length: 43
 Content-Type: application/json
 
 {&quot;info&quot;:[{&quot;description&quot;:{&quot;name&quot;:&quot;hello&quot;}}]}
-</code></pre><h4 id="update-a-file-content">Update a file content</h4>
+</code></pre><h4 id="update-file-content">Update file content</h4>
 <p><code>PUT /api/portals/v1/fs/{directory-path}</code></p>
 <h5 id="permissions">Permissions</h5>
 <ul>
@@ -4440,7 +4440,7 @@ Content-Type: application/json
 </ul>
 <h5 id="response">Response</h5>
 <ul>
-<li><code>200 OK</code>: Returned along with a body containing a file content if the file is updated successfully.</li>
+<li><code>200 OK</code>: Returned along with a body containing file content if the file is updated successfully.</li>
 <li><code>201 Created</code>: Returned along with file content and file directory appear in <code>Location</code> if the file directory does not exist.</li>
 <li><code>403 Forbidden</code>: one of the following:<ul>
 <li>Returned if the caller user is not authenticated.</li>
