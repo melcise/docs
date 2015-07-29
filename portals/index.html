@@ -6274,20 +6274,13 @@ Content-Type: text/html
 <p>Create a user.</p>
 <ul>
 <li>Non-admin and admin users can create a new account</li>
-<li>A new account will only be created, if settings are as followed:<ul>
-<li>Creating user with header containing X-User-Agent.<ul>
-<li>Moderate New User Signup is set to <strong>OFF</strong> from admin/moderate page.</li>
-<li>Set a default plan for <strong>Automatically create a portal for any user who signs up from another domain</strong> from admin/configuration page.
+<li>To create a new user, Moderate New User Signup must be set to <strong>OFF</strong> from admin/moderate page.</li>
+<li>Depending on the request, an activation email may be sent to the user <ul>
+<li>To send an activation email, include the <code>X-User-Agent</code> header. This also requires some extra configuration. A default plan for <strong>Automatically create a portal for any user who signs up from another domain</strong> from admin/configuration page.
 <img src="images/find_default_portal_setting.png" alt="Find Default Portal Setting"></li>
+<li>To not send an activation email, omit the <code>X-User-Agent</code> header.</li>
 </ul>
 </li>
-<li>Creating user with header not containing X-User-Agent.<ul>
-<li>Moderate New User Signup is set to <strong>OFF</strong> from admin/moderate page.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>When user is created with header contains X-User-Agent, an activation email is sent to the specified address.</li>
 </ul>
 <h5 id="permissions">Permissions</h5>
 <ul>
@@ -6297,10 +6290,10 @@ Content-Type: text/html
 <ul>
 <li>Request body is a <a href="#user-object">user object</a>.  Currently only the following keys may be included:<ul>
 <li><code>&quot;email&quot;</code> - User email. (required)</li>
-<li><code>&quot;userName&quot;</code> - User name.(optional) If it has no this attribute then userName will be same as email.</li>
-<li><code>&quot;password&quot;</code> - User password.(optional) If it has this attribute then email will not be sent.</li>
-<li><code>&quot;Firstname&quot;</code> - User first name.(optional)</li>
-<li><code>&quot;Lastname&quot;</code> - User last name.(optional)
+<li><code>&quot;userName&quot;</code> - User name. (optional) If it has no this attribute then userName will be same as email.</li>
+<li><code>&quot;password&quot;</code> - User password. (optional) If omitted, a random password is created.</li>
+<li><code>&quot;Firstname&quot;</code> - User first name. (optional)</li>
+<li><code>&quot;Lastname&quot;</code> - User last name. (optional)
 If you send any keys besides these, it will do nothing.</li>
 </ul>
 </li>
