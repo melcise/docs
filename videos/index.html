@@ -87,32 +87,10 @@
       </ul>
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
-    <div role='flatdoc-content' class='content'><h1 id="udp-single-shot-api">UDP Single Shot API</h1>
-<p>The UDP API provides a low-overhead interface that allows clients with strict data bandwidth requirements (e.g. cellular data) to send data to the One Platform. This API uses a simple UDP packet that encapsulates both identification information and data payload. If you&#39;re completely new to Exosite&#39;s APIs, you may want to read the <a href="../README.md">API       overview</a> first.</p>
-<p>Note: This API does not include a response from the server.  For this reason it is not recommended for applications where the device needs to take action when the server may not be receiving messages or if a device&#39;s CIK may have changed.  </p>
-<h2 id="conventions">Conventions</h2>
-<p>This document uses the following notational conventions:</p>
-<ul>
-<li>A name in angle brackets, e.g. <code>&lt;myvar&gt;</code>, is a placeholder that you must define.</li>
-</ul>
-<h2 id="procedures">Procedures</h2>
-<h3 id="write">Write</h3>
-<p>This interface can be accessed on Port 18494 via udp.exosite.com.</p>
-<pre><code>Server: udp.exosite.com
-Port: 18494
-</code></pre><p>Data being sent from the client device is sent over a UDP socket. An Exosite client identification key <code>&lt;CIK&gt;</code> and one or more alias (resource) names <code>&lt;alias&gt;</code>es &amp; <code>&lt;value&gt;</code>s are included as the body of the UDP packet.</p>
-<p>Multiple client resource values can be written in the body of a single UDP packet, each client resource is listed by its resource alias name, <code>=</code>, and its value. For example <code>1=453</code> or <code>temp=74.3</code>. To separate each resource the <code>&amp;</code> symbol is used. Multiple writes are written to the same timestamp.</p>
-<p>Content format:</p>
-<pre><code>cik=&lt;CIK&gt;&amp;&lt;alias 1&gt;=&lt;value 1&gt;&amp;&lt;alias 2...&gt;=&lt;value 2...&gt;&amp;&lt;alias n&gt;=&lt;value n&gt;
-</code></pre><p>Response Format:</p>
-<pre><code>None - no server responses are sent.
-</code></pre><h2 id="examples">Examples</h2>
-<p>The following example updates the alias <code>temperature</code> with a value of <code>22</code> for CIK fff51d1a260b4b258fefffd9a9313c433e419fff using the netcat command from the command line:</p>
-<pre><code>$ echo &quot;cik=fff51d1a260b4b258fefffd9a9313c433e419fff&amp;temperature=22&quot; | nc -w 1 -u udp.exosite.com 18494
-</code></pre><p>Our Github Exosite Garage Projects have a number of examples of using this interface. For instance:</p>
-<ul>
-<li><a href="https://github.com/exosite-garage/udp_single_shot">Python</a> - Write Example (Socket level code, useful reference for any code base)</li>
-</ul>
+    <div role='flatdoc-content' class='content'><h1 id="videos">Videos</h1>
+<h2 id="using-exoline">Using Exoline</h2>
+<p><a href="//fast.wistia.net/embed/iframe/v918r1aaiq?popover=true" class="wistia-popover[height=388,playerColor=7b796a,width=640]"><img src="https://embed-ssl.wistia.com/deliveries/ea19c39cf921192ca748fca194b9895fa7df654f.jpg?image_play_butt..." alt="" /></a></p>
+<script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/popover-v1.js"></script>
 </div>
   </div>
 
