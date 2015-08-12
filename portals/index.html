@@ -103,7 +103,7 @@
 <li><a href="#resources">Resources</a></li>
 </ul>
 <h2 id="api-endpoints">API Endpoints</h2>
-<h4 id="accounts">Accounts</h4>
+<h4 id="accountsin">Accountsin</h4>
 <ul>
 <li><a href="#get-all-user-accounts">Get all user accounts</a> (Deprecated)</li>
 <li><a href="#get-user-account-by-email">Get user account by email</a></li>
@@ -145,7 +145,8 @@
 </ul>
 <h4 id="data-sources-data">Data Sources Data</h4>
 <ul>
-<li><a href="#appendinsert-data-source-data">Append/insert data source data</a></li>
+<li><a href="#append-data-source-data">Append data source data</a></li>
+<li><a href="#record-data-source-data">Record data source data</a></li>
 <li><a href="#append-data-source-data-in-json-format">Append data source data in JSON format</a></li>
 <li><a href="#delete-data-source-data">Delete data source data</a></li>
 <li><a href="#get-data-source-data">Get data source data</a></li>
@@ -285,7 +286,7 @@
 <li>[GET] <a href="#get-data-source">/api/portals/v1/data-sources/{data-source-rid}</a></li>
 <li>[PUT] <a href="#update-data-source">/api/portals/v1/data-sources/{data-source-rid}</a></li>
 <li>[GET] <a href="#get-data-source-data">/api/portals/v1/data-sources/{data-source-rid}/data</a></li>
-<li>[POST] <a href="#appendinsert-data-source-data">/api/portals/v1/data-sources/{data-source-rid}/data</a></li>
+<li>[POST] <a href="#append-data-source-data">/api/portals/v1/data-sources/{data-source-rid}/data</a></li>
 <li>[GET] <a href="#get-data-source-data-bulk-request">/api/portals/v1/data-sources/[{data-source-rid},{data-source-rid},...]/data</a></li>
 <li>[POST] <a href="#append-data-source-data-in-json-format">/api/portals/v1/data-sources/{data-source-rid}/json</a></li>
 <li>[GET] <a href="#get-data-source-data-bulk-request">/api/portals/v1/data-sources/[{data-source-rid},{data-source-rid},...]/json</a></li>
@@ -3057,9 +3058,8 @@ Connection: keep-alive
 Keep-Alive: timeout=2
 
 {&quot;3218552df19a93a3f1b85c29fd0f46ddff2f7071&quot;:[],&quot;437240fba025d3416a60ef1a160e5424d4138fdc&quot;:[]}
-</code></pre><h4 id="append-insert-data-source-data">Append/insert data source data</h4>
+</code></pre><h4 id="append-data-source-data">Append data source data</h4>
 <p><code>POST /api/portals/v1/data-sources/{data-source-rid}/data</code></p>
-<p>Append data</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
 <li>User must have at least <code>d__write</code> <a href="#permission-object">permission</a> to the data sources.</li>
@@ -3092,7 +3092,7 @@ Status: 201 Created
 Vary: Accept-Encoding
 Content-Length: 0
 Content-Type: application/json; charset=UTF-8
-</code></pre><p>Insert data</p>
+</code></pre><h4 id="record-data-source-data">Record data source data</h4>
 <h5 id="permissions">Permissions</h5>
 <ul>
 <li>User must have at least <code>d__write</code> <a href="#permission-object">permission</a> to the data sources.</li>
@@ -3104,10 +3104,10 @@ Content-Type: application/json; charset=UTF-8
 </ul>
 <h5 id="response">Response</h5>
 <ul>
-<li><code>201 Created</code>: Returned if the data is inserted to data source successfully.</li>
+<li><code>201 Created</code>: Returned if the data is recorded to data source successfully.</li>
 <li><code>403 Forbidden</code>: one of the following:<ul>
 <li>Returned if the caller user is not authenticated.</li>
-<li>Returned if the caller user does not have permission insert data to the data source.</li>
+<li>Returned if the caller user does not have permission record data to the data source.</li>
 </ul>
 </li>
 <li><code>400 Bad Request</code>: Returned if request body is invalid.</li>
