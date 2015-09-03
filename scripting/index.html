@@ -297,25 +297,35 @@ When invoked globally, the functions in the table will act on behalf of the
 script owner client. When invoked on an alias object, they will act on the
 alias object owner&#39;s behalf.
 </code></pre><ul>
-<li><p><code>manage.activate(type, code)</code></p>
-<p>  Given an activation code, the associated entity is activated for the calling
-  client.</p>
+<li><p><code>manage.activate(rid | {alias = &lt;alias&gt;}, type, code)</code></p>
+<p>  Given an activation code, the associated entity is activated for the 
+  client specified in rid.</p>
 </li>
 </ul>
 <pre><code>  ------------------------------------------------------------------------------
-  Arguments:        type :: string - &quot;client&quot; | &quot;share&quot;
-                    code :: string - Activation code
+  Arguments:        rid :: string - Client ID under which to activate the entity
+                                    Note: an earlier form of this function
+                                    allowed omitting this argument. That
+                                    form is deprecated and should no
+                                    longer be used.
+                   type :: string - &quot;client&quot; | &quot;share&quot;
+                   code :: string - Activation code
 
   ------------------------------------------------------------------------------
   Returns:          true :: boolean - Activation was successful
             false, error :: boolean, string - &quot;badarg&quot; | &quot;invalid&quot; | &quot;noauth&quot;
 </code></pre><ul>
-<li><p><code>manage.create(type, description)</code></p>
-<p>  Create a One Platform resource of specified Type and Description.</p>
+<li><p><code>manage.create(rid | {alias = &lt;alias&gt;}, type, description)</code></p>
+<p>  Create a One Platform resource of specified Type and Description under rid.</p>
 </li>
 </ul>
 <pre><code>  ------------------------------------------------------------------------------
-  Arguments:    type :: string - &quot;client&quot; | &quot;dataport&quot; | &quot;datarule&quot; | &quot;dispatch&quot;
+  Arguments:     rid :: string - Client ID under which to create a resource
+                                 Note: an earlier form of this function
+                                 allowed omitting this argument. That
+                                 form is deprecated and should no
+                                 longer be used.
+                type :: string - &quot;client&quot; | &quot;dataport&quot; | &quot;datarule&quot; | &quot;dispatch&quot;
          description :: table - Description table specific to resource type.
 
   &quot;client&quot; description ::
@@ -437,13 +447,18 @@ alias object owner&#39;s behalf.
            false, error :: boolean, string - &quot;badarg&quot; | &quot;invalid&quot; | &quot;limit&quot; |
                                               &quot;restricted&quot;
 </code></pre><ul>
-<li><p><code>manage.deactivate(type, code | rid)</code></p>
+<li><p><code>manage.deactivate(cid | {alias = &lt;alias&gt;}, type, code | rid)</code></p>
 <p>  Given an activation code, or resource ID for shares, the associated entity is
-  deactivated for the calling client.</p>
+  deactivated for the client specified in cid.</p>
 </li>
 </ul>
 <pre><code>  ------------------------------------------------------------------------------
-  Arguments:       type :: string - &quot;client&quot; | &quot;share&quot;
+  Arguments:        cid :: string - Client ID under which to deactivate the entity
+                                    Note: an earlier form of this function
+                                    allowed omitting this argument. That
+                                    form is deprecated and should no
+                                    longer be used.
+                   type :: string - &quot;client&quot; | &quot;share&quot;
                    code :: string - Activation code
                    rid  :: string - Resource ID that code is associated with
 
@@ -613,12 +628,17 @@ alias object owner&#39;s behalf.
 
     list :: {{client | dataport | datarule | dispatch = {&lt;rid&gt; ,...}} ,...}
 </code></pre><ul>
-<li><p><code>manage.lookup(type, rid | alias | code)</code></p>
-<p>  Lookup an aliased resource, a resource&#39;s owner or a shared resource.</p>
+<li><p><code>manage.lookup(cid | {alias = &lt;alias&gt;}, type, rid | alias | code)</code></p>
+<p>  Lookup an aliased resource, a resource&#39;s owner or a shared resource under cid.</p>
 </li>
 </ul>
 <pre><code>  ------------------------------------------------------------------------------
-  Arguments:       type :: string - Lookup based on: owner, alias or code.
+  Arguments:        cid :: string - Client ID under which to lookup a resource
+                                    Note: an earlier form of this function
+                                    allowed omitting this argument. That
+                                    form is deprecated and should no
+                                    longer be used.
+                   type :: string - Lookup based on: owner, alias or code.
                     rid :: string - Resource ID (owner lookup only).
                   alias :: string - Alias for resource ID.
                    code :: string - Share activation code.
@@ -692,12 +712,17 @@ alias object owner&#39;s behalf.
                                              tag removed.
            false, error :: boolean, string - &quot;badarg&quot;
 </code></pre><ul>
-<li><p><code>manage.unmap(type, mapping)</code></p>
-<p>  Remove the specified type of mapping.</p>
+<li><p><code>manage.unmap(rid | {alias = &lt;alias&gt;}, type, mapping)</code></p>
+<p>  Remove the specified type of mapping under client identified by rid or alias.</p>
 </li>
 </ul>
 <pre><code>  ------------------------------------------------------------------------------
-  Arguments:       type :: string - Type of mapping: alias only.
+  Arguments:        rid :: string - Client ID under which to unmap the mapping
+                                    Note: an earlier form of this function
+                                    allowed omitting this argument. That
+                                    form is deprecated and should no 
+                                    longer be used.
+                   type :: string - Type of mapping: alias only.
                 mapping :: string - The mapped string to be removed.
 
     type :: &quot;alias&quot;

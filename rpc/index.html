@@ -104,6 +104,7 @@
 <p><a href="#create-datarule">create (datarule)</a> - create a resource that can perform processing in response to data</p>
 <p><a href="#create-dispatch">create (dispatch)</a> - create a resource for sending notifications </p>
 <p><a href="#create-clone">create (clone)</a> - copy an existing resource</p>
+<p><a href="#move">move</a> - move an existing resource</p>
 <p><a href="#update">update</a> - update an existing resource</p>
 <p><a href="#info">info</a> - get information about an existing resource</p>
 <p><a href="#listing">listing</a> - list the children of a client resource</p>
@@ -568,11 +569,12 @@ response:
 <hr>
 <h1 id="resources">Resources</h1>
 <h2 id="create-client-">create (client)</h2>
-<p>Creates a generic client. </p>
+<p>Creates a generic client under the client specified in <code>&lt;ResourceID&gt;</code>. </p>
 <p><em>NOTE:</em> To create a client based on a client model and connected with a serial number, use the <a href="http://docs.exosite.com/portals/#create-new-device-under-a-portal-of-authenticated-user">portals create device API</a> or the <a href="http://docs.exosite.com/provision/management/#provisionmanagemodelmodelsn">fleet management create client from model POST API</a> instead.</p>
 <pre><code>{
     &quot;procedure&quot;: &quot;create&quot;,
     &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
         &quot;client&quot;, 
         {
             &quot;limits&quot;: {
@@ -600,6 +602,8 @@ response:
     &quot;id&quot;: 1
 }
 </code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> is the client id under which to create a resource. (Please note: an earlier previous form of <code>create</code> that omitted this argument is deprecated and should not be used.)</p>
+</li>
 <li><p><code>&quot;limits&quot;</code> is an object containing limits for various entities and consumables. Each limit is either number, or <code>&quot;inherit&quot;</code>, which inherits the limit of the client&#39;s owner.</p>
 <p>  <code>&quot;client&quot;</code>, <code>&quot;dataport&quot;</code>, <code>&quot;datarule&quot;</code>, <code>&quot;dispatch&quot;</code> represent the number of each type of resource this client can own.</p>
 <p>  <code>&quot;disk&quot;</code> is the amount of disk space this client can occupy. Currently this limit is not enforced. </p>
@@ -930,6 +934,37 @@ previous value.</li>
     &quot;result&quot;: &quot;&lt;ResourceID&gt;&quot;
 }
 </code></pre><hr>
+<h2 id="move">move</h2>
+<p>Updates the description of the resource.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;move&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        &lt;DestinationClientID&gt;,
+        &lt;Options&gt;
+    ],
+    &quot;id&quot;: 1
+}
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> identifies the resource to be moved. See <a href="#identifying-resources">Identifying Resources</a> for details. Note, however, that a resource may not move itself.</p>
+</li>
+<li><p><code>&lt;DestinationClientID&gt;</code> identifies the client under which the resource should be moved to.. See <a href="#identifying-resources">Identifying Resources</a> for details.</p>
+</li>
+<li><p><code>&lt;Options&gt;</code> is a JSON object and can contain these options:</p>
+<ul>
+<li><code>aliases</code> is a boolean that when set to true will try to re-create aliases pointing the the moved resource in the new context. When set to false all aliases that would become invalid are being deleted without replacement. </li>
+</ul>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1
+}
+</code></pre><ul>
+<li><code>&quot;status&quot;: &quot;ok&quot;</code> means the resource was moved</li>
+</ul>
+<hr>
 <h2 id="update">update</h2>
 <p>Updates the description of the resource. </p>
 <pre><code>{
@@ -1239,7 +1274,7 @@ returned.</p>
 <pre><code>{
     &quot;procedure&quot;: &quot;listing&quot;,
     &quot;arguments&quot;: [
-        &lt;ResourceID&gt;
+        &lt;ResourceID&gt;,
         &lt;type_list&gt;,
         &lt;options&gt;
     ], 
@@ -1359,18 +1394,22 @@ be terminated.  </p>
 </ul>
 <h1 id="aliases">Aliases</h1>
 <h2 id="unmap">unmap</h2>
-<p>Removes a mapping of specified type. After the removal, the previously
-mapped resource will not be able to be looked up by the mapping.</p>
+<p>Removes a mapping of specified type under the client specified in <code>&lt;ResourceID&gt;</code>.
+After the removal, the previously mapped resource will not be able to be looked up by the mapping.</p>
 <pre><code>{
     &quot;procedure&quot;: &quot;unmap&quot;,
     &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
         &quot;alias&quot;,
         &lt;alias&gt; 
     ], 
     &quot;id&quot;: 1
 }
 </code></pre><ul>
-<li><code>&lt;alias&gt;</code> is the alias string to unmap.</li>
+<li><p><code>&lt;ResourceID&gt;</code> is the client id under which to unmap a mapping. (Please note: an earlier previous form of <code>unmap</code> that omitted this argument is deprecated and should not be used.)</p>
+</li>
+<li><p><code>&lt;alias&gt;</code> is the alias string to unmap.</p>
+</li>
 </ul>
 <h4 id="response">response</h4>
 <pre><code>{
@@ -1382,16 +1421,20 @@ mapped resource will not be able to be looked up by the mapping.</p>
 </ul>
 <hr>
 <h2 id="lookup">lookup</h2>
-<p>Look up a Resource ID by alias, owned Resource ID, or share activation code. </p>
+<p>Look up a Resource ID by alias, owned Resource ID, or share activation code
+under the client specified in <code>&lt;ClientID&gt;</code>.</p>
 <pre><code>{
     &quot;procedure&quot;: &quot;lookup&quot;,
     &quot;arguments&quot;: [
+        &lt;ClientID&gt;,
         &quot;alias&quot; | &quot;owner&quot; | &quot;shared&quot;,
         &lt;alias&gt; | &lt;ResourceID&gt; | &lt;Code&gt;
     ], 
     &quot;id&quot;: 1
 }
 </code></pre><ul>
+<li><p><code>&lt;ClientID&gt;</code> is the client id under which to lookup a resource. (Please note: an earlier previous form of <code>lookup</code> that omitted this argument is deprecated and should not be used.)</p>
+</li>
 <li><p>If the first argument is <code>&quot;alias&quot;</code>, the second argument is a string alias, or <code>&quot;&quot;</code> to 
   look up the caller client&#39;s Resource ID.</p>
 </li>
@@ -1484,17 +1527,20 @@ the owner of the resource with which the activation code is associated.</p>
 </ul>
 <hr>
 <h2 id="activate">activate</h2>
-<p>Given an activation code, activate an entity for the calling client.</p>
+<p>Given an activation code, activate an entity for the client specified in <code>&lt;ResourceID&gt;</code>.</p>
 <pre><code>{
     &quot;procedure&quot;: &quot;activate&quot;,
     &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
         &quot;client&quot; | &quot;share&quot;, 
         &lt;code&gt;
     ], 
     &quot;id&quot;: 1 
 }
 </code></pre><ul>
-<li><p>The first argument indicates the type of thing to activate:</p>
+<li><p><code>&lt;ResourceID&gt;</code> is the client id under which to activate an entity. (Please note: an earlier previous form of <code>activate</code> that omitted this argument is deprecated and should not be used.)</p>
+</li>
+<li><p>The second argument indicates the type of thing to activate:</p>
 <p>  <code>&quot;client&quot;</code> activates the specified client
   interface key (CIK) if it is not already activated or expired. Only the
   owner of the client associated with the CIK can activate it.</p>
@@ -1524,17 +1570,20 @@ the owner of the resource with which the activation code is associated.</p>
 </ul>
 <hr>
 <h2 id="deactivate">deactivate</h2>
-<p>Given an activation code, deactivate an entity for the calling client.</p>
+<p>Given an activation code, deactivate an entity for the client specified in <code>&lt;ResourceID&gt;</code>.</p>
 <pre><code>{
     &quot;procedure&quot;: &quot;deactivate&quot;,
     &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
         &quot;client&quot; | &quot;share&quot;, 
         &lt;code&gt;
     ], 
     &quot;id&quot;: 1
 }
 </code></pre><ul>
-<li><p>The first argument indicates the type of thing to deactivate:</p>
+<li><p><code>&lt;ResourceID&gt;</code> is the client id under which to deactivate the entity. (Please note: an earlier previous form of <code>deactivate</code> that omitted this argument is deprecated and should not be used.)</p>
+</li>
+<li><p>The second argument indicates the type of thing to deactivate:</p>
 <p>  <code>&quot;client&quot;</code> deactivate and expire the specified client interface 
   key (CIK) if it was previously activated. If the key was not previously 
   activated, the call will expire the key.</p>
