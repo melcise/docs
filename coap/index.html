@@ -492,7 +492,7 @@ Block Option: Block2
 <p>If you need to do more with your data than read the latest value and write new values at the current time, you&#39;ll need to use the <a href="https://github.com/exosite/docs/blob/master/rpc">RPC API</a>. Generally devices don&#39;t use this API since it is relatively complicated and the JSON format is rather heavy and hard to parse and construct, but luckily for you, we&#39;ve setup a proxy that will translate the HTTP + JSON format that that API uses into a CoAP + CBOR format which drastically brings down the requirements needed to use it.</p>
 <p>See the <a href="https://github.com/exosite/docs/blob/master/rpc">RPC API docs</a> for more information about using this API. The JSON of that API maps one to one the CBOR that you will receive and be expected to send.</p>
 <p>You can also request that the JSON be passed straight through by sending an &#39;Accept&#39; option with &#39;application/json&#39;.</p>
-<p><em>NOTE: This API has a know issue with responses larger than about 1500 bytes which results in you not receiving any response. This will be fixed in the future using block transfers.</em></p>
+<p>Responses that are longer than about 1500 bytes will need to be downloaded using block transfers.</p>
 <p>The payloads for both writing and the returned values for reading are in the CBOR (Concise Binary Object Representation) format. It is shown in this document in a JSON-like format for display purposes. See <a href="http://cbor.io">http://cbor.io</a> for more information.</p>
 <pre><code>POST: coap://coap.exosite.com/rpc
 </code></pre><pre><code>  Client                                                   Server
