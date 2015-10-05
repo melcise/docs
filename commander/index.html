@@ -84,269 +84,269 @@
       </ul>
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
-    <div role='flatdoc-content' class='content'><h1 id="commander-chat">Commander Chat</h1>
-<p>The Commander is a XMPP bot that allows any authenticated XMPP client 
+    <div role='flatdoc-content' class='content'>&lt;h1 id=&quot;commander-chat&quot;&gt;Commander Chat&lt;/h1&gt;
+&lt;p&gt;The Commander is a XMPP bot that allows any authenticated XMPP client 
 (typically a remote user) to initiate a XMPP Chat in order to issue commands
-to the One Platform through the Commander.</p>
-<p>The Commander interfaces to the One Platform on behalf of the connected 
+to the One Platform through the Commander.&lt;/p&gt;
+&lt;p&gt;The Commander interfaces to the One Platform on behalf of the connected 
 client. Given sufficient access rights the client may perform some or part of
-the following functions through the Commander:</p>
-<ul>
-<li>Read and write client resource values</li>
-<li>Create, delete and list data sources for client resources</li>
-<li>Count and read data source records</li>
-</ul>
-<h2 id="common-responses">Common Responses</h2>
-<p>When an XMPP Chat session is started with the Commander, all commands will 
+the following functions through the Commander:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Read and write client resource values&lt;/li&gt;
+&lt;li&gt;Create, delete and list data sources for client resources&lt;/li&gt;
+&lt;li&gt;Count and read data source records&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;common-responses&quot;&gt;Common Responses&lt;/h2&gt;
+&lt;p&gt;When an XMPP Chat session is started with the Commander, all commands will 
 receive a response. If a command fails for any reason, the bot replies with 
-an error message in this format:</p>
-<pre><code>error: &lt;reason&gt;
-</code></pre><p>If a command is successful the bot will reply with a command-specific 
-response value.</p>
-<h3 id="common-success-responses">Common Success Responses</h3>
-<ul>
-<li><code>ok</code></li>
-</ul>
-<h3 id="common-error-responses">Common Error Responses</h3>
-<ul>
-<li><code>error: no identity</code></li>
-<li><code>error: invalid parameters</code></li>
-<li><code>error: unavailable</code></li>
-<li><code>error: not implemented</code></li>
-</ul>
-<h1 id="command-set">Command Set</h1>
-<h2 id="commanderid-commander-id-string">commanderid - commander ID string</h2>
-<p>Gets the ID string of the running XMPP Commander instance.</p>
-<p>Note: it is not necessary to start a chat session to send this command. It
-may be sent in either a XMPP Chat or XMPP Message body.</p>
-<pre><code>commanderid
-</code></pre><h4 id="response">response</h4>
-<p>Response is the bot name and version.</p>
-<pre><code>XMPP Commander 0.2
-</code></pre><h2 id="version-get-api-version">version - get API version</h2>
-<p>Gets the version number of the running XMPP Commander instance.</p>
-<p>Note: it is not necessary to start a chat session to send this command. It 
-may be sent in either a XMPP Chat or XMPP Message body.</p>
-<pre><code>version
-</code></pre><h4 id="response">response</h4>
-<p>Response is the version string.</p>
-<pre><code>0.2
-</code></pre><h2 id="help">help</h2>
-<p>Lists commands and help command syntax.</p>
-<p>Note: it is not necessary to start a chat session to send this command. It 
-may be sent in either a XMPP Chat or XMPP Message body.</p>
-<pre><code>help [&lt;command&gt;]
-</code></pre><ul>
-<li><code>&lt;command&gt;</code> specifies the command for which to request help. It is optional.</li>
-</ul>
-<h4 id="response">response</h4>
-<p>Response is help information, either for a specified command, or general information.</p>
-<h4 id="examples">examples</h4>
-<pre><code>&gt; help
+an error message in this format:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;error: &amp;lt;reason&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If a command is successful the bot will reply with a command-specific 
+response value.&lt;/p&gt;
+&lt;h3 id=&quot;common-success-responses&quot;&gt;Common Success Responses&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ok&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;common-error-responses&quot;&gt;Common Error Responses&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;error: no identity&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;error: invalid parameters&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;error: unavailable&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;error: not implemented&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;command-set&quot;&gt;Command Set&lt;/h1&gt;
+&lt;h2 id=&quot;commanderid-commander-id-string&quot;&gt;commanderid - commander ID string&lt;/h2&gt;
+&lt;p&gt;Gets the ID string of the running XMPP Commander instance.&lt;/p&gt;
+&lt;p&gt;Note: it is not necessary to start a chat session to send this command. It
+may be sent in either a XMPP Chat or XMPP Message body.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;commanderid
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;p&gt;Response is the bot name and version.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;XMPP Commander 0.2
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;version-get-api-version&quot;&gt;version - get API version&lt;/h2&gt;
+&lt;p&gt;Gets the version number of the running XMPP Commander instance.&lt;/p&gt;
+&lt;p&gt;Note: it is not necessary to start a chat session to send this command. It 
+may be sent in either a XMPP Chat or XMPP Message body.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;version
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;p&gt;Response is the version string.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;0.2
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;help&quot;&gt;help&lt;/h2&gt;
+&lt;p&gt;Lists commands and help command syntax.&lt;/p&gt;
+&lt;p&gt;Note: it is not necessary to start a chat session to send this command. It 
+may be sent in either a XMPP Chat or XMPP Message body.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;help [&amp;lt;command&amp;gt;]
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;command&amp;gt;&lt;/code&gt; specifies the command for which to request help. It is optional.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;p&gt;Response is help information, either for a specified command, or general information.&lt;/p&gt;
+&lt;h4 id=&quot;examples&quot;&gt;examples&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; help
 Type ‘help ‘ where is one of: commanderid, dscount, dscreate, dsdelete, 
 dslist, dsread, dswrite, help, read, setcik, version, write
-</code></pre><pre><code>&gt; help dswrite
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;&amp;gt; help dswrite
 Write historical data to the named Portals data source
 
-dswrite &lt;alias&gt; &lt;timestamp&gt; &lt;value&gt;
-</code></pre><h2 id="setcik-set-client-interface-key">setcik - set client interface key</h2>
-<p>Sets the Client Interface Key (CIK) to the specified value. Setting the CIK 
-starts a chat session. Chat sessions timeout after 5 minutes of inactivity. </p>
-<p>This command is required. It must be the first command sent, else all other 
-commands will fail.</p>
-<p>Ensure your client is using an encrypted connection. Otherwise, your private 
-Client Interface Key will be exposed to third parties and could be exploited.</p>
-<pre><code>setcik &lt;value&gt;
-</code></pre><ul>
-<li><code>&lt;value&gt;</code> is a CIK that identifies the client to the One Platform. Certain 
+dswrite &amp;lt;alias&amp;gt; &amp;lt;timestamp&amp;gt; &amp;lt;value&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;setcik-set-client-interface-key&quot;&gt;setcik - set client interface key&lt;/h2&gt;
+&lt;p&gt;Sets the Client Interface Key (CIK) to the specified value. Setting the CIK 
+starts a chat session. Chat sessions timeout after 5 minutes of inactivity. &lt;/p&gt;
+&lt;p&gt;This command is required. It must be the first command sent, else all other 
+commands will fail.&lt;/p&gt;
+&lt;p&gt;Ensure your client is using an encrypted connection. Otherwise, your private 
+Client Interface Key will be exposed to third parties and could be exploited.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;setcik &amp;lt;value&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; is a CIK that identifies the client to the One Platform. Certain 
 commands may not be available depending on the access rights associated with 
-the given CIK.</li>
-</ul>
-<h4 id="response">response</h4>
-<pre><code>ok
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>error: Invalid key</code></li>
-</ul>
-<h4 id="examples">examples</h4>
-<pre><code>&gt;setcik 19cbdefad0b8e90b4d691376d5997f04c1acc18e
+the given CIK.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;ok
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;error: Invalid key&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;examples&quot;&gt;examples&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;setcik 19cbdefad0b8e90b4d691376d5997f04c1acc18e
 ok
-</code></pre><h2 id="write">write</h2>
-<p>Sends a data value for a specific client resource to the One Platform for 
-storage and processing.</p>
-<pre><code>write &lt;alias&gt; &lt;value&gt;
-</code></pre><ul>
-<li><code>&lt;alias&gt;</code> is the client resource identifier.</li>
-<li><code>&lt;value&gt;</code> is the data value to write.</li>
-</ul>
-<h4 id="response">response</h4>
-<pre><code>ok
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>error: duplicate timestamp</code></li>
-</ul>
-<h4 id="examples">examples</h4>
-<p>To post the value 1043 for resource 1:</p>
-<pre><code>&gt; write 1 1043
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;write&quot;&gt;write&lt;/h2&gt;
+&lt;p&gt;Sends a data value for a specific client resource to the One Platform for 
+storage and processing.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;write &amp;lt;alias&amp;gt; &amp;lt;value&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; is the client resource identifier.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; is the data value to write.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;ok
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;error: duplicate timestamp&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;examples&quot;&gt;examples&lt;/h4&gt;
+&lt;p&gt;To post the value 1043 for resource 1:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; write 1 1043
 ok
-</code></pre><h2 id="read">read</h2>
-<p>Reads up to the last 24 hours of written values for the specified client 
-resource.</p>
-<pre><code>read &lt;alias&gt; [&lt;count&gt;]
-</code></pre><ul>
-<li><code>&lt;alias&gt;</code> is the client resource identifier.</li>
-<li><code>&lt;count&gt;</code> is the maximum number of data points to return, beginning at the
-most recent to the least recent. If not specified, it defaults to 1.</li>
-</ul>
-<h4 id="response">response</h4>
-<p>Response is a number of data points in CSV format.</p>
-<pre><code>&lt;timestamp&gt;,&lt;value&gt;
-</code></pre><ul>
-<li><code>&lt;timestamp&gt;</code> is the UNIX timestamp</li>
-<li><code>&lt;value&gt;</code> is the value</li>
-</ul>
-<h4 id="examples">examples</h4>
-<pre><code>&gt; read 1
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;read&quot;&gt;read&lt;/h2&gt;
+&lt;p&gt;Reads up to the last 24 hours of written values for the specified client 
+resource.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;read &amp;lt;alias&amp;gt; [&amp;lt;count&amp;gt;]
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; is the client resource identifier.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;count&amp;gt;&lt;/code&gt; is the maximum number of data points to return, beginning at the
+most recent to the least recent. If not specified, it defaults to 1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;p&gt;Response is a number of data points in CSV format.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;timestamp&amp;gt;,&amp;lt;value&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;timestamp&amp;gt;&lt;/code&gt; is the UNIX timestamp&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; is the value&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;examples&quot;&gt;examples&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; read 1
 1267806955,1043
-</code></pre><h2 id="dscreate-create-a-data-source">dscreate - create a data source</h2>
-<p>Creates a data source having a <code>&lt;name&gt;</code> for the <code>&lt;alias&gt;</code> to be stored. The 
-<code>&lt;format&gt;</code> of the data source may be specified. Before storing a reported 
-value, the value may be normalized with an <code>&lt;operation&gt;</code> one of <code>add</code>, <code>sub</code>, 
-<code>mul</code>, <code>div</code> or <code>mod</code> using the given <code>&lt;constant&gt;</code> value. To store data 
-values without normalization, specify <code>na</code> for <code>&lt;operation&gt;</code>.</p>
-<pre><code>dscreate &lt;name&gt; &lt;alias&gt; [&lt;operation&gt; &lt;constant&gt; &lt;format&gt;]
-</code></pre><ul>
-<li><code>&lt;name&gt;</code> is the friendly name of the data source to create.</li>
-<li><code>&lt;alias&gt;</code> is the resource identifier used when reporting data from the 
-client.</li>
-<li><p><code>&lt;operation&gt;</code> is the preprocessing operation to be performed when data 
-is written to the datasource. Defaults to <code>na</code></p>
-<p>  <code>add</code> : Add <code>&lt;constant&gt;</code> to <code>&lt;value&gt;</code> and store the result.
-  <code>sub</code> : Subtract <code>&lt;constant&gt;</code> from <code>&lt;value&gt;</code> and store the result.
-  <code>mul</code> : Multiply <code>&lt;value&gt;</code> by <code>&lt;constant&gt;</code> and store the product.
-  <code>div</code> : Divide <code>&lt;value&gt;</code> by <code>&lt;constant&gt;</code> and store the quotient.
-  <code>mod</code> : Divide <code>&lt;value&gt;</code> by <code>&lt;constant&gt;</code> and store the remainder.
-  <code>na</code> : Store <code>&lt;value&gt;</code> without normalization.</p>
-</li>
-<li><p><code>&lt;constant&gt;</code> is the second operand for <code>&lt;operation&gt;</code>, a number to apply to 
-<code>&lt;value&gt;</code> using the given <code>&lt;operation&gt;</code>. It is ignored if <code>&lt;operation&gt;</code> is 
-<code>na</code>.</p>
-</li>
-<li><p><code>&lt;format&gt;</code> is the storage format of the data. It defaults to <code>float</code> if <code>op</code> 
-is specified, otherwise defaults to <code>string</code>.</p>
-<p>  <code>integer</code>
-  <code>float</code>
-  <code>string</code></p>
-</li>
-</ul>
-<h4 id="response">response</h4>
-<pre><code>ok
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>error: invalid or duplicate data source</code></li>
-<li><code>error: too many data sources</code></li>
-</ul>
-<h4 id="examples">examples</h4>
-<pre><code>&gt; dscreate “office temp” temp div 20
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;dscreate-create-a-data-source&quot;&gt;dscreate - create a data source&lt;/h2&gt;
+&lt;p&gt;Creates a data source having a &lt;code&gt;&amp;lt;name&amp;gt;&lt;/code&gt; for the &lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; to be stored. The 
+&lt;code&gt;&amp;lt;format&amp;gt;&lt;/code&gt; of the data source may be specified. Before storing a reported 
+value, the value may be normalized with an &lt;code&gt;&amp;lt;operation&amp;gt;&lt;/code&gt; one of &lt;code&gt;add&lt;/code&gt;, &lt;code&gt;sub&lt;/code&gt;, 
+&lt;code&gt;mul&lt;/code&gt;, &lt;code&gt;div&lt;/code&gt; or &lt;code&gt;mod&lt;/code&gt; using the given &lt;code&gt;&amp;lt;constant&amp;gt;&lt;/code&gt; value. To store data 
+values without normalization, specify &lt;code&gt;na&lt;/code&gt; for &lt;code&gt;&amp;lt;operation&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dscreate &amp;lt;name&amp;gt; &amp;lt;alias&amp;gt; [&amp;lt;operation&amp;gt; &amp;lt;constant&amp;gt; &amp;lt;format&amp;gt;]
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;name&amp;gt;&lt;/code&gt; is the friendly name of the data source to create.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; is the resource identifier used when reporting data from the 
+client.&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;operation&amp;gt;&lt;/code&gt; is the preprocessing operation to be performed when data 
+is written to the datasource. Defaults to &lt;code&gt;na&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;  &lt;code&gt;add&lt;/code&gt; : Add &lt;code&gt;&amp;lt;constant&amp;gt;&lt;/code&gt; to &lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; and store the result.
+  &lt;code&gt;sub&lt;/code&gt; : Subtract &lt;code&gt;&amp;lt;constant&amp;gt;&lt;/code&gt; from &lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; and store the result.
+  &lt;code&gt;mul&lt;/code&gt; : Multiply &lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; by &lt;code&gt;&amp;lt;constant&amp;gt;&lt;/code&gt; and store the product.
+  &lt;code&gt;div&lt;/code&gt; : Divide &lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; by &lt;code&gt;&amp;lt;constant&amp;gt;&lt;/code&gt; and store the quotient.
+  &lt;code&gt;mod&lt;/code&gt; : Divide &lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; by &lt;code&gt;&amp;lt;constant&amp;gt;&lt;/code&gt; and store the remainder.
+  &lt;code&gt;na&lt;/code&gt; : Store &lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; without normalization.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;constant&amp;gt;&lt;/code&gt; is the second operand for &lt;code&gt;&amp;lt;operation&amp;gt;&lt;/code&gt;, a number to apply to 
+&lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; using the given &lt;code&gt;&amp;lt;operation&amp;gt;&lt;/code&gt;. It is ignored if &lt;code&gt;&amp;lt;operation&amp;gt;&lt;/code&gt; is 
+&lt;code&gt;na&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;format&amp;gt;&lt;/code&gt; is the storage format of the data. It defaults to &lt;code&gt;float&lt;/code&gt; if &lt;code&gt;op&lt;/code&gt; 
+is specified, otherwise defaults to &lt;code&gt;string&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;  &lt;code&gt;integer&lt;/code&gt;
+  &lt;code&gt;float&lt;/code&gt;
+  &lt;code&gt;string&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;ok
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;error: invalid or duplicate data source&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;error: too many data sources&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;examples&quot;&gt;examples&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; dscreate “office temp” temp div 20
 ok
-</code></pre><pre><code>&gt; dscreate Temperature 1 mul 5 integer
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;&amp;gt; dscreate Temperature 1 mul 5 integer
 ok
-</code></pre><h2 id="dsdelete-delete-data-source">dsdelete - delete data source</h2>
-<p>Deletes the specified data source and all associated data. Warning: once data 
-is deleted, it may not be recovered.</p>
-<pre><code>dsdelete &lt;alias&gt;
-</code></pre><ul>
-<li><code>&lt;alias&gt;</code> is the resource identifier of the datasource to delete.</li>
-</ul>
-<h4 id="response">response</h4>
-<pre><code>ok
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>error: invalid data source</code></li>
-</ul>
-<h4 id="examples">examples</h4>
-<pre><code>&gt; dsdelete temp
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;dsdelete-delete-data-source&quot;&gt;dsdelete - delete data source&lt;/h2&gt;
+&lt;p&gt;Deletes the specified data source and all associated data. Warning: once data 
+is deleted, it may not be recovered.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dsdelete &amp;lt;alias&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; is the resource identifier of the datasource to delete.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;ok
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;error: invalid data source&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;examples&quot;&gt;examples&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; dsdelete temp
 ok
-</code></pre><h2 id="dswrite-write-data-source">dswrite - write data source</h2>
-<p>Write data records to the data source identified by <code>&lt;alias&gt;</code> and timestamp 
-<code>&lt;timestamp&gt;</code>.</p>
-<pre><code>dswrite &lt;alias&gt; &lt;timestamp&gt; &lt;value&gt;
-</code></pre><ul>
-<li><code>&lt;alias&gt;</code> is the resource identifier of the data source to write to.</li>
-<li><code>&lt;timestamp&gt;</code> is the UNIX timestamp to index the data by.</li>
-<li><code>&lt;value&gt;</code> is the data value to write.</li>
-</ul>
-<h4 id="response">response</h4>
-<pre><code>ok
-</code></pre><h4 id="examples">examples</h4>
-<pre><code>&gt; dswrite temp 1300777704 1067
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;dswrite-write-data-source&quot;&gt;dswrite - write data source&lt;/h2&gt;
+&lt;p&gt;Write data records to the data source identified by &lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; and timestamp 
+&lt;code&gt;&amp;lt;timestamp&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dswrite &amp;lt;alias&amp;gt; &amp;lt;timestamp&amp;gt; &amp;lt;value&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; is the resource identifier of the data source to write to.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;timestamp&amp;gt;&lt;/code&gt; is the UNIX timestamp to index the data by.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; is the data value to write.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;ok
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;examples&quot;&gt;examples&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; dswrite temp 1300777704 1067
 ok
-</code></pre><h2 id="dsread-read-data-source">dsread - read data source</h2>
-<p>Reads historical data records from the data source identified by <code>&lt;alias&gt;</code>.</p>
-<pre><code>dsread &lt;alias&gt; &lt;count&gt; [&lt;start&gt; [&lt;end&gt;]]
-</code></pre><ul>
-<li><code>&lt;alias&gt;</code> is the resource identifier of the data source to read from.</li>
-<li><code>&lt;count&gt;</code> is the maximum number of data records to return, beginning at the
-most recent to the least recent.</li>
-<li><code>&lt;start&gt;</code> and <code>&lt;end&gt;</code> are the earliest and latest timestamp for which to
-retrieve historical data records.</li>
-</ul>
-<h4 id="response">response</h4>
-<p>Response is unix timestamp and data value pairs in CSV format.</p>
-<pre><code>&lt;timestamp 1&gt;,&lt;value 1&gt;
-&lt;timestamp 2&gt;,&lt;value 2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;dsread-read-data-source&quot;&gt;dsread - read data source&lt;/h2&gt;
+&lt;p&gt;Reads historical data records from the data source identified by &lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dsread &amp;lt;alias&amp;gt; &amp;lt;count&amp;gt; [&amp;lt;start&amp;gt; [&amp;lt;end&amp;gt;]]
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; is the resource identifier of the data source to read from.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;count&amp;gt;&lt;/code&gt; is the maximum number of data records to return, beginning at the
+most recent to the least recent.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;start&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;end&amp;gt;&lt;/code&gt; are the earliest and latest timestamp for which to
+retrieve historical data records.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;p&gt;Response is unix timestamp and data value pairs in CSV format.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;timestamp 1&amp;gt;,&amp;lt;value 1&amp;gt;
+&amp;lt;timestamp 2&amp;gt;,&amp;lt;value 2&amp;gt;
 ...
-</code></pre><h4 id="examples">examples</h4>
-<pre><code>&gt; dsread temp 3
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;examples&quot;&gt;examples&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; dsread temp 3
 1300796584,52.7
 1300796577,52.15
 1300777704,53.35
-</code></pre><h2 id="dslist-list-data-sources">dslist - list data sources</h2>
-<p>Lists all created data sources.</p>
-<pre><code>dslist [&lt;detail&gt;]
-</code></pre><ul>
-<li><code>&lt;detail&gt;</code> is the detail level of the list to return. Defaults to <code>name</code>.
-  <code>name</code> returns the data source name only.
-  <code>full</code> returns the data source name, resource, operation, and constant 
-  values.</li>
-</ul>
-<h4 id="response">response</h4>
-<p>A list of data source information is returned in CSV format.</p>
-<pre><code>&lt;name 1&gt;,&lt;resourceid 1&gt;,&lt;operation 1&gt;,&lt;constant 1&gt;
-&lt;name 2&gt;,&lt;resourceid 2&gt;,&lt;operation 2&gt;,&lt;constant 2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;dslist-list-data-sources&quot;&gt;dslist - list data sources&lt;/h2&gt;
+&lt;p&gt;Lists all created data sources.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dslist [&amp;lt;detail&amp;gt;]
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;detail&amp;gt;&lt;/code&gt; is the detail level of the list to return. Defaults to &lt;code&gt;name&lt;/code&gt;.
+  &lt;code&gt;name&lt;/code&gt; returns the data source name only.
+  &lt;code&gt;full&lt;/code&gt; returns the data source name, resource, operation, and constant 
+  values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;p&gt;A list of data source information is returned in CSV format.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;name 1&amp;gt;,&amp;lt;resourceid 1&amp;gt;,&amp;lt;operation 1&amp;gt;,&amp;lt;constant 1&amp;gt;
+&amp;lt;name 2&amp;gt;,&amp;lt;resourceid 2&amp;gt;,&amp;lt;operation 2&amp;gt;,&amp;lt;constant 2&amp;gt;
 ...
-</code></pre><h4 id="examples">examples</h4>
-<pre><code>&gt; dslist
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;examples&quot;&gt;examples&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; dslist
 office temp
 office humidity
 outside temp
 outside humidity
-</code></pre><pre><code>&gt; dslist full
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;&amp;gt; dslist full
 office temp,1,div,20
 office humidity,10,div,100
 outside temp,2,div,20
 outside humidity,11,div,100
-</code></pre><h2 id="dscount-count-data-source-records">dscount - count data source records</h2>
-<p>Counts the number of historical data records from the data source identified 
-by <code>&lt;alias&gt;</code>.</p>
-<pre><code>dscount &lt;alias&gt; [&lt;start&gt; [&lt;end&gt;]]
-</code></pre><ul>
-<li><p><code>&lt;alias&gt;</code> is the resource identifier of the data source to count records from.</p>
-</li>
-<li><p><code>&lt;start&gt;</code> is the earliest UNIX timestamp for which to start counting 
-historical data records. This parameter is optional.</p>
-</li>
-<li><p><code>&lt;end&gt;</code> is the latest UNIX timestamp for which to stop counting 
-historical data records. This parameter is optional.</p>
-</li>
-</ul>
-<h4 id="response">response</h4>
-<p>The number of historical records that exist in the range specified. If no 
-range is given, then all records are counted.</p>
-<h4 id="examples">examples</h4>
-<pre><code>&gt; dscount temp 1300777704 1300796584
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;dscount-count-data-source-records&quot;&gt;dscount - count data source records&lt;/h2&gt;
+&lt;p&gt;Counts the number of historical data records from the data source identified 
+by &lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dscount &amp;lt;alias&amp;gt; [&amp;lt;start&amp;gt; [&amp;lt;end&amp;gt;]]
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; is the resource identifier of the data source to count records from.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;start&amp;gt;&lt;/code&gt; is the earliest UNIX timestamp for which to start counting 
+historical data records. This parameter is optional.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;end&amp;gt;&lt;/code&gt; is the latest UNIX timestamp for which to stop counting 
+historical data records. This parameter is optional.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;p&gt;The number of historical records that exist in the range specified. If no 
+range is given, then all records are counted.&lt;/p&gt;
+&lt;h4 id=&quot;examples&quot;&gt;examples&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; dscount temp 1300777704 1300796584
 3
-</code></pre></div>
+&lt;/code&gt;&lt;/pre&gt;</div>
   </div>
 
   <div id="markdown" style="display:none;">

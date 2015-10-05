@@ -84,1367 +84,1367 @@
       </ul>
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
-    <div role='flatdoc-content' class='content'><h1 id="device-provisioning-and-fleet-management-api">Device Provisioning and Fleet Management API</h1>
-<p>Both APIs use the HTTP POST, GET, PUT and DELETE methods to configure the different facets of the provisioning system. Note that the terms &quot;client&quot; and &quot;device&quot; are interchangeable in the text below. There are various HTTP required headers that are inherent to the protocol that are not repeated in each API procedure description. As an example, all of the POST and PUT requests must also contain a correct <code>Content-Length</code> header specifying the body payload size. Also, all responses having a status of 200 will also contain a <code>Content-Length</code> response header.</p>
-<p>API Version: <code>1.1</code></p>
-<p>Host Address: <code>http://m2.exosite.com</code> or <code>https://m2.exosite.com</code></p>
-<p>If you&#39;re completely new to Exosite&#39;s APIs, you may want to read the <a href="../README.md">API overview</a> first.</p>
-<h2 id="libraries-and-sample-code">Libraries and Sample Code</h2>
-<p>Wrapper libraries for this API:</p>
-<ul>
-<li>Python: <a href="https://github.com/exosite-labs/pyonep">pyonep</a> includes a module, provision.py, that wraps the provision API.</li>
-<li>.NET: <a href="https://github.com/exosite-labs/clronep">clronep</a> includes Provision.cs that wraps the provision API.</li>
-<li>C++: <a href="https://github.com/exosite-labs/cpponep">cpponep</a> includes Provision.cpp that wraps the provision API.</li>
-<li>Go: <a href="https://github.com/exosite-labs/goonep">goonep</a> includes provision.go that wraps the provision API.</li>
-</ul>
-<p>Code samples that use this API:</p>
-<ul>
-<li><a href="https://github.com/exosite-garage/provision_examples">Provision Examples</a> - socket level code intended as a reference for implementation in other languages</li>
-</ul>
-<h2 id="conventions">Conventions</h2>
-<p>This document uses a few notational conventions:</p>
-<ul>
-<li>A name in angle brackets, e.g. <code>&lt;myvar&gt;</code>, is a placeholder that will be defined elsewhere.</li>
-<li>Items in curly braces, e.g., <code>{vendor=&lt;id&gt;}</code>, are optional.</li>
-<li><code>...</code> indicates the previous content is repeated.</li>
-</ul>
-<h2 id="http-responses">HTTP Responses</h2>
-<p>Typical HTTP response codes include:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Code</th>
-<th style="text-align:left">Response</th>
-<th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">200</td>
-<td style="text-align:left">OK</td>
-<td style="text-align:left">Successful request, returning requested values</td>
-</tr>
-<tr>
-<td style="text-align:left">204</td>
-<td style="text-align:left">No Content</td>
-<td style="text-align:left">Successful request, nothing will be returned</td>
-</tr>
-<tr>
-<td style="text-align:left">4xx</td>
-<td style="text-align:left">Client Error</td>
-<td style="text-align:left">There was an error with the request by the client</td>
-</tr>
-<tr>
-<td style="text-align:left">5xx</td>
-<td style="text-align:left">Server Error</td>
-<td style="text-align:left">There was an error with the request on the server</td>
-</tr>
-</tbody>
-</table>
-<h1 id="endpoints">Endpoints</h1>
-<p>The following procedures allow device OEMs to create custom fleet management applications. For many applications they do not need to be used since Portals wraps their functionality with a user interface.</p>
-<p><a href="#provisionmanagecontentmodel">/provision/manage/content/&lt;model&gt;/</a> - list, create, or delete content </p>
-<p><a href="#provisionmanagecontentmodelid">/provision/manage/content/&lt;model&gt;/&lt;id&gt;</a> - get content information, groups  or blob, upload content, delete content</p>
-<p><a href="#provisionmanagegroupmodel">/provision/manage/group/&lt;model&gt;/</a> - show groups, create group, delete group</p>
-<p><a href="#provisionmanagegroupmodelid">/provision/manage/group/&lt;model&gt;/&lt;id&gt;</a> - get group meta, get group membership, delete group    </p>
-<p><a href="#provisionmanagegroupmodelid-1">/provision/manage/group/&lt;model&gt;/&lt;id&gt;/</a> - list group info, list types with group membership, get group member info, get group member id, add or update group members, delete group members</p>
-<p><a href="#provisionmanagemodel">/provision/manage/model/</a> - list models, list shared models, create model, delete model</p>
-<p><a href="#provisionmanagemodelmodel">/provision/manage/model/&lt;model&gt;</a> - get model info, update model, delete model</p>
-<p><a href="#provisionmanagemodelmodel-1">/provision/manage/model/&lt;model&gt;/</a> - list serial numbers, get serial number JSON object, add serial number(s), remove serial number(s)</p>
-<p><a href="#provisionmanagemodelmodelsn">/provision/manage/model/&lt;model&gt;/&lt;sn&gt;</a> - get client RID, list serial number groups, get serial number activation log, create client from model, map client to new serial number, regenerate CIK, disable CIK, delete serial number</p>
-<p><a href="#provisionmanagesharemodel">/provision/manage/share/&lt;model&gt;/</a> - list vendors that share a model, create a model share, delete a model share.</p>
-<p><a href="#provisionmanagesharemodelvendorname">/provision/manage/share/&lt;model&gt;/&lt;vendorname&gt;</a> - find out if model is shared with a vendor, delete model share </p>
-<p><a href="#provisionregister">/provision/register</a> - get registered vendor name for cik, register vendor name for CIK, unregister vendor name from CIK</p>
-<p><a href="#provisionadminauth">/provision/admin/auth</a> - list vendor token ids, create vendor token, delete vendor token</p>
-<p><a href="#provisionadminauthid">/provision/admin/auth/&lt;id&gt;</a> - get vendor token, delete vendor token</p>
-<h2 id="-provision-manage-content-lt-model-gt-">/provision/manage/content/&lt;model&gt;/</h2>
-<h3 id="get-list-content-ids">GET - list content ids</h3>
-<p>Returns list of content <code>&lt;id&gt;</code>s for <code>&lt;model&gt;</code>.</p>
-<pre><code>GET /provision/manage/content/&lt;model&gt;/ HTTP/1.1
+    <div role='flatdoc-content' class='content'>&lt;h1 id=&quot;device-provisioning-and-fleet-management-api&quot;&gt;Device Provisioning and Fleet Management API&lt;/h1&gt;
+&lt;p&gt;Both APIs use the HTTP POST, GET, PUT and DELETE methods to configure the different facets of the provisioning system. Note that the terms &amp;quot;client&amp;quot; and &amp;quot;device&amp;quot; are interchangeable in the text below. There are various HTTP required headers that are inherent to the protocol that are not repeated in each API procedure description. As an example, all of the POST and PUT requests must also contain a correct &lt;code&gt;Content-Length&lt;/code&gt; header specifying the body payload size. Also, all responses having a status of 200 will also contain a &lt;code&gt;Content-Length&lt;/code&gt; response header.&lt;/p&gt;
+&lt;p&gt;API Version: &lt;code&gt;1.1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Host Address: &lt;code&gt;http://m2.exosite.com&lt;/code&gt; or &lt;code&gt;https://m2.exosite.com&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;If you&amp;#39;re completely new to Exosite&amp;#39;s APIs, you may want to read the &lt;a href=&quot;../README.md&quot;&gt;API overview&lt;/a&gt; first.&lt;/p&gt;
+&lt;h2 id=&quot;libraries-and-sample-code&quot;&gt;Libraries and Sample Code&lt;/h2&gt;
+&lt;p&gt;Wrapper libraries for this API:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Python: &lt;a href=&quot;https://github.com/exosite-labs/pyonep&quot;&gt;pyonep&lt;/a&gt; includes a module, provision.py, that wraps the provision API.&lt;/li&gt;
+&lt;li&gt;.NET: &lt;a href=&quot;https://github.com/exosite-labs/clronep&quot;&gt;clronep&lt;/a&gt; includes Provision.cs that wraps the provision API.&lt;/li&gt;
+&lt;li&gt;C++: &lt;a href=&quot;https://github.com/exosite-labs/cpponep&quot;&gt;cpponep&lt;/a&gt; includes Provision.cpp that wraps the provision API.&lt;/li&gt;
+&lt;li&gt;Go: &lt;a href=&quot;https://github.com/exosite-labs/goonep&quot;&gt;goonep&lt;/a&gt; includes provision.go that wraps the provision API.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Code samples that use this API:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/exosite-garage/provision_examples&quot;&gt;Provision Examples&lt;/a&gt; - socket level code intended as a reference for implementation in other languages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;conventions&quot;&gt;Conventions&lt;/h2&gt;
+&lt;p&gt;This document uses a few notational conventions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A name in angle brackets, e.g. &lt;code&gt;&amp;lt;myvar&amp;gt;&lt;/code&gt;, is a placeholder that will be defined elsewhere.&lt;/li&gt;
+&lt;li&gt;Items in curly braces, e.g., &lt;code&gt;{vendor=&amp;lt;id&amp;gt;}&lt;/code&gt;, are optional.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;...&lt;/code&gt; indicates the previous content is repeated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;http-responses&quot;&gt;HTTP Responses&lt;/h2&gt;
+&lt;p&gt;Typical HTTP response codes include:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;Code&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;Response&lt;/th&gt;
+&lt;th style=&quot;text-align:left&quot;&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;200&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;OK&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Successful request, returning requested values&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;204&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;No Content&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Successful request, nothing will be returned&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;4xx&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Client Error&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;There was an error with the request by the client&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;5xx&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;Server Error&lt;/td&gt;
+&lt;td style=&quot;text-align:left&quot;&gt;There was an error with the request on the server&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id=&quot;endpoints&quot;&gt;Endpoints&lt;/h1&gt;
+&lt;p&gt;The following procedures allow device OEMs to create custom fleet management applications. For many applications they do not need to be used since Portals wraps their functionality with a user interface.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionmanagecontentmodel&quot;&gt;/provision/manage/content/&amp;lt;model&amp;gt;/&lt;/a&gt; - list, create, or delete content &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionmanagecontentmodelid&quot;&gt;/provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;&lt;/a&gt; - get content information, groups  or blob, upload content, delete content&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionmanagegroupmodel&quot;&gt;/provision/manage/group/&amp;lt;model&amp;gt;/&lt;/a&gt; - show groups, create group, delete group&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionmanagegroupmodelid&quot;&gt;/provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;&lt;/a&gt; - get group meta, get group membership, delete group    &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionmanagegroupmodelid-1&quot;&gt;/provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;/&lt;/a&gt; - list group info, list types with group membership, get group member info, get group member id, add or update group members, delete group members&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionmanagemodel&quot;&gt;/provision/manage/model/&lt;/a&gt; - list models, list shared models, create model, delete model&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionmanagemodelmodel&quot;&gt;/provision/manage/model/&amp;lt;model&amp;gt;&lt;/a&gt; - get model info, update model, delete model&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionmanagemodelmodel-1&quot;&gt;/provision/manage/model/&amp;lt;model&amp;gt;/&lt;/a&gt; - list serial numbers, get serial number JSON object, add serial number(s), remove serial number(s)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionmanagemodelmodelsn&quot;&gt;/provision/manage/model/&amp;lt;model&amp;gt;/&amp;lt;sn&amp;gt;&lt;/a&gt; - get client RID, list serial number groups, get serial number activation log, create client from model, map client to new serial number, regenerate CIK, disable CIK, delete serial number&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionmanagesharemodel&quot;&gt;/provision/manage/share/&amp;lt;model&amp;gt;/&lt;/a&gt; - list vendors that share a model, create a model share, delete a model share.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionmanagesharemodelvendorname&quot;&gt;/provision/manage/share/&amp;lt;model&amp;gt;/&amp;lt;vendorname&amp;gt;&lt;/a&gt; - find out if model is shared with a vendor, delete model share &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionregister&quot;&gt;/provision/register&lt;/a&gt; - get registered vendor name for cik, register vendor name for CIK, unregister vendor name from CIK&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionadminauth&quot;&gt;/provision/admin/auth&lt;/a&gt; - list vendor token ids, create vendor token, delete vendor token&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#provisionadminauthid&quot;&gt;/provision/admin/auth/&amp;lt;id&amp;gt;&lt;/a&gt; - get vendor token, delete vendor token&lt;/p&gt;
+&lt;h2 id=&quot;-provision-manage-content-lt-model-gt-&quot;&gt;/provision/manage/content/&amp;lt;model&amp;gt;/&lt;/h2&gt;
+&lt;h3 id=&quot;get-list-content-ids&quot;&gt;GET - list content ids&lt;/h3&gt;
+&lt;p&gt;Returns list of content &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;s for &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/content/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
-&lt;blank line&gt;
-&lt;id 1&gt;
-&lt;id 2&gt;
+&amp;lt;blank line&amp;gt;
+&amp;lt;id 1&amp;gt;
+&amp;lt;id 2&amp;gt;
 ...
-&lt;id n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 400 Bad Request</code> if the <code>&lt;vendor&gt;</code> and <code>&lt;model&gt;</code> pair is invalid.</li>
-</ul>
-<h3 id="get-list-authorized-content">GET - list authorized content</h3>
-<p>Returns list of content <code>&lt;id&gt;</code>s authorized for access by <code>&lt;serialnumber&gt;</code>.</p>
-<pre><code>GET /provision/manage/content/&lt;model&gt;/?sn=&lt;serialnumber&gt; HTTP/1.1
+&amp;lt;id n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 400 Bad Request&lt;/code&gt; if the &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; pair is invalid.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;get-list-authorized-content&quot;&gt;GET - list authorized content&lt;/h3&gt;
+&lt;p&gt;Returns list of content &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;s authorized for access by &lt;code&gt;&amp;lt;serialnumber&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/content/&amp;lt;model&amp;gt;/?sn=&amp;lt;serialnumber&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
-&lt;blank line&gt;
-&lt;id 1&gt;
-&lt;id 2&gt;
+&amp;lt;blank line&amp;gt;
+&amp;lt;id 1&amp;gt;
+&amp;lt;id 2&amp;gt;
 ...
-&lt;id n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 400 Bad Request</code> if the <code>&lt;vendor&gt;</code>, <code>&lt;model&gt;</code> and <code>&lt;serialnumber&gt;</code> combination is invalid.</li>
-</ul>
-<h3 id="post-create-content-entity">POST - create content entity</h3>
-<p>Creates content entity bucket named <code>&lt;id&gt;</code>. If <code>protected</code> is not specified or
-<code>false</code> then the content entry is available to all model serial numbers.</p>
-<pre><code>POST /provision/manage/content/&lt;model&gt;/ HTTP/1.1
+&amp;lt;id n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 400 Bad Request&lt;/code&gt; if the &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;serialnumber&amp;gt;&lt;/code&gt; combination is invalid.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;post-create-content-entity&quot;&gt;POST - create content entity&lt;/h3&gt;
+&lt;p&gt;Creates content entity bucket named &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;. If &lt;code&gt;protected&lt;/code&gt; is not specified or
+&lt;code&gt;false&lt;/code&gt; then the content entry is available to all model serial numbers.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/content/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-id=&lt;id&gt;&amp;meta=&lt;meta&gt;{&amp;protected=true}
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+id=&amp;lt;id&amp;gt;&amp;amp;meta=&amp;lt;meta&amp;gt;{&amp;amp;protected=true}
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 409 Conflict</code> if <code>&lt;id&gt;</code> already exists.</li>
-</ul>
-<h3 id="post-delete-content-entry">POST - delete content entry</h3>
-<p>Deletes content management entry and associated content.</p>
-<pre><code>POST /provision/manage/content/&lt;model&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 409 Conflict&lt;/code&gt; if &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt; already exists.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;post-delete-content-entry&quot;&gt;POST - delete content entry&lt;/h3&gt;
+&lt;p&gt;Deletes content management entry and associated content.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/content/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-delete=true&amp;id=&lt;id&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+delete=true&amp;amp;id=&amp;lt;id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-manage-content-lt-model-gt-lt-id-gt-">/provision/manage/content/&lt;model&gt;/&lt;id&gt;</h2>
-<h3 id="get-get-content-info">GET - get content info</h3>
-<p>Returns information about the specified content <code>&lt;id&gt;</code>.</p>
-<pre><code>GET /provision/manage/content/&lt;model&gt;/&lt;id&gt; HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-manage-content-lt-model-gt-lt-id-gt-&quot;&gt;/provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;&lt;/h2&gt;
+&lt;h3 id=&quot;get-get-content-info&quot;&gt;GET - get content info&lt;/h3&gt;
+&lt;p&gt;Returns information about the specified content &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
-&lt;blank line&gt;
-&lt;content-type&gt;,&lt;byte-size&gt;,&lt;updated-timestamp&gt;,&lt;meta&gt;,&lt;protected&gt;
-</code></pre><h3 id="get-get-content-blob">GET - get content blob</h3>
-<p>Returns the <code>&lt;blob&gt;</code> of the specified content <code>&lt;id&gt;</code>. <code>Range</code> is optional –
+&amp;lt;blank line&amp;gt;
+&amp;lt;content-type&amp;gt;,&amp;lt;byte-size&amp;gt;,&amp;lt;updated-timestamp&amp;gt;,&amp;lt;meta&amp;gt;,&amp;lt;protected&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;get-get-content-blob&quot;&gt;GET - get content blob&lt;/h3&gt;
+&lt;p&gt;Returns the &lt;code&gt;&amp;lt;blob&amp;gt;&lt;/code&gt; of the specified content &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;. &lt;code&gt;Range&lt;/code&gt; is optional –
 it allows the caller to request a chunk of bytes at a time. 
-<code>&lt;range-specifier&gt;</code> takes the form of <code>X-Y</code> where both <code>X</code> and <code>Y</code> are 
-optional but at least one of them must be present. <code>X</code> is the start byte 
-position to return, <code>Y</code> is the end position. Both are 0 based. If <code>X</code> is 
-omitted, <code>Y</code> will request the last <code>Y</code> count of bytes of the content. If <code>Y</code>
+&lt;code&gt;&amp;lt;range-specifier&amp;gt;&lt;/code&gt; takes the form of &lt;code&gt;X-Y&lt;/code&gt; where both &lt;code&gt;X&lt;/code&gt; and &lt;code&gt;Y&lt;/code&gt; are 
+optional but at least one of them must be present. &lt;code&gt;X&lt;/code&gt; is the start byte 
+position to return, &lt;code&gt;Y&lt;/code&gt; is the end position. Both are 0 based. If &lt;code&gt;X&lt;/code&gt; is 
+omitted, &lt;code&gt;Y&lt;/code&gt; will request the last &lt;code&gt;Y&lt;/code&gt; count of bytes of the content. If &lt;code&gt;Y&lt;/code&gt;
 is omitted, it will default to the end of the content. Note that the 
-<code>&lt;content-type&gt;</code> of the <code>&lt;blob&gt;</code> is based on the type set in the <code>POST</code> to 
-<code>/provision/manage/content/&lt;model&gt;/&lt;id&gt;</code>.</p>
-<pre><code>GET /provision/manage/content/&lt;model&gt;/&lt;id&gt;?download=true HTTP/1.1
+&lt;code&gt;&amp;lt;content-type&amp;gt;&lt;/code&gt; of the &lt;code&gt;&amp;lt;blob&amp;gt;&lt;/code&gt; is based on the type set in the &lt;code&gt;POST&lt;/code&gt; to 
+&lt;code&gt;/provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;?download=true HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-{Range: bytes=&lt;range-specifier&gt;}
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+{Range: bytes=&amp;lt;range-specifier&amp;gt;}
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 {Accept-Ranges: bytes}
-Content-Length: &lt;number of bytes being returned&gt;
-{Content-Range: bytes &lt;first position&gt;-&lt;last position&gt;/&lt;total length&gt;}
-Content-Type: &lt;content-type&gt;
+Content-Length: &amp;lt;number of bytes being returned&amp;gt;
+{Content-Range: bytes &amp;lt;first position&amp;gt;-&amp;lt;last position&amp;gt;/&amp;lt;total length&amp;gt;}
+Content-Type: &amp;lt;content-type&amp;gt;
 
-&lt;blob&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 206 Partial Content</code> if the response is partial.</li>
-<li><code>HTTP/1.1 403 Forbidden</code> if the <code>&lt;vendor&gt;</code> and <code>&lt;model&gt;</code> pair is invalid.</li>
-</ul>
-<h3 id="get-get-content-info">GET - get content info</h3>
-<p>Returns information of the specified content <code>&lt;id&gt;</code> if <code>&lt;serialnumber&gt;</code> is 
-authorized to download it.</p>
-<pre><code>GET /provision/manage/content/&lt;model&gt;/&lt;id&gt;?sn=&lt;serialnumber&gt; HTTP/1.1
+&amp;lt;blob&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 206 Partial Content&lt;/code&gt; if the response is partial.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 403 Forbidden&lt;/code&gt; if the &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; pair is invalid.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;get-get-content-info&quot;&gt;GET - get content info&lt;/h3&gt;
+&lt;p&gt;Returns information of the specified content &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt; if &lt;code&gt;&amp;lt;serialnumber&amp;gt;&lt;/code&gt; is 
+authorized to download it.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;?sn=&amp;lt;serialnumber&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-Content-Length: &lt;length&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+Content-Length: &amp;lt;length&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
 
-&lt;content-type&gt;,&lt;byte-size&gt;,&lt;updated-timestamp&gt;,&lt;meta&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 400 Bad Request</code> if the <code>&lt;vendor&gt;</code>, <code>&lt;model&gt;</code> and <code>&lt;serialnumber&gt;</code> combination is invalid.</li>
-</ul>
-<h3 id="get-get-content-blob">GET - get content blob</h3>
-<p>If <code>&lt;serialnumber&gt;</code> is authorized for the content, then the <code>&lt;id&gt;</code> content 
-blob, or its requested range, is returned. The <code>Range</code> header 
+&amp;lt;content-type&amp;gt;,&amp;lt;byte-size&amp;gt;,&amp;lt;updated-timestamp&amp;gt;,&amp;lt;meta&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 400 Bad Request&lt;/code&gt; if the &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;serialnumber&amp;gt;&lt;/code&gt; combination is invalid.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;get-get-content-blob&quot;&gt;GET - get content blob&lt;/h3&gt;
+&lt;p&gt;If &lt;code&gt;&amp;lt;serialnumber&amp;gt;&lt;/code&gt; is authorized for the content, then the &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt; content 
+blob, or its requested range, is returned. The &lt;code&gt;Range&lt;/code&gt; header 
 is optional – it allows the caller to request a chunk of bytes at a time. 
-<code>&lt;range-specifier&gt;</code> takes the form <code>X-Y</code> where both <code>X</code> and <code>Y</code> are optional 
-but at least one of them must be present. <code>X</code> is the start byte position to 
-return, <code>Y</code> is the end position. Both are 0 based. If <code>X</code> is omitted, <code>Y</code> will
-request the last <code>Y</code> count of bytes of the content. If <code>Y</code> is omitted, it will
-default to the end of the content. Note that the <code>&lt;content-type&gt;</code> of <code>&lt;blob&gt;</code> 
-is based on the type set in the <code>POST</code> to 
-<code>/provision/manage/content/&lt;model&gt;/&lt;id&gt;</code>.</p>
-<pre><code>GET /provision/manage/content/&lt;model&gt;/&lt;id&gt;?download=true&amp;sn=&lt;serialnumber&gt; HTTP/1.1
+&lt;code&gt;&amp;lt;range-specifier&amp;gt;&lt;/code&gt; takes the form &lt;code&gt;X-Y&lt;/code&gt; where both &lt;code&gt;X&lt;/code&gt; and &lt;code&gt;Y&lt;/code&gt; are optional 
+but at least one of them must be present. &lt;code&gt;X&lt;/code&gt; is the start byte position to 
+return, &lt;code&gt;Y&lt;/code&gt; is the end position. Both are 0 based. If &lt;code&gt;X&lt;/code&gt; is omitted, &lt;code&gt;Y&lt;/code&gt; will
+request the last &lt;code&gt;Y&lt;/code&gt; count of bytes of the content. If &lt;code&gt;Y&lt;/code&gt; is omitted, it will
+default to the end of the content. Note that the &lt;code&gt;&amp;lt;content-type&amp;gt;&lt;/code&gt; of &lt;code&gt;&amp;lt;blob&amp;gt;&lt;/code&gt; 
+is based on the type set in the &lt;code&gt;POST&lt;/code&gt; to 
+&lt;code&gt;/provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;?download=true&amp;amp;sn=&amp;lt;serialnumber&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-{Range: bytes=&lt;range-specifier&gt;}
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+{Range: bytes=&amp;lt;range-specifier&amp;gt;}
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 {Accept-Ranges: bytes}
-Content-Length: &lt;number of bytes being returned&gt;
-{Content-Range: bytes &lt;first position&gt;-&lt;last position&gt;/&lt;total length&gt;}
-Content-Type: &lt;content-type&gt;
+Content-Length: &amp;lt;number of bytes being returned&amp;gt;
+{Content-Range: bytes &amp;lt;first position&amp;gt;-&amp;lt;last position&amp;gt;/&amp;lt;total length&amp;gt;}
+Content-Type: &amp;lt;content-type&amp;gt;
 
-&lt;blob&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 206 Partial Content</code> if the response is partial.</li>
-<li><code>HTTP/1.1 403 Forbidden</code> if the <code>&lt;vendor&gt;</code> and <code>&lt;model&gt;</code> pair is invalid.</li>
-</ul>
-<h3 id="get-list-groups">GET - list groups</h3>
-<p>Returns the list of <code>&lt;group id&gt;</code>s which this content is a member of, if any, 
-in paginated sets of size <code>&lt;limit&gt;</code> starting at <code>&lt;offset&gt;</code>, limit is 
-enforced to be between 5 and 1000. If omitted, <code>&lt;offset&gt;</code> and <code>&lt;limit&gt;</code> will
-respectively default to 0 and 5.</p>
-<pre><code>GET /provision/manage/content/&lt;model&gt;/&lt;id&gt;?show=groups{&amp;offset=&lt;offset&gt;&amp;limit=&lt;limit&gt;} HTTP/1.1
+&amp;lt;blob&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 206 Partial Content&lt;/code&gt; if the response is partial.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 403 Forbidden&lt;/code&gt; if the &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; pair is invalid.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;get-list-groups&quot;&gt;GET - list groups&lt;/h3&gt;
+&lt;p&gt;Returns the list of &lt;code&gt;&amp;lt;group id&amp;gt;&lt;/code&gt;s which this content is a member of, if any, 
+in paginated sets of size &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; starting at &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt;, limit is 
+enforced to be between 5 and 1000. If omitted, &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; will
+respectively default to 0 and 5.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;?show=groups{&amp;amp;offset=&amp;lt;offset&amp;gt;&amp;amp;limit=&amp;lt;limit&amp;gt;} HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
-&lt;blankline&gt;
-&lt;group id 1&gt;
-&lt;group id 2&gt;
+&amp;lt;blankline&amp;gt;
+&amp;lt;group id 1&amp;gt;
+&amp;lt;group id 2&amp;gt;
 ...
-&lt;group id n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 204 No Content</code> if content <code>&lt;id&gt;</code> is not a member of any group.</li>
-</ul>
-<h3 id="post-upload-content">POST - upload content</h3>
-<p>Stores <code>&lt;blob&gt;</code> as the payload for <code>&lt;id&gt;</code> under the given model. The given 
-<code>&lt;content-type&gt;</code> is used as the <code>Content-Type</code> in subsequent download requests
-for the <code>&lt;id&gt;</code>. Stores the payload for the given model with given
-<code>Content-Type</code>.</p>
-<pre><code>POST /provision/manage/content/&lt;model&gt;/&lt;id&gt; HTTP/1.1
+&amp;lt;group id n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 204 No Content&lt;/code&gt; if content &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt; is not a member of any group.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;post-upload-content&quot;&gt;POST - upload content&lt;/h3&gt;
+&lt;p&gt;Stores &lt;code&gt;&amp;lt;blob&amp;gt;&lt;/code&gt; as the payload for &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt; under the given model. The given 
+&lt;code&gt;&amp;lt;content-type&amp;gt;&lt;/code&gt; is used as the &lt;code&gt;Content-Type&lt;/code&gt; in subsequent download requests
+for the &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;. Stores the payload for the given model with given
+&lt;code&gt;Content-Type&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-Content-Type: &lt;content-type&gt;
-Content-Length: &lt;length&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+Content-Type: &amp;lt;content-type&amp;gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-&lt;blob&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+&amp;lt;blob&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 409 Conflict</code> if <code>&lt;id&gt;</code> already exists.</li>
-</ul>
-<h3 id="delete-delete-content">DELETE - delete content</h3>
-<p>Deletes content <code>&lt;id&gt;</code>, and all payload and information, under the given 
-<code>&lt;model&gt;</code>.</p>
-<pre><code>DELETE /provision/manage/content/&lt;model&gt;/&lt;id&gt; HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 409 Conflict&lt;/code&gt; if &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt; already exists.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;delete-delete-content&quot;&gt;DELETE - delete content&lt;/h3&gt;
+&lt;p&gt;Deletes content &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;, and all payload and information, under the given 
+&lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DELETE /provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-manage-group-lt-model-gt-">/provision/manage/group/&lt;model&gt;/</h2>
-<h3 id="get-show-groups">GET - show groups</h3>
-<p>Returns list of <code>&lt;group id&gt;</code>s with <code>&lt;meta&gt;</code> for <code>&lt;model&gt;</code> in
-paginated sets of size <code>&lt;limit&gt;</code> starting at <code>&lt;offset&gt;</code>. <code>&lt;limit&gt;</code> is enforced 
-to be between 5 and 1000. If omitted, <code>&lt;offset&gt;</code> defaults to 0 and <code>&lt;limit&gt;</code>
-defaults to 5.</p>
-<pre><code>GET /provision/manage/group/&lt;model&gt;/{?offset=&lt;offset&gt;&amp;limit=&lt;limit&gt;} HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-manage-group-lt-model-gt-&quot;&gt;/provision/manage/group/&amp;lt;model&amp;gt;/&lt;/h2&gt;
+&lt;h3 id=&quot;get-show-groups&quot;&gt;GET - show groups&lt;/h3&gt;
+&lt;p&gt;Returns list of &lt;code&gt;&amp;lt;group id&amp;gt;&lt;/code&gt;s with &lt;code&gt;&amp;lt;meta&amp;gt;&lt;/code&gt; for &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; in
+paginated sets of size &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; starting at &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt;. &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; is enforced 
+to be between 5 and 1000. If omitted, &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt; defaults to 0 and &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt;
+defaults to 5.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/group/&amp;lt;model&amp;gt;/{?offset=&amp;lt;offset&amp;gt;&amp;amp;limit=&amp;lt;limit&amp;gt;} HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
-&lt;blankline&gt;
-&lt;group id 1&gt;,&lt;meta 1&gt;
-&lt;group id 2&gt;,&lt;meta 2&gt;
+&amp;lt;blankline&amp;gt;
+&amp;lt;group id 1&amp;gt;,&amp;lt;meta 1&amp;gt;
+&amp;lt;group id 2&amp;gt;,&amp;lt;meta 2&amp;gt;
 ...
-&lt;group id n&gt;,&lt;meta n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 204 No Content</code> if there are no matching groups.</li>
-</ul>
-<h3 id="post-create-group">POST - create group</h3>
-<p>Creates a new group with given <code>&lt;id&gt;</code> and <code>&lt;meta&gt;</code>.</p>
-<pre><code>POST /provision/manage/group/&lt;model&gt;/ HTTP/1.1
+&amp;lt;group id n&amp;gt;,&amp;lt;meta n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 204 No Content&lt;/code&gt; if there are no matching groups.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;post-create-group&quot;&gt;POST - create group&lt;/h3&gt;
+&lt;p&gt;Creates a new group with given &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;meta&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/group/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-id=&lt;id&gt;&amp;meta=&lt;meta&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+id=&amp;lt;id&amp;gt;&amp;amp;meta=&amp;lt;meta&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 409 Conflict</code> if group <code>&lt;id&gt;</code> already exists.</li>
-</ul>
-<h3 id="post-delete-group">POST - delete group</h3>
-<p>Deletes the group with given <code>&lt;id&gt;</code>.</p>
-<pre><code>POST /provision/manage/group/&lt;model&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 409 Conflict&lt;/code&gt; if group &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt; already exists.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;post-delete-group&quot;&gt;POST - delete group&lt;/h3&gt;
+&lt;p&gt;Deletes the group with given &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/group/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-id=&lt;id&gt;&amp;delete=true
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+id=&amp;lt;id&amp;gt;&amp;amp;delete=true
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-manage-group-lt-model-gt-lt-id-gt-">/provision/manage/group/&lt;model&gt;/&lt;id&gt;</h2>
-<h3 id="get-get-group-meta">GET - get group meta</h3>
-<p>Returns the <code>&lt;meta&gt;</code> and the number of members of group <code>&lt;id&gt;</code>.</p>
-<pre><code>GET /provision/manage/group/&lt;model&gt;/&lt;id&gt; HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-manage-group-lt-model-gt-lt-id-gt-&quot;&gt;/provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;&lt;/h2&gt;
+&lt;h3 id=&quot;get-get-group-meta&quot;&gt;GET - get group meta&lt;/h3&gt;
+&lt;p&gt;Returns the &lt;code&gt;&amp;lt;meta&amp;gt;&lt;/code&gt; and the number of members of group &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
 
-&lt;meta&gt;,&lt;count&gt;
-</code></pre><h3 id="get-get-group-membership">GET - get group membership</h3>
-<p>Returns the list of <code>&lt;group id&gt;</code>s of which this group is a member,
-in paginated sets of size <code>&lt;limit&gt;</code> starting at <code>&lt;offset&gt;</code>, limit is enforced
-to be between 5 and 1000. If omitted, <code>&lt;offset&gt;</code> and <code>&lt;limit&gt;</code> will 
-respectively default to 0 and 5. </p>
-<pre><code>GET /provision/manage/group/&lt;model&gt;/&lt;id&gt;?show=groups{&amp;offset=&lt;offset&gt;&amp;limit=&lt;limit&gt;} HTTP/1.1
+&amp;lt;meta&amp;gt;,&amp;lt;count&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;get-get-group-membership&quot;&gt;GET - get group membership&lt;/h3&gt;
+&lt;p&gt;Returns the list of &lt;code&gt;&amp;lt;group id&amp;gt;&lt;/code&gt;s of which this group is a member,
+in paginated sets of size &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; starting at &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt;, limit is enforced
+to be between 5 and 1000. If omitted, &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; will 
+respectively default to 0 and 5. &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;?show=groups{&amp;amp;offset=&amp;lt;offset&amp;gt;&amp;amp;limit=&amp;lt;limit&amp;gt;} HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
-&lt;blankline&gt;
-&lt;group id 1&gt;
-&lt;group id 2&gt;
+&amp;lt;blankline&amp;gt;
+&amp;lt;group id 1&amp;gt;
+&amp;lt;group id 2&amp;gt;
 ...
-&lt;group id n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 204 No Content</code> if the group is not a member of any other groups.</li>
-</ul>
-<h3 id="delete-delete-group">DELETE - delete group</h3>
-<p>Deletes group <id>.</p>
-<pre><code>DELETE /provision/manage/group/&lt;model&gt;/&lt;id&gt; HTTP/1.1
+&amp;lt;group id n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 204 No Content&lt;/code&gt; if the group is not a member of any other groups.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;delete-delete-group&quot;&gt;DELETE - delete group&lt;/h3&gt;
+&lt;p&gt;Deletes group &lt;id&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DELETE /provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-manage-group-lt-model-gt-lt-id-gt-">/provision/manage/group/&lt;model&gt;/&lt;id&gt;/</h2>
-<h3 id="get-list-group-info">GET - list group info</h3>
-<p>Returns information about all members of this group in paginated sets of 
-size <code>&lt;limit&gt;</code> starting at <code>&lt;offset&gt;</code>. <code>&lt;limit&gt;</code> is enforced to be between 
-5 and 1000. If omitted, <code>&lt;offset&gt;</code> defaults to 0 and <code>&lt;limit&gt;</code> defaults to
-5.</p>
-<pre><code>GET /provision/manage/group/&lt;model&gt;/&lt;id&gt;/?{?offset=&lt;offset&gt;&amp;limit=&lt;limit&gt;} HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-manage-group-lt-model-gt-lt-id-gt-&quot;&gt;/provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;/&lt;/h2&gt;
+&lt;h3 id=&quot;get-list-group-info&quot;&gt;GET - list group info&lt;/h3&gt;
+&lt;p&gt;Returns information about all members of this group in paginated sets of 
+size &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; starting at &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt;. &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; is enforced to be between 
+5 and 1000. If omitted, &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt; defaults to 0 and &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; defaults to
+5.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;/?{?offset=&amp;lt;offset&amp;gt;&amp;amp;limit=&amp;lt;limit&amp;gt;} HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
-&lt;blankline&gt;
-&lt;type 1&gt;,&lt;memberid 1&gt;,&lt;expire 1&gt;,&lt;meta 1&gt;
-&lt;type 2&gt;,&lt;memberid 2&gt;,&lt;expire 2&gt;,&lt;meta 2&gt;
+&amp;lt;blankline&amp;gt;
+&amp;lt;type 1&amp;gt;,&amp;lt;memberid 1&amp;gt;,&amp;lt;expire 1&amp;gt;,&amp;lt;meta 1&amp;gt;
+&amp;lt;type 2&amp;gt;,&amp;lt;memberid 2&amp;gt;,&amp;lt;expire 2&amp;gt;,&amp;lt;meta 2&amp;gt;
 ...
-&lt;type n&gt;,&lt;memberid n&gt;,&lt;expire n&gt;,&lt;meta n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 204 No Content</code> if the group does not have any members.</li>
-</ul>
-<h3 id="get-list-types-with-group-membership">GET - list types with group membership</h3>
-<p>Returns information about all members of specified <code>&lt;type&gt;</code> in this group, in
-paginated sets of size <code>&lt;limit&gt;</code> starting at <code>&lt;offset&gt;</code>. <code>&lt;limit&gt;</code> is enforced
-to be between 5 and 1000. If omitted, <code>&lt;offset&gt;</code> defaults to 0 and <code>&lt;limit&gt;</code> 
-defaults to 5.</p>
-<pre><code>GET /provision/manage/group/&lt;model&gt;/&lt;id&gt;/?type=&lt;type&gt;{&amp;offset=&lt;offset&gt;&amp;limit=&lt;limit&gt;} HTTP/1.1
+&amp;lt;type n&amp;gt;,&amp;lt;memberid n&amp;gt;,&amp;lt;expire n&amp;gt;,&amp;lt;meta n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 204 No Content&lt;/code&gt; if the group does not have any members.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;get-list-types-with-group-membership&quot;&gt;GET - list types with group membership&lt;/h3&gt;
+&lt;p&gt;Returns information about all members of specified &lt;code&gt;&amp;lt;type&amp;gt;&lt;/code&gt; in this group, in
+paginated sets of size &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; starting at &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt;. &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; is enforced
+to be between 5 and 1000. If omitted, &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt; defaults to 0 and &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; 
+defaults to 5.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;/?type=&amp;lt;type&amp;gt;{&amp;amp;offset=&amp;lt;offset&amp;gt;&amp;amp;limit=&amp;lt;limit&amp;gt;} HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
-&lt;blankline&gt;
-&lt;type 1&gt;,&lt;memberid 1&gt;,&lt;expire 1&gt;,&lt;meta 1&gt;
-&lt;type 2&gt;,&lt;memberid 2&gt;,&lt;expire 2&gt;,&lt;meta 2&gt;
+&amp;lt;blankline&amp;gt;
+&amp;lt;type 1&amp;gt;,&amp;lt;memberid 1&amp;gt;,&amp;lt;expire 1&amp;gt;,&amp;lt;meta 1&amp;gt;
+&amp;lt;type 2&amp;gt;,&amp;lt;memberid 2&amp;gt;,&amp;lt;expire 2&amp;gt;,&amp;lt;meta 2&amp;gt;
 ...
-&lt;type n&gt;,&lt;memberid n&gt;,&lt;expire n&gt;,&lt;meta n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 204 No Content</code> if the group does not have any members of specified type.</li>
-</ul>
-<h3 id="get-get-group-member-info">GET - get group member info</h3>
-<p>Returns information of members of <code>&lt;id&gt;</code> in the group.</p>
-<pre><code>GET /provision/manage/group/&lt;model&gt;/&lt;id&gt;/?id=&lt;id&gt; HTTP/1.1
+&amp;lt;type n&amp;gt;,&amp;lt;memberid n&amp;gt;,&amp;lt;expire n&amp;gt;,&amp;lt;meta n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 204 No Content&lt;/code&gt; if the group does not have any members of specified type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;get-get-group-member-info&quot;&gt;GET - get group member info&lt;/h3&gt;
+&lt;p&gt;Returns information of members of &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt; in the group.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;/?id=&amp;lt;id&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
 
-&lt;type 1&gt;,&lt;memberid 1&gt;,&lt;expire 1&gt;,&lt;meta 1&gt;
-&lt;type 2&gt;,&lt;memberid 2&gt;,&lt;expire 2&gt;,&lt;meta 2&gt;
+&amp;lt;type 1&amp;gt;,&amp;lt;memberid 1&amp;gt;,&amp;lt;expire 1&amp;gt;,&amp;lt;meta 1&amp;gt;
+&amp;lt;type 2&amp;gt;,&amp;lt;memberid 2&amp;gt;,&amp;lt;expire 2&amp;gt;,&amp;lt;meta 2&amp;gt;
 ...
-&lt;type n&gt;,&lt;memberid n&gt;,&lt;expire n&gt;,&lt;meta n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 204 No Content</code> if the group does not have any members that match <code>&lt;id&gt;</code>.</li>
-</ul>
-<h3 id="get-get-group-member-info">GET - get group member info</h3>
-<p>Returns information about specified member in the group.</p>
-<pre><code>GET /provision/manage/group/&lt;model&gt;/&lt;id&gt;/?type=&lt;type&gt;&amp;id=&lt;id&gt; HTTP/1.1
+&amp;lt;type n&amp;gt;,&amp;lt;memberid n&amp;gt;,&amp;lt;expire n&amp;gt;,&amp;lt;meta n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 204 No Content&lt;/code&gt; if the group does not have any members that match &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;get-get-group-member-info&quot;&gt;GET - get group member info&lt;/h3&gt;
+&lt;p&gt;Returns information about specified member in the group.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;/?type=&amp;lt;type&amp;gt;&amp;amp;id=&amp;lt;id&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
 
-&lt;type&gt;,&lt;memberid&gt;,&lt;expire&gt;,&lt;meta&gt;
-</code></pre><h3 id="post-add-or-update-similar-group-members">POST - add or update similar group members</h3>
-<p>Adds or updates a member or members to a group, all with the same <code>&lt;type&gt;</code>,
-<code>&lt;expire&gt;</code> time and <code>&lt;meta&gt;</code>, but with different <code>&lt;member id&gt;</code>s.</p>
-<pre><code>POST /provision/manage/group/&lt;model&gt;/&lt;id&gt;/ HTTP/1.1
+&amp;lt;type&amp;gt;,&amp;lt;memberid&amp;gt;,&amp;lt;expire&amp;gt;,&amp;lt;meta&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-add-or-update-similar-group-members&quot;&gt;POST - add or update similar group members&lt;/h3&gt;
+&lt;p&gt;Adds or updates a member or members to a group, all with the same &lt;code&gt;&amp;lt;type&amp;gt;&lt;/code&gt;,
+&lt;code&gt;&amp;lt;expire&amp;gt;&lt;/code&gt; time and &lt;code&gt;&amp;lt;meta&amp;gt;&lt;/code&gt;, but with different &lt;code&gt;&amp;lt;member id&amp;gt;&lt;/code&gt;s.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-type=&lt;type&gt;&amp;id=&lt;member id&gt;&amp;expire=&lt;expire&gt;&amp;meta=&lt;meta&gt;
+type=&amp;lt;type&amp;gt;&amp;amp;id=&amp;lt;member id&amp;gt;&amp;amp;expire=&amp;lt;expire&amp;gt;&amp;amp;meta=&amp;lt;meta&amp;gt;
  OR
-type=&lt;type&gt;&amp;id[]=&lt;member id1&gt;{...&amp;id[]=&lt;member idN&gt;}&amp;expire=&lt;expire&gt;&amp;meta=&lt;meta&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+type=&amp;lt;type&amp;gt;&amp;amp;id[]=&amp;lt;member id1&amp;gt;{...&amp;amp;id[]=&amp;lt;member idN&amp;gt;}&amp;amp;expire=&amp;lt;expire&amp;gt;&amp;amp;meta=&amp;lt;meta&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="post-add-or-update-dissimilar-group-members">POST - add or update dissimilar group members</h3>
-<p>Adds or updates a member or members to a group, all with different <code>&lt;type&gt;</code>, 
-<code>&lt;expire&gt;</code> time, <code>&lt;meta&gt;</code> and <code>&lt;member id&gt;</code>s.</p>
-<pre><code>POST /provision/manage/group/&lt;model&gt;/&lt;id&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-add-or-update-dissimilar-group-members&quot;&gt;POST - add or update dissimilar group members&lt;/h3&gt;
+&lt;p&gt;Adds or updates a member or members to a group, all with different &lt;code&gt;&amp;lt;type&amp;gt;&lt;/code&gt;, 
+&lt;code&gt;&amp;lt;expire&amp;gt;&lt;/code&gt; time, &lt;code&gt;&amp;lt;meta&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;member id&amp;gt;&lt;/code&gt;s.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: text/csv; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-&lt;type 1&gt;,&lt;memberid 1&gt;,&lt;expire 1&gt;,&lt;meta 1&gt;
-&lt;type 2&gt;,&lt;memberid 2&gt;,&lt;expire 2&gt;,&lt;meta 2&gt;
+&amp;lt;type 1&amp;gt;,&amp;lt;memberid 1&amp;gt;,&amp;lt;expire 1&amp;gt;,&amp;lt;meta 1&amp;gt;
+&amp;lt;type 2&amp;gt;,&amp;lt;memberid 2&amp;gt;,&amp;lt;expire 2&amp;gt;,&amp;lt;meta 2&amp;gt;
 ...
-&lt;type n&gt;,&lt;memberid n&gt;,&lt;expire n&gt;,&lt;meta n&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+&amp;lt;type n&amp;gt;,&amp;lt;memberid n&amp;gt;,&amp;lt;expire n&amp;gt;,&amp;lt;meta n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="post-delete-similar-group-members">POST - delete similar group members</h3>
-<p>Deletes a member or members of specified type, with specified id(s), from
-this group.</p>
-<pre><code>POST /provision/manage/group/&lt;model&gt;/&lt;id&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-delete-similar-group-members&quot;&gt;POST - delete similar group members&lt;/h3&gt;
+&lt;p&gt;Deletes a member or members of specified type, with specified id(s), from
+this group.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-type=&lt;type&gt;&amp;id=&lt;member id&gt;&amp;delete=true
+type=&amp;lt;type&amp;gt;&amp;amp;id=&amp;lt;member id&amp;gt;&amp;amp;delete=true
 OR
-type=&lt;type&gt;&amp;id[]=&lt;member id1&gt;{...&amp;id[]=&lt;member idN&gt;}&amp;delete=true
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+type=&amp;lt;type&amp;gt;&amp;amp;id[]=&amp;lt;member id1&amp;gt;{...&amp;amp;id[]=&amp;lt;member idN&amp;gt;}&amp;amp;delete=true
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="delete-delete-members-of-group">DELETE - delete members of group</h3>
-<p>Deletes members matching specified <code>&lt;type&gt;</code>s and <code>&lt;id&gt;</code>s.</p>
-<pre><code>DELETE /provision/manage/group/&lt;model&gt;/&lt;id&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;delete-delete-members-of-group&quot;&gt;DELETE - delete members of group&lt;/h3&gt;
+&lt;p&gt;Deletes members matching specified &lt;code&gt;&amp;lt;type&amp;gt;&lt;/code&gt;s and &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;s.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DELETE /provision/manage/group/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: text/csv; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-&lt;type 1&gt;,&lt;id 1&gt;
-&lt;type 2&gt;,&lt;id 2&gt;
+&amp;lt;type 1&amp;gt;,&amp;lt;id 1&amp;gt;
+&amp;lt;type 2&amp;gt;,&amp;lt;id 2&amp;gt;
 ...
-&lt;type n&gt;,&lt;id n&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+&amp;lt;type n&amp;gt;,&amp;lt;id n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-manage-model-">/provision/manage/model/</h2>
-<h3 id="get-list-models">GET - list models</h3>
-<p>Returns list of models owned by the vendor.</p>
-<pre><code>GET /provision/manage/model/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-manage-model-&quot;&gt;/provision/manage/model/&lt;/h2&gt;
+&lt;h3 id=&quot;get-list-models&quot;&gt;GET - list models&lt;/h3&gt;
+&lt;p&gt;Returns list of models owned by the vendor.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/model/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
-Content-Type: text/csv; charset=utf-8
-
-&lt;model 1&gt;
-&lt;model 2&gt;
-...
-&lt;model n&gt;
-</code></pre><h3 id="get-list-shared-models">GET - list shared models</h3>
-<p>Returns list of models that other vendors have shared to the calling vendor.</p>
-<pre><code>GET /provision/manage/model/?show=shared HTTP/1.1
-Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
-Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
 
-&lt;vendorname 1&gt;,&lt;model 1&gt;
-&lt;vendorname 2&gt;,&lt;model 2&gt;
+&amp;lt;model 1&amp;gt;
+&amp;lt;model 2&amp;gt;
 ...
-&lt;vendorname n&gt;,&lt;model n&gt;
-</code></pre><h3 id="post-create-model">POST - create model</h3>
-<p>Adds a model, using <code>&lt;rid&gt;</code> or <code>&lt;code&gt;</code> as the clone template.</p>
-<pre><code>POST /provision/manage/model/ HTTP/1.1
+&amp;lt;model n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;get-list-shared-models&quot;&gt;GET - list shared models&lt;/h3&gt;
+&lt;p&gt;Returns list of models that other vendors have shared to the calling vendor.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/model/?show=shared HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
+Connection: Keep-Alive
+Content-Length: &amp;lt;length&amp;gt;
+Content-Type: text/csv; charset=utf-8
 
-model=&lt;model&gt;&amp;rid=&lt;rid&gt;&amp;options[]=noaliases&amp;options[]=nocomments
-   &amp;options[]=nohistorical
+&amp;lt;vendorname 1&amp;gt;,&amp;lt;model 1&amp;gt;
+&amp;lt;vendorname 2&amp;gt;,&amp;lt;model 2&amp;gt;
+...
+&amp;lt;vendorname n&amp;gt;,&amp;lt;model n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-create-model&quot;&gt;POST - create model&lt;/h3&gt;
+&lt;p&gt;Adds a model, using &lt;code&gt;&amp;lt;rid&amp;gt;&lt;/code&gt; or &lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt; as the clone template.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/ HTTP/1.1
+Host: m2.exosite.com
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+Content-Length: &amp;lt;length&amp;gt;
+
+model=&amp;lt;model&amp;gt;&amp;amp;rid=&amp;lt;rid&amp;gt;&amp;amp;options[]=noaliases&amp;amp;options[]=nocomments
+   &amp;amp;options[]=nohistorical
 OR
-model=&lt;model&gt;&amp;code=&lt;code&gt;&amp;options[]=noaliases&amp;options[]=nocomments
-   &amp;options[]=nohistorical
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+model=&amp;lt;model&amp;gt;&amp;amp;code=&amp;lt;code&amp;gt;&amp;amp;options[]=noaliases&amp;amp;options[]=nocomments
+   &amp;amp;options[]=nohistorical
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 409 Conflict</code> if another model called <code>&lt;model&gt;</code> already exists.</li>
-</ul>
-<h3 id="post-delete-model">POST - delete model</h3>
-<p>Deletes specified provisioning model and all associated serial numbers and 
-content.</p>
-<pre><code>POST /provision/manage/model/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 409 Conflict&lt;/code&gt; if another model called &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; already exists.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;post-delete-model&quot;&gt;POST - delete model&lt;/h3&gt;
+&lt;p&gt;Deletes specified provisioning model and all associated serial numbers and 
+content.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-delete=true&amp;model=&lt;model&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+delete=true&amp;amp;model=&amp;lt;model&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-manage-model-lt-model-gt-">/provision/manage/model/&lt;model&gt;</h2>
-<h3 id="get-get-model-info">GET - get model info</h3>
-<p>Get model information.</p>
-<pre><code>GET /provision/manage/model/&lt;model&gt; HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-manage-model-lt-model-gt-&quot;&gt;/provision/manage/model/&amp;lt;model&amp;gt;&lt;/h2&gt;
+&lt;h3 id=&quot;get-get-model-info&quot;&gt;GET - get model info&lt;/h3&gt;
+&lt;p&gt;Get model information.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/model/&amp;lt;model&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
 
-rid=&lt;rid&gt;&amp;options[]=noaliases&amp;options[]=nocomments&amp;options=nohistorical
+rid=&amp;lt;rid&amp;gt;&amp;amp;options[]=noaliases&amp;amp;options[]=nocomments&amp;amp;options=nohistorical
 OR
-code=&lt;code&gt;&amp;options[]=noaliases&amp;options[]=nocomments&amp;options[]=nohistorical
-</code></pre><h3 id="put-update-model">PUT - update model</h3>
-<p>Updates <code>&lt;model&gt;</code> with new <code>&lt;option&gt;</code>s and <code>&lt;rid&gt;</code> or <code>&lt;code&gt;</code>.</p>
-<pre><code>PUT /provision/manage/model/&lt;model&gt; HTTP/1.1
+code=&amp;lt;code&amp;gt;&amp;amp;options[]=noaliases&amp;amp;options[]=nocomments&amp;amp;options[]=nohistorical
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;put-update-model&quot;&gt;PUT - update model&lt;/h3&gt;
+&lt;p&gt;Updates &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; with new &lt;code&gt;&amp;lt;option&amp;gt;&lt;/code&gt;s and &lt;code&gt;&amp;lt;rid&amp;gt;&lt;/code&gt; or &lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;PUT /provision/manage/model/&amp;lt;model&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-rid=&lt;rid&gt;&amp;options[]=noaliases&amp;options[]=nocomments&amp;options=nohistorical
+rid=&amp;lt;rid&amp;gt;&amp;amp;options[]=noaliases&amp;amp;options[]=nocomments&amp;amp;options=nohistorical
 OR
-code=&lt;code&gt;&amp;options[]=noaliases&amp;options[]=nocomments&amp;options[]=nohistorical
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+code=&amp;lt;code&amp;gt;&amp;amp;options[]=noaliases&amp;amp;options[]=nocomments&amp;amp;options[]=nohistorical
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="delete-delete-model">DELETE - delete model</h3>
-<p>Deletes specified <code>&lt;model&gt;</code> and all associated serial numbers and content.</p>
-<pre><code>DELETE /provision/manage/model/&lt;model&gt; HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;delete-delete-model&quot;&gt;DELETE - delete model&lt;/h3&gt;
+&lt;p&gt;Deletes specified &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; and all associated serial numbers and content.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DELETE /provision/manage/model/&amp;lt;model&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-manage-model-lt-model-gt-">/provision/manage/model/&lt;model&gt;/</h2>
-<p>Note: If <code>X-Exosite-Vendor</code> header is provided, the given <code>&lt;model&gt;</code> is one 
-associated to <code>&lt;Vendorname&gt;</code>. The calling vendor was identified by 
-<code>&lt;VendorCIK&gt;</code> OR <code>&lt;VendorToken&gt;</code>) must have authorized share access to the 
-<code>&lt;model&gt;</code>. Shared access only provides enable/disable/ reenable controls, 
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-manage-model-lt-model-gt-&quot;&gt;/provision/manage/model/&amp;lt;model&amp;gt;/&lt;/h2&gt;
+&lt;p&gt;Note: If &lt;code&gt;X-Exosite-Vendor&lt;/code&gt; header is provided, the given &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; is one 
+associated to &lt;code&gt;&amp;lt;Vendorname&amp;gt;&lt;/code&gt;. The calling vendor was identified by 
+&lt;code&gt;&amp;lt;VendorCIK&amp;gt;&lt;/code&gt; OR &lt;code&gt;&amp;lt;VendorToken&amp;gt;&lt;/code&gt;) must have authorized share access to the 
+&lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;. Shared access only provides enable/disable/ reenable controls, 
 and view listings are only valid for serial numbers enabled by the calling 
-vendor.</p>
-<h3 id="get-list-serial-numbers">GET - list serial numbers</h3>
-<p>Returns list of serial numbers <code>&lt;sn&gt;</code> from <code>&lt;model&gt;</code> with associated <code>&lt;rid&gt;</code> 
-in paginated sets of size <code>&lt;limit&gt;</code> starting at <code>&lt;offset&gt;</code>. <code>&lt;limit&gt;</code> is 
-enforced to be between 5 and 1000. Optionally specify <code>shared=&lt;vendor&gt;</code> to 
+vendor.&lt;/p&gt;
+&lt;h3 id=&quot;get-list-serial-numbers&quot;&gt;GET - list serial numbers&lt;/h3&gt;
+&lt;p&gt;Returns list of serial numbers &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; from &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; with associated &lt;code&gt;&amp;lt;rid&amp;gt;&lt;/code&gt; 
+in paginated sets of size &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; starting at &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt;. &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; is 
+enforced to be between 5 and 1000. Optionally specify &lt;code&gt;shared=&amp;lt;vendor&amp;gt;&lt;/code&gt; to 
 filter on serial numbers enabled by a particular shared vendor. If calling 
-with header <code>X-Exosite-Vendor</code> specified, <code>&lt;extra&gt;</code> will always be empty. 
-Note that <code>&lt;rid&gt;</code> may be blank if the <code>&lt;sn&gt;</code> has not yet been instantiated 
-as a client.</p>
-<pre><code>GET /provision/manage/model/&lt;model&gt;/?offset=&lt;offset&gt;&amp;limit=&lt;limit&gt;{&amp;shared=&lt;vendor&gt;} HTTP/1.1
+with header &lt;code&gt;X-Exosite-Vendor&lt;/code&gt; specified, &lt;code&gt;&amp;lt;extra&amp;gt;&lt;/code&gt; will always be empty. 
+Note that &lt;code&gt;&amp;lt;rid&amp;gt;&lt;/code&gt; may be blank if the &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; has not yet been instantiated 
+as a client.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/model/&amp;lt;model&amp;gt;/?offset=&amp;lt;offset&amp;gt;&amp;amp;limit=&amp;lt;limit&amp;gt;{&amp;amp;shared=&amp;lt;vendor&amp;gt;} HTTP/1.1
 Host: m2.exosite.com
-{X-Exosite-Vendor: &lt;VendorName&gt;}
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+{X-Exosite-Vendor: &amp;lt;VendorName&amp;gt;}
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
-&lt;blank line&gt;
-&lt;sn 1&gt;,&lt;rid 1&gt;,&lt;extra 1&gt;
-&lt;sn 2&gt;,&lt;rid 2&gt;, &lt;extra 2&gt;
+&amp;lt;blank line&amp;gt;
+&amp;lt;sn 1&amp;gt;,&amp;lt;rid 1&amp;gt;,&amp;lt;extra 1&amp;gt;
+&amp;lt;sn 2&amp;gt;,&amp;lt;rid 2&amp;gt;, &amp;lt;extra 2&amp;gt;
 ...
-&lt;sn n&gt;,&lt;rid n&gt;,&lt;extra n&gt;
-</code></pre><h4 id="example">example</h4>
-<p>This command white lists the individual serial numbers whitelisted for the model MY_CLIENT_MODEL_ID.</p>
-<pre><code>$ curl http://m2.exosite.com/provision/manage/model/MY_CLIENT_MODEL_ID/ \
-    -H &quot;X-Exosite-Token: MY_VENDOR_TOKEN&quot;
-</code></pre><h3 id="get-get-serial-number-json-object">GET - get serial number JSON object</h3>
-<p>Returns JSON object of configured serial number ranges for relevant model.</p>
-<pre><code>GET /provision/manage/model/&lt;model&gt;/?show=ranges HTTP/1.1
+&amp;lt;sn n&amp;gt;,&amp;lt;rid n&amp;gt;,&amp;lt;extra n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;example&quot;&gt;example&lt;/h4&gt;
+&lt;p&gt;This command white lists the individual serial numbers whitelisted for the model MY_CLIENT_MODEL_ID.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ curl http://m2.exosite.com/provision/manage/model/MY_CLIENT_MODEL_ID/ \
+    -H &amp;quot;X-Exosite-Token: MY_VENDOR_TOKEN&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;get-get-serial-number-json-object&quot;&gt;GET - get serial number JSON object&lt;/h3&gt;
+&lt;p&gt;Returns JSON object of configured serial number ranges for relevant model.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/model/&amp;lt;model&amp;gt;/?show=ranges HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: application/javascript; charset=utf-8
 
 {
-    &quot;ranges&quot;:[
+    &amp;quot;ranges&amp;quot;:[
         {
-            &quot;format&quot;: &quot;base10&quot;|&quot;base16&quot;|&quot;mac:48&quot;|&quot;mac-48&quot;|&quot;mac.48&quot;,
+            &amp;quot;format&amp;quot;: &amp;quot;base10&amp;quot;|&amp;quot;base16&amp;quot;|&amp;quot;mac:48&amp;quot;|&amp;quot;mac-48&amp;quot;|&amp;quot;mac.48&amp;quot;,
             // not applicable in mac?48 formats
-            &quot;length&quot;: &lt;number&gt;, 
+            &amp;quot;length&amp;quot;: &amp;lt;number&amp;gt;, 
             // base16/mac?48 hexidecimal letter casing
-            &quot;casing&quot;: &quot;upper&quot;|&quot;lower&quot;, 
-            &quot;first&quot;: &lt;number&gt;,
-            &quot;last&quot;: &lt;number&gt;
+            &amp;quot;casing&amp;quot;: &amp;quot;upper&amp;quot;|&amp;quot;lower&amp;quot;, 
+            &amp;quot;first&amp;quot;: &amp;lt;number&amp;gt;,
+            &amp;quot;last&amp;quot;: &amp;lt;number&amp;gt;
         },
         ...
     ]
 }
-</code></pre><h3 id="post-add-single-serial-number">POST - add single serial number</h3>
-<p>Adds/whitelists a single serial number <code>&lt;sn&gt;</code> to specified <code>&lt;model&gt;</code> entry, with
-<code>&lt;extra&gt;</code> information.</p>
-<pre><code>POST /provision/manage/model/&lt;model&gt;/ HTTP/1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-add-single-serial-number&quot;&gt;POST - add single serial number&lt;/h3&gt;
+&lt;p&gt;Adds/whitelists a single serial number &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; to specified &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; entry, with
+&lt;code&gt;&amp;lt;extra&amp;gt;&lt;/code&gt; information.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-sn=&lt;sn&gt;&amp;extra=&lt;extra&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+sn=&amp;lt;sn&amp;gt;&amp;amp;extra=&amp;lt;extra&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 409 Conflict</code> if <code>&lt;sn&gt;</code> already exists.</li>
-</ul>
-<h4 id="example">example</h4>
-<p>This command white lists the serial number 12345678 for use with the model MY_CLIENT_MODEL_ID.</p>
-<pre><code>$ curl http://m2.exosite.com/provision/manage/model/MY_CLIENT_MODEL_ID/ \
-    -H &quot;X-Exosite-Token: MY_VENDOR_TOKEN&quot; \
-    -H &quot;Content-Type: application/x-www-form-urlencoded; charset=utf-8&quot; \
-    -d &quot;sn=12345678&amp;extra=&quot;
-</code></pre><h3 id="post-add-multiple-serial-numbers">POST - add multiple serial numbers</h3>
-<p>Adds/whitelists serial numbers for <code>&lt;model&gt;</code>.</p>
-<pre><code>POST /provision/manage/model/&lt;model&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 409 Conflict&lt;/code&gt; if &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; already exists.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;example&quot;&gt;example&lt;/h4&gt;
+&lt;p&gt;This command white lists the serial number 12345678 for use with the model MY_CLIENT_MODEL_ID.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ curl http://m2.exosite.com/provision/manage/model/MY_CLIENT_MODEL_ID/ \
+    -H &amp;quot;X-Exosite-Token: MY_VENDOR_TOKEN&amp;quot; \
+    -H &amp;quot;Content-Type: application/x-www-form-urlencoded; charset=utf-8&amp;quot; \
+    -d &amp;quot;sn=12345678&amp;amp;extra=&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-add-multiple-serial-numbers&quot;&gt;POST - add multiple serial numbers&lt;/h3&gt;
+&lt;p&gt;Adds/whitelists serial numbers for &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-sn[]=&lt;sn 1&gt;&amp;sn[]=&lt;sn 2&gt;&amp;sn[]=&lt;sn n&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+sn[]=&amp;lt;sn 1&amp;gt;&amp;amp;sn[]=&amp;lt;sn 2&amp;gt;&amp;amp;sn[]=&amp;lt;sn n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 409 Conflict</code> if <code>&lt;sn&gt;</code> already exists.</li>
-</ul>
-<h3 id="post-add-multiple-serial-numbers-and-extra-information">POST - add multiple serial numbers and extra information</h3>
-<p>Adds serial numbers <code>&lt;sn&gt;</code> to <code>&lt;model&gt;</code>, with extra information <code>&lt;extra&gt;</code>.</p>
-<pre><code>POST /provision/manage/model/&lt;model&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 409 Conflict&lt;/code&gt; if &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; already exists.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;post-add-multiple-serial-numbers-and-extra-information&quot;&gt;POST - add multiple serial numbers and extra information&lt;/h3&gt;
+&lt;p&gt;Adds serial numbers &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; to &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;, with extra information &lt;code&gt;&amp;lt;extra&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: text/csv; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-&lt;sn 1&gt;,&lt;extra 1&gt;
-&lt;sn 2&gt;,&lt;extra 2&gt;
+&amp;lt;sn 1&amp;gt;,&amp;lt;extra 1&amp;gt;
+&amp;lt;sn 2&amp;gt;,&amp;lt;extra 2&amp;gt;
 ...
-&lt;sn n&gt;,&lt;extra n&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+&amp;lt;sn n&amp;gt;,&amp;lt;extra n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 409 Conflict</code> if <code>&lt;sn&gt;</code> already exists.</li>
-</ul>
-<h3 id="post-add-serial-number-ranges">POST - add serial number ranges</h3>
-<p>Adds serial number ranges to <model>.</p>
-<pre><code>POST /provision/manage/model/&lt;model&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 409 Conflict&lt;/code&gt; if &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; already exists.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;post-add-serial-number-ranges&quot;&gt;POST - add serial number ranges&lt;/h3&gt;
+&lt;p&gt;Adds serial number ranges to &lt;model&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/javascript; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
 {
-    &quot;ranges&quot;:[
+    &amp;quot;ranges&amp;quot;:[
         {
-            &quot;format&quot;: &quot;base10&quot;|&quot;base16&quot;|&quot;mac:48&quot;|&quot;mac-48&quot;|&quot;mac.48&quot;,
+            &amp;quot;format&amp;quot;: &amp;quot;base10&amp;quot;|&amp;quot;base16&amp;quot;|&amp;quot;mac:48&amp;quot;|&amp;quot;mac-48&amp;quot;|&amp;quot;mac.48&amp;quot;,
             // not applicable in mac?48 formats
-            &quot;length&quot;: &lt;number&gt;, 
+            &amp;quot;length&amp;quot;: &amp;lt;number&amp;gt;, 
             // base16/mac?48 hexidecimal letter casing
-            &quot;casing&quot;: &quot;upper&quot;|&quot;lower&quot;, 
-            &quot;first&quot;: &lt;number&gt;,
-            &quot;last&quot;: &lt;number&gt;
+            &amp;quot;casing&amp;quot;: &amp;quot;upper&amp;quot;|&amp;quot;lower&amp;quot;, 
+            &amp;quot;first&amp;quot;: &amp;lt;number&amp;gt;,
+            &amp;quot;last&amp;quot;: &amp;lt;number&amp;gt;
         },
         ...
     ]
 }
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="post-remove-single-serial-number">POST - remove single serial number</h3>
-<p>Removes a single serial number from relevant model entry.</p>
-<pre><code>POST /provision/manage/model/&lt;model&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-remove-single-serial-number&quot;&gt;POST - remove single serial number&lt;/h3&gt;
+&lt;p&gt;Removes a single serial number from relevant model entry.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-delete=true&amp;sn=&lt;sn&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+delete=true&amp;amp;sn=&amp;lt;sn&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="post-remove-multiple-serial-numbers">POST - remove multiple serial numbers</h3>
-<p>Removes serial numbers from relevant model entry.</p>
-<pre><code>POST /provision/manage/model/&lt;model&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-remove-multiple-serial-numbers&quot;&gt;POST - remove multiple serial numbers&lt;/h3&gt;
+&lt;p&gt;Removes serial numbers from relevant model entry.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-delete=true&amp;sn[]=&lt;sn 1&gt;&amp;sn[]=&lt;sn 2&gt;&amp;sn[]=&lt;sn n&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+delete=true&amp;amp;sn[]=&amp;lt;sn 1&amp;gt;&amp;amp;sn[]=&amp;lt;sn 2&amp;gt;&amp;amp;sn[]=&amp;lt;sn n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="delete-remove-multiple-serial-numbers">DELETE - remove multiple serial numbers</h3>
-<p>Remove serial numbers from <code>&lt;model&gt;</code>.</p>
-<pre><code>POST /provision/manage/model/&lt;model&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;delete-remove-multiple-serial-numbers&quot;&gt;DELETE - remove multiple serial numbers&lt;/h3&gt;
+&lt;p&gt;Remove serial numbers from &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: text/csv; charset=utf-8
-Content-Length: &lt;length&gt;
-&lt;blank line&gt;
-&lt;sn 1&gt;
-&lt;sn 2&gt;
+Content-Length: &amp;lt;length&amp;gt;
+&amp;lt;blank line&amp;gt;
+&amp;lt;sn 1&amp;gt;
+&amp;lt;sn 2&amp;gt;
 ...
-&lt;sn n&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+&amp;lt;sn n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="delete-delete-serial-number-ranges">DELETE - delete serial number ranges</h3>
-<p>Deletes serial number ranges from relevant model entry.</p>
-<pre><code>DELETE /provision/manage/model/&lt;model&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;delete-delete-serial-number-ranges&quot;&gt;DELETE - delete serial number ranges&lt;/h3&gt;
+&lt;p&gt;Deletes serial number ranges from relevant model entry.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DELETE /provision/manage/model/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/javascript; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
 {
-    &quot;ranges&quot;:[
+    &amp;quot;ranges&amp;quot;:[
         {
-            &quot;format&quot;: &quot;base10&quot;|&quot;base16&quot;|&quot;mac:48&quot;|&quot;mac-48&quot;|&quot;mac.48&quot;,
+            &amp;quot;format&amp;quot;: &amp;quot;base10&amp;quot;|&amp;quot;base16&amp;quot;|&amp;quot;mac:48&amp;quot;|&amp;quot;mac-48&amp;quot;|&amp;quot;mac.48&amp;quot;,
             // not applicable in mac?48 formats
-            &quot;length&quot;: &lt;number&gt;, 
+            &amp;quot;length&amp;quot;: &amp;lt;number&amp;gt;, 
             // base16/mac?48 hexidecimal letter casing
-            &quot;casing&quot;: &quot;upper&quot;|&quot;lower&quot;, 
-            &quot;first&quot;: &lt;number&gt;,
-            &quot;last&quot;: &lt;number&gt;
+            &amp;quot;casing&amp;quot;: &amp;quot;upper&amp;quot;|&amp;quot;lower&amp;quot;, 
+            &amp;quot;first&amp;quot;: &amp;lt;number&amp;gt;,
+            &amp;quot;last&amp;quot;: &amp;lt;number&amp;gt;
         },
         ...
     ]
 }
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-manage-model-lt-model-gt-lt-sn-gt-">/provision/manage/model/&lt;model&gt;/&lt;sn&gt;</h2>
-<p>Note: If <code>X-Exosite-Vendor</code> header is provided, the given <code>&lt;model&gt;</code> is one 
-associated to <code>&lt;Vendorname&gt;</code>. The calling vendor was identified by 
-<code>&lt;VendorCIK&gt;</code> OR <code>&lt;VendorToken&gt;</code>) must have authorized share access to the 
-<code>&lt;model&gt;</code>. Shared access only provides enable/disable/ reenable controls, 
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-manage-model-lt-model-gt-lt-sn-gt-&quot;&gt;/provision/manage/model/&amp;lt;model&amp;gt;/&amp;lt;sn&amp;gt;&lt;/h2&gt;
+&lt;p&gt;Note: If &lt;code&gt;X-Exosite-Vendor&lt;/code&gt; header is provided, the given &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; is one 
+associated to &lt;code&gt;&amp;lt;Vendorname&amp;gt;&lt;/code&gt;. The calling vendor was identified by 
+&lt;code&gt;&amp;lt;VendorCIK&amp;gt;&lt;/code&gt; OR &lt;code&gt;&amp;lt;VendorToken&amp;gt;&lt;/code&gt;) must have authorized share access to the 
+&lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;. Shared access only provides enable/disable/ reenable controls, 
 and view listings are only valid for serial numbers enabled by the calling 
-vendor.</p>
-<h3 id="get-get-client-rid">GET - get client RID</h3>
-<p>Returns associated client <code>&lt;rid&gt;</code>, and extra serial number data. If calling 
-with header <code>X-Exosite-Vendor</code> specified, <code>&lt;extra&gt;</code> will always be empty.</p>
-<pre><code>GET /provision/manage/model/&lt;model&gt;/&lt;sn&gt; HTTP/1.1
+vendor.&lt;/p&gt;
+&lt;h3 id=&quot;get-get-client-rid&quot;&gt;GET - get client RID&lt;/h3&gt;
+&lt;p&gt;Returns associated client &lt;code&gt;&amp;lt;rid&amp;gt;&lt;/code&gt;, and extra serial number data. If calling 
+with header &lt;code&gt;X-Exosite-Vendor&lt;/code&gt; specified, &lt;code&gt;&amp;lt;extra&amp;gt;&lt;/code&gt; will always be empty.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/model/&amp;lt;model&amp;gt;/&amp;lt;sn&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-{X-Exosite-Vendor: &lt;VendorName&gt;}
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+{X-Exosite-Vendor: &amp;lt;VendorName&amp;gt;}
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
 
-&lt;status 1&gt;,&lt;rid 1&gt;,&lt;extra 1&gt;
-&lt;status 2&gt;,&lt;rid 2&gt;,&lt;extra 2&gt;
+&amp;lt;status 1&amp;gt;,&amp;lt;rid 1&amp;gt;,&amp;lt;extra 1&amp;gt;
+&amp;lt;status 2&amp;gt;,&amp;lt;rid 2&amp;gt;,&amp;lt;extra 2&amp;gt;
 ...
-&lt;status n&gt;,&lt;rid n&gt;,&lt;extra n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 204 No-Content</code> if <code>&lt;sn&gt;</code> is unused.</li>
-</ul>
-<h3 id="get-list-serial-number-groups">GET - list serial number groups</h3>
-<p>Lists groups of which this serial number is a member, in paginated sets of 
-size <code>&lt;limit&gt;</code> starting at <code>&lt;offset&gt;</code>. <code>&lt;limit&gt;</code> is enforced to be between 
-5 and 1000. If omitted, <code>&lt;offset&gt;</code> defaults to 0 and <code>&lt;limit&gt;</code> defaults to 5.</p>
-<pre><code>GET /provision/manage/model/&lt;model&gt;/&lt;sn&gt;?show=groups{&amp;offset=&lt;offset&gt;&amp;limit=&lt;limit&gt;} HTTP/1.1
+&amp;lt;status n&amp;gt;,&amp;lt;rid n&amp;gt;,&amp;lt;extra n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 204 No-Content&lt;/code&gt; if &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; is unused.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;get-list-serial-number-groups&quot;&gt;GET - list serial number groups&lt;/h3&gt;
+&lt;p&gt;Lists groups of which this serial number is a member, in paginated sets of 
+size &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; starting at &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt;. &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; is enforced to be between 
+5 and 1000. If omitted, &lt;code&gt;&amp;lt;offset&amp;gt;&lt;/code&gt; defaults to 0 and &lt;code&gt;&amp;lt;limit&amp;gt;&lt;/code&gt; defaults to 5.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/model/&amp;lt;model&amp;gt;/&amp;lt;sn&amp;gt;?show=groups{&amp;amp;offset=&amp;lt;offset&amp;gt;&amp;amp;limit=&amp;lt;limit&amp;gt;} HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
 
-&lt;group id 1&gt;
-&lt;group id 2&gt;
+&amp;lt;group id 1&amp;gt;
+&amp;lt;group id 2&amp;gt;
 ...
-&lt;group id n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 204 No-Content</code> if <code>&lt;sn&gt;</code> is not a member of any group.</li>
-</ul>
-<h3 id="get-get-activation-log-for-serial-number">GET - get activation log for serial number</h3>
-<p>Get activation log for serial number <code>&lt;sn&gt;</code>.</p>
-<pre><code>GET /provision/manage/model/&lt;model&gt;/&lt;sn&gt;?show=log HTTP/1.1
+&amp;lt;group id n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 204 No-Content&lt;/code&gt; if &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; is not a member of any group.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;get-get-activation-log-for-serial-number&quot;&gt;GET - get activation log for serial number&lt;/h3&gt;
+&lt;p&gt;Get activation log for serial number &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/model/&amp;lt;model&amp;gt;/&amp;lt;sn&amp;gt;?show=log HTTP/1.1
 Host: m2.exosite.com
-{X-Exosite-Vendor: &lt;VendorName&gt;}
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+{X-Exosite-Vendor: &amp;lt;VendorName&amp;gt;}
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
 
-&lt;timestamp 1&gt;,&lt;connection-info 1&gt;,&lt;log-entry 1&gt;
-&lt;timestamp 2&gt;,&lt;connection-info 2&gt;,&lt;log-entry 2&gt;
+&amp;lt;timestamp 1&amp;gt;,&amp;lt;connection-info 1&amp;gt;,&amp;lt;log-entry 1&amp;gt;
+&amp;lt;timestamp 2&amp;gt;,&amp;lt;connection-info 2&amp;gt;,&amp;lt;log-entry 2&amp;gt;
 ...
-&lt;timestamp n&gt;,&lt;connection-info n&gt;,&lt;log-entry n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 204 No-Content</code> if log is empty.</li>
-</ul>
-<h3 id="post-create-client-from-model">POST - create client from model</h3>
-<p>Creates a client based on <code>&lt;model&gt;</code> under the resource indicated by <code>owner</code>, 
-associates it with <code>&lt;sn&gt;</code>, and returns its <code>&lt;ClientRID&gt;</code>. Owner <code>&lt;rid&gt;</code> must 
-be a descendant of the <code>&lt;model&gt;</code>&#39;s creator, and <code>&lt;sn&gt;</code> must not already have 
-an associated client.</p>
-<p>A few definitions:</p>
-<ul>
-<li>the <code>owner</code> of a One Platform resource is its direct parent in the hierarchy. 
-For exmple, in the Portals application the owner of a device is a portal, so <code>&lt;rid&gt;</code> is
-set to the RID of the portal.</li>
-<li>the <code>&lt;model&gt;</code>&#39;s creator is the resource used for auth when creating the model.
+&amp;lt;timestamp n&amp;gt;,&amp;lt;connection-info n&amp;gt;,&amp;lt;log-entry n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 204 No-Content&lt;/code&gt; if log is empty.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;post-create-client-from-model&quot;&gt;POST - create client from model&lt;/h3&gt;
+&lt;p&gt;Creates a client based on &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; under the resource indicated by &lt;code&gt;owner&lt;/code&gt;, 
+associates it with &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt;, and returns its &lt;code&gt;&amp;lt;ClientRID&amp;gt;&lt;/code&gt;. Owner &lt;code&gt;&amp;lt;rid&amp;gt;&lt;/code&gt; must 
+be a descendant of the &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;&amp;#39;s creator, and &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; must not already have 
+an associated client.&lt;/p&gt;
+&lt;p&gt;A few definitions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the &lt;code&gt;owner&lt;/code&gt; of a One Platform resource is its direct parent in the hierarchy. 
+For exmple, in the Portals application the owner of a device is a portal, so &lt;code&gt;&amp;lt;rid&amp;gt;&lt;/code&gt; is
+set to the RID of the portal.&lt;/li&gt;
+&lt;li&gt;the &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;&amp;#39;s creator is the resource used for auth when creating the model.
 For example, in the Portals application the vendor token is typically used to 
 create models. That token is associated with the domain client, which is an 
-ancestor of all portals in the domain.</li>
-</ul>
-<pre><code>POST /provision/manage/model/&lt;model&gt;/&lt;sn&gt; HTTP/1.1
+ancestor of all portals in the domain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/&amp;lt;model&amp;gt;/&amp;lt;sn&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-{X-Exosite-Vendor: &lt;VendorName&gt;}
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+{X-Exosite-Vendor: &amp;lt;VendorName&amp;gt;}
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-enable=true&amp;owner=&lt;rid&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+enable=true&amp;amp;owner=&amp;lt;rid&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
 
-&lt;ClientRID&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 409 Conflict</code> if owner <code>&lt;rid&gt;</code> resources not sufficient to 
-instantiate a new client of this <code>&lt;model&gt;</code> type.</li>
-</ul>
-<h3 id="post-remap-client-to-a-new-serial-number">POST - remap client to a new serial number</h3>
-<p>Remaps the client associated with <code>&lt;oldsn&gt;</code> to <code>&lt;sn&gt;</code>. <code>&lt;sn&gt;</code> must subsequently
-be activated in order to use the client.</p>
-<pre><code>POST /provision/manage/model/&lt;model&gt;/&lt;sn&gt; HTTP/1.1
+&amp;lt;ClientRID&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 409 Conflict&lt;/code&gt; if owner &lt;code&gt;&amp;lt;rid&amp;gt;&lt;/code&gt; resources not sufficient to 
+instantiate a new client of this &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;post-remap-client-to-a-new-serial-number&quot;&gt;POST - remap client to a new serial number&lt;/h3&gt;
+&lt;p&gt;Remaps the client associated with &lt;code&gt;&amp;lt;oldsn&amp;gt;&lt;/code&gt; to &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt;. &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; must subsequently
+be activated in order to use the client.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/&amp;lt;model&amp;gt;/&amp;lt;sn&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-{X-Exosite-Vendor: &lt;VendorName&gt;}
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+{X-Exosite-Vendor: &amp;lt;VendorName&amp;gt;}
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-enable=true&amp;oldsn=&lt;oldsn&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+enable=true&amp;amp;oldsn=&amp;lt;oldsn&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="post-regenerate-cik-for-serial-number">POST - regenerate cik for serial number</h3>
-<p>Regenerates CIK for client associated with <code>&lt;sn&gt;</code>. <code>&lt;sn&gt;</code> must have been 
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-regenerate-cik-for-serial-number&quot;&gt;POST - regenerate cik for serial number&lt;/h3&gt;
+&lt;p&gt;Regenerates CIK for client associated with &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt;. &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; must have been 
 previously enabled, and must subsequently be activated after in order to 
-download the new CIK and to use the client.</p>
-<pre><code>POST /provision/manage/model/&lt;model&gt;/&lt;sn&gt; HTTP/1.1
+download the new CIK and to use the client.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/&amp;lt;model&amp;gt;/&amp;lt;sn&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-{X-Exosite-Vendor: &lt;VendorName&gt;}
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+{X-Exosite-Vendor: &amp;lt;VendorName&amp;gt;}
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
 enable=true
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="post-disable-cik">POST - disable CIK</h3>
-<p>Disables the CIK associated with <code>&lt;sn&gt;</code>.  <code>&lt;sn&gt;</code> must be re-enabled before
-it can be used again.</p>
-<pre><code>POST /provision/manage/model/&lt;model&gt;/&lt;sn&gt; HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-disable-cik&quot;&gt;POST - disable CIK&lt;/h3&gt;
+&lt;p&gt;Disables the CIK associated with &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt;.  &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; must be re-enabled before
+it can be used again.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/model/&amp;lt;model&amp;gt;/&amp;lt;sn&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-{X-Exosite-Vendor: &lt;VendorName&gt;}
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+{X-Exosite-Vendor: &amp;lt;VendorName&amp;gt;}
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
 disable=true
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="delete-delete-serial-number">DELETE - delete serial number</h3>
-<p>Delete a single serial number <code>&lt;sn&gt;</code> from <code>&lt;model&gt;</code>.</p>
-<pre><code>DELETE /provision/manage/model/&lt;model&gt;/&lt;sn&gt; HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;delete-delete-serial-number&quot;&gt;DELETE - delete serial number&lt;/h3&gt;
+&lt;p&gt;Delete a single serial number &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; from &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DELETE /provision/manage/model/&amp;lt;model&amp;gt;/&amp;lt;sn&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-manage-share-lt-model-gt-">/provision/manage/share/&lt;model&gt;/</h2>
-<h3 id="get-list-vendors-that-share-a-model">GET - list vendors that share a model</h3>
-<p>Returns list of names of vendors that have a share to <code>&lt;model&gt;</code>.</p>
-<pre><code>GET /provision/manage/share/&lt;model&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-manage-share-lt-model-gt-&quot;&gt;/provision/manage/share/&amp;lt;model&amp;gt;/&lt;/h2&gt;
+&lt;h3 id=&quot;get-list-vendors-that-share-a-model&quot;&gt;GET - list vendors that share a model&lt;/h3&gt;
+&lt;p&gt;Returns list of names of vendors that have a share to &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/share/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
 
-&lt;vendorname 1&gt;
-&lt;vendorname 2&gt;
+&amp;lt;vendorname 1&amp;gt;
+&amp;lt;vendorname 2&amp;gt;
 ...
-&lt;vendorname n&gt;
-</code></pre><p>Response may also be:</p>
-<ul>
-<li><code>HTTP/1.1 204 No-Content</code> if <model> is not shared to any other vendors.</li>
-</ul>
-<h3 id="post-create-model-share">POST - create model share</h3>
-<p>Shares <code>&lt;model&gt;</code> with <code>&lt;vendorname&gt;</code>.</p>
-<pre><code>POST /provision/manage/share/&lt;model&gt;/ HTTP/1.1
+&amp;lt;vendorname n&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;HTTP/1.1 204 No-Content&lt;/code&gt; if &lt;model&gt; is not shared to any other vendors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;post-create-model-share&quot;&gt;POST - create model share&lt;/h3&gt;
+&lt;p&gt;Shares &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; with &lt;code&gt;&amp;lt;vendorname&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/share/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-vendor=&lt;vendorname&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+vendor=&amp;lt;vendorname&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="post-delete-model-share">POST - delete model share</h3>
-<p>Deletes the <code>&lt;model&gt;</code> share so that <code>&lt;vendorname&gt;</code> no longer has share access.</p>
-<pre><code>POST /provision/manage/share/&lt;model&gt;/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-delete-model-share&quot;&gt;POST - delete model share&lt;/h3&gt;
+&lt;p&gt;Deletes the &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; share so that &lt;code&gt;&amp;lt;vendorname&amp;gt;&lt;/code&gt; no longer has share access.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/manage/share/&amp;lt;model&amp;gt;/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 
-vendor=&lt;vendorname&gt;&amp;delete=true
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+vendor=&amp;lt;vendorname&amp;gt;&amp;amp;delete=true
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-manage-share-lt-model-gt-lt-vendorname-gt-">/provision/manage/share/&lt;model&gt;/&lt;vendorname&gt;</h2>
-<h3 id="get-find-out-if-a-model-is-shared">GET - find out if a model is shared</h3>
-<p>Query <code>&lt;model&gt;</code> share status with <code>&lt;vendorname&gt;</code>.</p>
-<pre><code>GET /provision/manage/share/&lt;model&gt;/&lt;vendorname&gt; HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-manage-share-lt-model-gt-lt-vendorname-gt-&quot;&gt;/provision/manage/share/&amp;lt;model&amp;gt;/&amp;lt;vendorname&amp;gt;&lt;/h2&gt;
+&lt;h3 id=&quot;get-find-out-if-a-model-is-shared&quot;&gt;GET - find out if a model is shared&lt;/h3&gt;
+&lt;p&gt;Query &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; share status with &lt;code&gt;&amp;lt;vendorname&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/manage/share/&amp;lt;model&amp;gt;/&amp;lt;vendorname&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 204 No Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 204 No Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
-</code></pre><p>The above response indicates that the <code>&lt;model&gt;</code> is shared with <code>&lt;vendorname&gt;</code>.</p>
-<h3 id="delete-delete-model-share">DELETE - delete model share</h3>
-<p>Deletes the <code>&lt;model&gt;</code> share so that <code>&lt;vendorname&gt;</code> no longer has share access.</p>
-<pre><code>DELETE /provision/manage/share/&lt;model&gt;/&lt;vendorname&gt; HTTP/1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The above response indicates that the &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; is shared with &lt;code&gt;&amp;lt;vendorname&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;delete-delete-model-share&quot;&gt;DELETE - delete model share&lt;/h3&gt;
+&lt;p&gt;Deletes the &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; share so that &lt;code&gt;&amp;lt;vendorname&amp;gt;&lt;/code&gt; no longer has share access.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DELETE /provision/manage/share/&amp;lt;model&amp;gt;/&amp;lt;vendorname&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt; OR X-Exosite-Token: &lt;VendorToken&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt; OR X-Exosite-Token: &amp;lt;VendorToken&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-register">/provision/register</h2>
-<h3 id="get-get-registered-vendor-name-for-cik">GET - get registered vendor name for CIK</h3>
-<p>Returns vendor name registered to <code>&lt;CIK&gt;</code>.</p>
-<pre><code>GET /provision/register HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-register&quot;&gt;/provision/register&lt;/h2&gt;
+&lt;h3 id=&quot;get-get-registered-vendor-name-for-cik&quot;&gt;GET - get registered vendor name for CIK&lt;/h3&gt;
+&lt;p&gt;Returns vendor name registered to &lt;code&gt;&amp;lt;CIK&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/register HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;CIK&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;CIK&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/plain; charset=utf-8
 
-&lt;vendor&gt;
-</code></pre><h3 id="post-register-vendor-name-for-cik">POST - register vendor name for CIK</h3>
-<p>Register a vendor name to <code>&lt;CIK&gt;</code>.</p>
-<pre><code>POST /provision/register HTTP/1.1
+&amp;lt;vendor&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-register-vendor-name-for-cik&quot;&gt;POST - register vendor name for CIK&lt;/h3&gt;
+&lt;p&gt;Register a vendor name to &lt;code&gt;&amp;lt;CIK&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/register HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;CIK&gt;
+X-Exosite-CIK: &amp;lt;CIK&amp;gt;
 
-vendor=&lt;vendor&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+vendor=&amp;lt;vendor&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h3 id="post-unregister-vendor-name-from-cik">POST - unregister vendor name from CIK</h3>
-<p>Unregister vendor name from <code>&lt;CIK&gt;</code>.</p>
-<pre><code>POST /provision/register HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-unregister-vendor-name-from-cik&quot;&gt;POST - unregister vendor name from CIK&lt;/h3&gt;
+&lt;p&gt;Unregister vendor name from &lt;code&gt;&amp;lt;CIK&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/register HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;CIK&gt;
+X-Exosite-CIK: &amp;lt;CIK&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
 
-delete=true&amp;vendor=&lt;vendor&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+delete=true&amp;amp;vendor=&amp;lt;vendor&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-admin-auth-">/provision/admin/auth/</h2>
-<h3 id="get-list-vendor-token-ids">GET - list vendor token ids</h3>
-<p>Returns list of vendor auth token <code>&lt;id&gt;</code>s for <code>&lt;VendorCIK&gt;</code>.</p>
-<pre><code>GET /provision/admin/auth/ HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-admin-auth-&quot;&gt;/provision/admin/auth/&lt;/h2&gt;
+&lt;h3 id=&quot;get-list-vendor-token-ids&quot;&gt;GET - list vendor token ids&lt;/h3&gt;
+&lt;p&gt;Returns list of vendor auth token &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;s for &lt;code&gt;&amp;lt;VendorCIK&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/admin/auth/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/csv; charset=utf-8
 
-&lt;id1&gt;
-&lt;id2&gt;
+&amp;lt;id1&amp;gt;
+&amp;lt;id2&amp;gt;
 ...
-&lt;idN&gt;
-</code></pre><h3 id="post-create-vendor-token">POST - create vendor token</h3>
-<p>Generates a vendor auth token that may be used in place of <code>&lt;VendorCIK&gt;</code> and 
-associates the token with the given <code>&lt;id&gt;</code>.</p>
-<pre><code>POST /provision/admin/auth/ HTTP/1.1
+&amp;lt;idN&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-create-vendor-token&quot;&gt;POST - create vendor token&lt;/h3&gt;
+&lt;p&gt;Generates a vendor auth token that may be used in place of &lt;code&gt;&amp;lt;VendorCIK&amp;gt;&lt;/code&gt; and 
+associates the token with the given &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/admin/auth/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
 
-id=&lt;id&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+id=&amp;lt;id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/plain; charset=utf-8
 
-&lt;VendorToken&gt;
-</code></pre><h3 id="post-delete-vendor-token">POST - delete vendor token</h3>
-<p>Deletes vendor auth token.</p>
-<pre><code>POST /provision/admin/auth/ HTTP/1.1
+&amp;lt;VendorToken&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;post-delete-vendor-token&quot;&gt;POST - delete vendor token&lt;/h3&gt;
+&lt;p&gt;Deletes vendor auth token.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /provision/admin/auth/ HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt;
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
 
-delete=true&amp;id=&lt;id&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+delete=true&amp;amp;id=&amp;lt;id&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre><h2 id="-provision-admin-auth-lt-id-gt-">/provision/admin/auth/&lt;id&gt;</h2>
-<h3 id="get-get-vendor-token">GET - get vendor token</h3>
-<p>Returns the vendor auth token for the specified <code>&lt;id&gt;</code>.</p>
-<pre><code>GET /provision/admin/auth/&lt;id&gt; HTTP/1.1
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;-provision-admin-auth-lt-id-gt-&quot;&gt;/provision/admin/auth/&amp;lt;id&amp;gt;&lt;/h2&gt;
+&lt;h3 id=&quot;get-get-vendor-token&quot;&gt;GET - get vendor token&lt;/h3&gt;
+&lt;p&gt;Returns the vendor auth token for the specified &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /provision/admin/auth/&amp;lt;id&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 200 OK
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
-Content-Length: &lt;length&gt;
+Content-Length: &amp;lt;length&amp;gt;
 Content-Type: text/plain; charset=utf-8
 
-&lt;VendorToken&gt;
-</code></pre><h3 id="delete-delete-vendor-token">DELETE - delete vendor token</h3>
-<p>Deletes vendor auth token for <code>&lt;id&gt;</code>.</p>
-<pre><code>DELETE /provision/admin/auth/&lt;id&gt; HTTP/1.1
+&amp;lt;VendorToken&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;delete-delete-vendor-token&quot;&gt;DELETE - delete vendor token&lt;/h3&gt;
+&lt;p&gt;Deletes vendor auth token for &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DELETE /provision/admin/auth/&amp;lt;id&amp;gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &lt;VendorCIK&gt;
-&lt;blank line&gt;
-</code></pre><h4 id="response">response</h4>
-<pre><code>HTTP/1.1 205 Reset Content
-Date: &lt;date&gt;
-Server: &lt;server&gt;
+X-Exosite-CIK: &amp;lt;VendorCIK&amp;gt;
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;HTTP/1.1 205 Reset Content
+Date: &amp;lt;date&amp;gt;
+Server: &amp;lt;server&amp;gt;
 Connection: Keep-Alive
 Content-Length: 0
-&lt;blank line&gt;
-</code></pre></div>
+&amp;lt;blank line&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;</div>
   </div>
 
   <div id="markdown" style="display:none;">

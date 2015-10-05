@@ -84,244 +84,244 @@
       </ul>
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
-    <div role='flatdoc-content' class='content'><h1 id="custom-widget-api">Custom Widget API</h1>
-<p>Portals provides a Javascript API for developing custom dashboard widgets. If you need to develop a custom widget, you&#39;ve come to the right place. This document will describe how to create a custom widget in Portals, the data Portals passes to widgets when they load, and the API widgets can use to interact with Portals and the One Platform.</p>
-<h3 id="functions">Functions</h3>
-<p><a href="#read">read</a> - read data from a One Platform resource</p>
-<p><a href="#write">write</a> - write a single point to a One Platform resource</p>
-<p><a href="#update">update</a> - update a One Platform client (e.g. device) description</p>
-<p><a href="#drop">drop</a> - delete a client (e.g. device)</p>
-<p><a href="#subscribe">subscribe</a> - register a callback function to handle a widget UI event</p>
-<p><a href="#publish">publish</a> - publish a widget UI event to registered callback functions </p>
-<p><a href="#getwidgetinfo">getWidgetInfo</a> - get information about the current widget</p>
-<h2 id="create-a-widget">Create a Widget</h2>
-<p>To create a custom widget on a Portals dashboard:</p>
-<ul>
-<li><p>Click the Add Widget button in the upper right</p>
-</li>
-<li><p>Set the Widget Type to Custom Widget, enter a title of your choice, and click Continue.</p>
-</li>
-<li><p>Set the Widget Size. Portals dashboards are laid out in a grid, and the Widget Size is defined in grid units. Each grid unit in Portals is 248px wide and 204px tall, with default spacing of 16px. The spacing is included in the widget&#39;s width, but not its height. So, for example, the default setting of 2x2 defines a widget that is 2 <em> 248px + 16px = 512px wide but only 2 </em> 204px = 408px tall. Here&#39;s an illustration of the dashboard layout:</p>
-</li>
-</ul>
-<p><img src="images/layout.png" alt="Portals Dashboard Layout"></p>
-<p>Note that the maximum width of a widget is 4 grid units, since that is the default maximum width of a custom dashboard. The dashboard width may also be increased to 6 grid units, which allows wider widgets. The widget height does not have a maximum for practical purposes. </p>
-<ul>
-<li><p>Select the device data sources this widget will use.</p>
-</li>
-<li><p>Select the range of data the widget will consume, in number of points (e.g. last 1 point) or time period (e.g. all points in last 2 days).</p>
-</li>
-<li><p>Optionally select a script template to use as a starting point.</p>
-</li>
-<li><p>Enter script code.</p>
-</li>
-</ul>
-<p><img src="images/script.png" alt="Portals script code"></p>
-<ul>
-<li><p>Press Save.</p>
-</li>
-<li><p>The new widget is displayed in the dashboard.</p>
-</li>
-</ul>
-<p>Note that the these setup instructions cover portal-level widgets. With a <a href="http://exosite.com/platform/oem-whitelabel/">whitelabel account</a> you can also create widgets at the domain level and that can operate on types of devices (client models in Exosite terminology) without needing to be configured with a concrete device. The API for domain widgets is identical to portal widgets, but the setup process is somewhat different and not covered here.</p>
-<h2 id="widget-function">Widget Function</h2>
-<p>Custom widgets define a function that is called by their containing sandbox environment when they are loaded. The following example displays &quot;Hello World&quot; inside its widget container area.</p>
-<pre><code class="lang-javascript">function(container, portal) {
+    <div role='flatdoc-content' class='content'>&lt;h1 id=&quot;custom-widget-api&quot;&gt;Custom Widget API&lt;/h1&gt;
+&lt;p&gt;Portals provides a Javascript API for developing custom dashboard widgets. If you need to develop a custom widget, you&amp;#39;ve come to the right place. This document will describe how to create a custom widget in Portals, the data Portals passes to widgets when they load, and the API widgets can use to interact with Portals and the One Platform.&lt;/p&gt;
+&lt;h3 id=&quot;functions&quot;&gt;Functions&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;#read&quot;&gt;read&lt;/a&gt; - read data from a One Platform resource&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#write&quot;&gt;write&lt;/a&gt; - write a single point to a One Platform resource&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#update&quot;&gt;update&lt;/a&gt; - update a One Platform client (e.g. device) description&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#drop&quot;&gt;drop&lt;/a&gt; - delete a client (e.g. device)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#subscribe&quot;&gt;subscribe&lt;/a&gt; - register a callback function to handle a widget UI event&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#publish&quot;&gt;publish&lt;/a&gt; - publish a widget UI event to registered callback functions &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#getwidgetinfo&quot;&gt;getWidgetInfo&lt;/a&gt; - get information about the current widget&lt;/p&gt;
+&lt;h2 id=&quot;create-a-widget&quot;&gt;Create a Widget&lt;/h2&gt;
+&lt;p&gt;To create a custom widget on a Portals dashboard:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Click the Add Widget button in the upper right&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Set the Widget Type to Custom Widget, enter a title of your choice, and click Continue.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Set the Widget Size. Portals dashboards are laid out in a grid, and the Widget Size is defined in grid units. Each grid unit in Portals is 248px wide and 204px tall, with default spacing of 16px. The spacing is included in the widget&amp;#39;s width, but not its height. So, for example, the default setting of 2x2 defines a widget that is 2 &lt;em&gt; 248px + 16px = 512px wide but only 2 &lt;/em&gt; 204px = 408px tall. Here&amp;#39;s an illustration of the dashboard layout:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;images/layout.png&quot; alt=&quot;Portals Dashboard Layout&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Note that the maximum width of a widget is 4 grid units, since that is the default maximum width of a custom dashboard. The dashboard width may also be increased to 6 grid units, which allows wider widgets. The widget height does not have a maximum for practical purposes. &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Select the device data sources this widget will use.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Select the range of data the widget will consume, in number of points (e.g. last 1 point) or time period (e.g. all points in last 2 days).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Optionally select a script template to use as a starting point.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Enter script code.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;images/script.png&quot; alt=&quot;Portals script code&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Press Save.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The new widget is displayed in the dashboard.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note that the these setup instructions cover portal-level widgets. With a &lt;a href=&quot;http://exosite.com/platform/oem-whitelabel/&quot;&gt;whitelabel account&lt;/a&gt; you can also create widgets at the domain level and that can operate on types of devices (client models in Exosite terminology) without needing to be configured with a concrete device. The API for domain widgets is identical to portal widgets, but the setup process is somewhat different and not covered here.&lt;/p&gt;
+&lt;h2 id=&quot;widget-function&quot;&gt;Widget Function&lt;/h2&gt;
+&lt;p&gt;Custom widgets define a function that is called by their containing sandbox environment when they are loaded. The following example displays &amp;quot;Hello World&amp;quot; inside its widget container area.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;function(container, portal) {
     /* CODE HERE */
-    $(container).html(&quot;Hello, World!&quot;);
+    $(container).html(&amp;quot;Hello, World!&amp;quot;);
 }
-</code></pre>
-<p>The widget function takes two parameters: <code>container</code> and <code>portal</code>.</p>
-<ul>
-<li><p><code>container</code> is an HTMLDivElement container for the widget. It can be used to write widget content. For more information, see <a href="#widget-container">Widget Container</a>.</p>
-</li>
-<li><p><code>portal</code> is a Javascript object containing a snapshot of device and dataport information, including datapoints. For more information, see <a href="#portal-resources">Portal Resources</a>.</p>
-</li>
-</ul>
-<h2 id="widget-container">Widget Container</h2>
-<p>The first argument to the <a href="#widget-function">widget function</a> is a HTMLDivElement container. By injecting HTML, CSS, and Javascript into this container, it&#39;s possible to create a wide variety of custom widgets that make use of data from the One Platform. The following examples illustrate techniques for working with the widget container.</p>
-<p>To display HTML content in a widget, write the HTML as a string to the container.</p>
-<pre><code class="lang-javascript">function(container, portal) {
-    $(container).html(&quot;&lt;h2&gt;Hello, World!&lt;/h2&gt;&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The widget function takes two parameters: &lt;code&gt;container&lt;/code&gt; and &lt;code&gt;portal&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;container&lt;/code&gt; is an HTMLDivElement container for the widget. It can be used to write widget content. For more information, see &lt;a href=&quot;#widget-container&quot;&gt;Widget Container&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;portal&lt;/code&gt; is a Javascript object containing a snapshot of device and dataport information, including datapoints. For more information, see &lt;a href=&quot;#portal-resources&quot;&gt;Portal Resources&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;widget-container&quot;&gt;Widget Container&lt;/h2&gt;
+&lt;p&gt;The first argument to the &lt;a href=&quot;#widget-function&quot;&gt;widget function&lt;/a&gt; is a HTMLDivElement container. By injecting HTML, CSS, and Javascript into this container, it&amp;#39;s possible to create a wide variety of custom widgets that make use of data from the One Platform. The following examples illustrate techniques for working with the widget container.&lt;/p&gt;
+&lt;p&gt;To display HTML content in a widget, write the HTML as a string to the container.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;function(container, portal) {
+    $(container).html(&amp;quot;&amp;lt;h2&amp;gt;Hello, World!&amp;lt;/h2&amp;gt;&amp;quot;);
 }
-</code></pre>
-<p><img src="images/html_output_example.png" alt="HTML Output Example"></p>
-<p>To style the HTML contents using CSS, you can inject a <code>&lt;style&gt;</code> element in the HTML. With a whitelabel account, you also have the option of defining styles separately in the domain level CSS.</p>
-<pre><code class="lang-javascript">function(container, portal) {
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&quot;images/html_output_example.png&quot; alt=&quot;HTML Output Example&quot;&gt;&lt;/p&gt;
+&lt;p&gt;To style the HTML contents using CSS, you can inject a &lt;code&gt;&amp;lt;style&amp;gt;&lt;/code&gt; element in the HTML. With a whitelabel account, you also have the option of defining styles separately in the domain level CSS.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;function(container, portal) {
     // set h2 header style to green
-    var html = &#39;&lt;style type=&quot;text/css&quot;&gt;&#39;;
-    html += &#39;h2 { color: #0000EE; }&#39;;
-    html += &#39;&lt;/style&gt;&#39;;
+    var html = &amp;#39;&amp;lt;style type=&amp;quot;text/css&amp;quot;&amp;gt;&amp;#39;;
+    html += &amp;#39;h2 { color: #0000EE; }&amp;#39;;
+    html += &amp;#39;&amp;lt;/style&amp;gt;&amp;#39;;
 
-    html += &#39;&lt;h2&gt;Hello, World!&lt;/h2&gt;&#39;;
+    html += &amp;#39;&amp;lt;h2&amp;gt;Hello, World!&amp;lt;/h2&amp;gt;&amp;#39;;
 
     $(container).html(html);
 }
-</code></pre>
-<p><img src="images/css_output_example.png" alt="CSS Output Example"></p>
-<p>To react to a user action, attach a Javascript event handler to an element.</p>
-<pre><code class="lang-javascript">function(container, portal) {
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&quot;images/css_output_example.png&quot; alt=&quot;CSS Output Example&quot;&gt;&lt;/p&gt;
+&lt;p&gt;To react to a user action, attach a Javascript event handler to an element.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;function(container, portal) {
   function showPage1() {
-    $(container).html(&#39;&lt;h2&gt;Hello&lt;/h2&gt;&lt;br&gt;&lt;a id=&quot;next_button&quot; href=&quot;javascript:void(0)&quot;&gt;Next&lt;/a&gt;&#39;);
-    $(&quot;a#next_button&quot;).click(function() {
+    $(container).html(&amp;#39;&amp;lt;h2&amp;gt;Hello&amp;lt;/h2&amp;gt;&amp;lt;br&amp;gt;&amp;lt;a id=&amp;quot;next_button&amp;quot; href=&amp;quot;javascript:void(0)&amp;quot;&amp;gt;Next&amp;lt;/a&amp;gt;&amp;#39;);
+    $(&amp;quot;a#next_button&amp;quot;).click(function() {
       showPage2();
     });
   }
   function showPage2() {
-    $(container).html(&#39;&lt;h2&gt;World&lt;/h2&gt;&lt;br&gt;&lt;a id=&quot;prev_button&quot; href=&quot;javascript:void(0)&quot;&gt;Previous&lt;/a&gt;&#39;);
-    $(&quot;a#prev_button&quot;).click(function() {
+    $(container).html(&amp;#39;&amp;lt;h2&amp;gt;World&amp;lt;/h2&amp;gt;&amp;lt;br&amp;gt;&amp;lt;a id=&amp;quot;prev_button&amp;quot; href=&amp;quot;javascript:void(0)&amp;quot;&amp;gt;Previous&amp;lt;/a&amp;gt;&amp;#39;);
+    $(&amp;quot;a#prev_button&amp;quot;).click(function() {
       showPage1();
     });
   }
   showPage1();
 }
-</code></pre>
-<p><img src="images/user_input_example1.png" alt="User Input Example 1"> <img src="images/user_input_example2.png" alt="User Input Example 2"></p>
-<p>To read data from the platform, a widget may read data passed from the <a href="#portal-resources">portal resources</a> argument to the widget function. Note that you have to select a Data Source in the widget configuration to see any output listed.</p>
-<pre><code class="lang-javascript">function(container, portal) {
-    var html = &#39;&lt;p&gt;Custom widget function was called with &#39;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&quot;images/user_input_example1.png&quot; alt=&quot;User Input Example 1&quot;&gt; &lt;img src=&quot;images/user_input_example2.png&quot; alt=&quot;User Input Example 2&quot;&gt;&lt;/p&gt;
+&lt;p&gt;To read data from the platform, a widget may read data passed from the &lt;a href=&quot;#portal-resources&quot;&gt;portal resources&lt;/a&gt; argument to the widget function. Note that you have to select a Data Source in the widget configuration to see any output listed.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;function(container, portal) {
+    var html = &amp;#39;&amp;lt;p&amp;gt;Custom widget function was called with &amp;#39;;
     html += portal.dataports.length;
-    html += &#39; portal datasource(s) and &#39;;
+    html += &amp;#39; portal datasource(s) and &amp;#39;;
     html += portal.clients.length;
-    html += &#39; device(s).&lt;/p&gt;&#39;;
+    html += &amp;#39; device(s).&amp;lt;/p&amp;gt;&amp;#39;;
 
-    html += &#39;&lt;p&gt;&#39;;
+    html += &amp;#39;&amp;lt;p&amp;gt;&amp;#39;;
     $.each(portal.clients, function(idx, client) {
-       html += &#39;&lt;h5&gt;&#39; + client.info.description.name + &#39;:&lt;/h5&gt;&#39;; 
-       html += &#39;&lt;ul&gt;&#39;;
+       html += &amp;#39;&amp;lt;h5&amp;gt;&amp;#39; + client.info.description.name + &amp;#39;:&amp;lt;/h5&amp;gt;&amp;#39;; 
+       html += &amp;#39;&amp;lt;ul&amp;gt;&amp;#39;;
        $.each(client.dataports, function(idx, dataport) {
          // display dataport name
-         html += &#39;&lt;li&gt;&#39; + dataport.info.description.name + &#39;: &#39;;
-         if (dataport.data.length &gt; 0) {
+         html += &amp;#39;&amp;lt;li&amp;gt;&amp;#39; + dataport.info.description.name + &amp;#39;: &amp;#39;;
+         if (dataport.data.length &amp;gt; 0) {
            var latest_point = dataport.data[dataport.data.length - 1]; 
            html += latest_point[1];
-           html += &#39; (&#39; + new Date(latest_point[0] * 1000) + &#39;)&#39;;
+           html += &amp;#39; (&amp;#39; + new Date(latest_point[0] * 1000) + &amp;#39;)&amp;#39;;
          } else {
-           html += &#39;no data points available&#39;;
+           html += &amp;#39;no data points available&amp;#39;;
          }
-         html += &#39;&lt;/li&gt;&#39;;
+         html += &amp;#39;&amp;lt;/li&amp;gt;&amp;#39;;
        });
-       html += &#39;&lt;/ul&gt;&#39;;
+       html += &amp;#39;&amp;lt;/ul&amp;gt;&amp;#39;;
     });
-    html += &#39;&lt;/p&gt;&#39;;
+    html += &amp;#39;&amp;lt;/p&amp;gt;&amp;#39;;
 
     $(container).html(html);
 }
-</code></pre>
-<p><img src="images/read_portal_resources_example.png" alt="Read Portal Resources Example"></p>
-<p>It&#39;s also possible to use the <code>read</code> widget API function to get data from the One Platform. The advantage of this method is that you can do it after the script has been loaded. For an example, see the <a href="#read">documentation for read</a>.</p>
-<h2 id="portal-resources">Portal Resources</h2>
-<p>The second argument to the <a href="#widget-function">widget function</a> is a Javascript object containing a snapshot of device and dataport information at the time the widget loaded. The object has this format:</p>
-<pre><code>{ 
-  &quot;clients&quot;: [Client,...],
-  &quot;dataports&quot;: [Dataport,...] 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&quot;images/read_portal_resources_example.png&quot; alt=&quot;Read Portal Resources Example&quot;&gt;&lt;/p&gt;
+&lt;p&gt;It&amp;#39;s also possible to use the &lt;code&gt;read&lt;/code&gt; widget API function to get data from the One Platform. The advantage of this method is that you can do it after the script has been loaded. For an example, see the &lt;a href=&quot;#read&quot;&gt;documentation for read&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;portal-resources&quot;&gt;Portal Resources&lt;/h2&gt;
+&lt;p&gt;The second argument to the &lt;a href=&quot;#widget-function&quot;&gt;widget function&lt;/a&gt; is a Javascript object containing a snapshot of device and dataport information at the time the widget loaded. The object has this format:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{ 
+  &amp;quot;clients&amp;quot;: [Client,...],
+  &amp;quot;dataports&amp;quot;: [Dataport,...] 
 }
-</code></pre><h3 id="client">Client</h3>
-<p>Each <code>Client</code> contains JSON formatted information from the client in the One Platform including its alias, name, meta, and array of dataports (data sources).</p>
-<pre><code>{
-  &quot;alias&quot;:string :: null,
-  &quot;dataports&quot;:[Dataport,...],
-  &quot;info&quot;:{
-    &quot;description&quot;:{
-      &quot;meta&quot;:DeviceMeta,
-      &quot;name&quot;:string :: &quot;&quot; 
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;client&quot;&gt;Client&lt;/h3&gt;
+&lt;p&gt;Each &lt;code&gt;Client&lt;/code&gt; contains JSON formatted information from the client in the One Platform including its alias, name, meta, and array of dataports (data sources).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;alias&amp;quot;:string :: null,
+  &amp;quot;dataports&amp;quot;:[Dataport,...],
+  &amp;quot;info&amp;quot;:{
+    &amp;quot;description&amp;quot;:{
+      &amp;quot;meta&amp;quot;:DeviceMeta,
+      &amp;quot;name&amp;quot;:string :: &amp;quot;&amp;quot; 
     }
   }
 }
-</code></pre><p><code>DeviceMeta</code> is a JSON string that may be parsed with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse"><code>JSON.parse()</code></a>. It contains the meta information for the client in the One Platform.</p>
-<pre><code>{
-  &quot;activetime&quot;:ActiveTimeRange,
-  &quot;timezone&quot;:Timezone,
-  &quot;location&quot;:Location,
-  &quot;device&quot;:{
-    &quot;type&quot;:&quot;generic&quot; | &quot;vendor&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;DeviceMeta&lt;/code&gt; is a JSON string that may be parsed with &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse&quot;&gt;&lt;code&gt;JSON.parse()&lt;/code&gt;&lt;/a&gt;. It contains the meta information for the client in the One Platform.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;activetime&amp;quot;:ActiveTimeRange,
+  &amp;quot;timezone&amp;quot;:Timezone,
+  &amp;quot;location&amp;quot;:Location,
+  &amp;quot;device&amp;quot;:{
+    &amp;quot;type&amp;quot;:&amp;quot;generic&amp;quot; | &amp;quot;vendor&amp;quot;
   }
 }
-</code></pre><ul>
-<li><p><code>&quot;ActiveTimeRange&quot;</code> is a string set by the number of minutes user input in the device popup. If the device received any data source within the last N minutes, the device is considered to be active. N here is the ActiveTimeRange.</p>
-</li>
-<li><p><code>&quot;Timezone&quot;</code> is a string set by the timezone user chose in the device popup.</p>
-</li>
-<li><p><code>&quot;Location&quot;</code> is a string set by the location user input in the device popup.</p>
-</li>
-</ul>
-<h3 id="dataport">Dataport</h3>
-<p><code>Dataport</code> contains JSON formatted information from the dataport in the One Platform including its alias, name, meta, format, and array of data values.  </p>
-<pre><code>{
-  &quot;alias&quot;:string :: null,
-  &quot;data&quot;:[[Timestamp ,Value],...],
-  &quot;info&quot;:{
-    &quot;description&quot;:{
-      &quot;format&quot;: &quot;float&quot; | &quot;integer&quot; | &quot;string&quot;,
-      &quot;meta&quot;:DataSourceMeta,
-      &quot;name&quot;:string :: &quot;&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;ActiveTimeRange&amp;quot;&lt;/code&gt; is a string set by the number of minutes user input in the device popup. If the device received any data source within the last N minutes, the device is considered to be active. N here is the ActiveTimeRange.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;Timezone&amp;quot;&lt;/code&gt; is a string set by the timezone user chose in the device popup.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;Location&amp;quot;&lt;/code&gt; is a string set by the location user input in the device popup.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;dataport&quot;&gt;Dataport&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Dataport&lt;/code&gt; contains JSON formatted information from the dataport in the One Platform including its alias, name, meta, format, and array of data values.  &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;alias&amp;quot;:string :: null,
+  &amp;quot;data&amp;quot;:[[Timestamp ,Value],...],
+  &amp;quot;info&amp;quot;:{
+    &amp;quot;description&amp;quot;:{
+      &amp;quot;format&amp;quot;: &amp;quot;float&amp;quot; | &amp;quot;integer&amp;quot; | &amp;quot;string&amp;quot;,
+      &amp;quot;meta&amp;quot;:DataSourceMeta,
+      &amp;quot;name&amp;quot;:string :: &amp;quot;&amp;quot;
     }
   }
 }
-</code></pre><p><code>DataSourceMeta</code> is a JSON string that may be parsed with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse"><code>JSON.parse()</code></a>. It contains the meta information for the dataport in the One Platform.</p>
-<pre><code>{
-  &quot;datasource&quot;:{
-    &quot;unit&quot;: string :: &quot;&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;DataSourceMeta&lt;/code&gt; is a JSON string that may be parsed with &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse&quot;&gt;&lt;code&gt;JSON.parse()&lt;/code&gt;&lt;/a&gt;. It contains the meta information for the dataport in the One Platform.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;datasource&amp;quot;:{
+    &amp;quot;unit&amp;quot;: string :: &amp;quot;&amp;quot;
   }
 }
-</code></pre><ul>
-<li><code>unit</code> is a string set by the user input in the device popup.</li>
-</ul>
-<h2 id="portal-resources-example">Portal Resources Example</h2>
-<p>The above section defines the individual parts of the portals resources object passed to the <a href="#widget-function">widget function</a>. Let&#39;s bring that together by looking at a concrete example. Here&#39;s an custom widget configured to load the temperature in Antarctica from the virtual device that comes with a new Portals Community account.</p>
-<p><img src="images/widget_config_example.png" alt="Widget Config Example"></p>
-<p>In the example widget code, the line <code>console.log(JSON.stringify(portal, null, 2));</code> converts <code>portal</code> to a string so that we can see its contents in the browser console. Here&#39;s the output of that script, with comments added.</p>
-<pre><code>{
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;unit&lt;/code&gt; is a string set by the user input in the device popup.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;portal-resources-example&quot;&gt;Portal Resources Example&lt;/h2&gt;
+&lt;p&gt;The above section defines the individual parts of the portals resources object passed to the &lt;a href=&quot;#widget-function&quot;&gt;widget function&lt;/a&gt;. Let&amp;#39;s bring that together by looking at a concrete example. Here&amp;#39;s an custom widget configured to load the temperature in Antarctica from the virtual device that comes with a new Portals Community account.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;images/widget_config_example.png&quot; alt=&quot;Widget Config Example&quot;&gt;&lt;/p&gt;
+&lt;p&gt;In the example widget code, the line &lt;code&gt;console.log(JSON.stringify(portal, null, 2));&lt;/code&gt; converts &lt;code&gt;portal&lt;/code&gt; to a string so that we can see its contents in the browser console. Here&amp;#39;s the output of that script, with comments added.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
   // portal level dataports
-  &quot;dataports&quot;: [],
+  &amp;quot;dataports&amp;quot;: [],
   // devices configured to be included
-  &quot;clients&quot;: [
+  &amp;quot;clients&amp;quot;: [
     {
       // this device has no alias assigned
-      &quot;alias&quot;: null,
-      &quot;info&quot;: {
-        &quot;description&quot;: {
+      &amp;quot;alias&amp;quot;: null,
+      &amp;quot;info&amp;quot;: {
+        &amp;quot;description&amp;quot;: {
           // Portals-specific metadata
-          &quot;meta&quot;: &quot;{\&quot;timezone\&quot;:\&quot;America/Chicago\&quot;,\&quot;location\&quot;:\&quot;United States\&quot;,\&quot;device\&quot;:{\&quot;type\&quot;:\&quot;generic\&quot;}}&quot;,
-          // device&#39;s name
-          &quot;name&quot;: &quot;Exosite Device&quot;,
+          &amp;quot;meta&amp;quot;: &amp;quot;{\&amp;quot;timezone\&amp;quot;:\&amp;quot;America/Chicago\&amp;quot;,\&amp;quot;location\&amp;quot;:\&amp;quot;United States\&amp;quot;,\&amp;quot;device\&amp;quot;:{\&amp;quot;type\&amp;quot;:\&amp;quot;generic\&amp;quot;}}&amp;quot;,
+          // device&amp;#39;s name
+          &amp;quot;name&amp;quot;: &amp;quot;Exosite Device&amp;quot;,
           // whether the device is public
-          &quot;public&quot;: false
+          &amp;quot;public&amp;quot;: false
         }
       },
       // dataports contained in this device
-      &quot;dataports&quot;: [
+      &amp;quot;dataports&amp;quot;: [
         {
           // dataport alias
-          &quot;alias&quot;: &quot;Antarctica Temperature&quot;,
-          &quot;info&quot;: {
-            &quot;description&quot;: {
+          &amp;quot;alias&amp;quot;: &amp;quot;Antarctica Temperature&amp;quot;,
+          &amp;quot;info&amp;quot;: {
+            &amp;quot;description&amp;quot;: {
               // format of dataport data
-              &quot;format&quot;: &quot;string&quot;,
+              &amp;quot;format&amp;quot;: &amp;quot;string&amp;quot;,
               // Portals-specific metadata (see below)
-              &quot;meta&quot;: &quot;{\&quot;alias\&quot;:\&quot;antarctica_temperature\&quot;,\&quot;datasource\&quot;:{\&quot;description\&quot;:\&quot;Temperature data for Antarctica\&quot;,\&quot;unit\&quot;:\&quot;°C\&quot;}}&quot;,
+              &amp;quot;meta&amp;quot;: &amp;quot;{\&amp;quot;alias\&amp;quot;:\&amp;quot;antarctica_temperature\&amp;quot;,\&amp;quot;datasource\&amp;quot;:{\&amp;quot;description\&amp;quot;:\&amp;quot;Temperature data for Antarctica\&amp;quot;,\&amp;quot;unit\&amp;quot;:\&amp;quot;°C\&amp;quot;}}&amp;quot;,
               // dataport name
-              &quot;name&quot;: &quot;Antarctica Temperature&quot;,
+              &amp;quot;name&amp;quot;: &amp;quot;Antarctica Temperature&amp;quot;,
               // no preprocessing
-              &quot;preprocess&quot;: [],
+              &amp;quot;preprocess&amp;quot;: [],
               // this is a public dataport 
-              &quot;public&quot;: true,
+              &amp;quot;public&amp;quot;: true,
               // how much historical data to retain
-              &quot;retention&quot;: {
-                &quot;count&quot;: &quot;infinity&quot;,
-                &quot;duration&quot;: &quot;infinity&quot;
+              &amp;quot;retention&amp;quot;: {
+                &amp;quot;count&amp;quot;: &amp;quot;infinity&amp;quot;,
+                &amp;quot;duration&amp;quot;: &amp;quot;infinity&amp;quot;
               },
               // see RPC info command 
-              &quot;subscribe&quot;: null
+              &amp;quot;subscribe&amp;quot;: null
             }
           },
-          &quot;data&quot;: [
+          &amp;quot;data&amp;quot;: [
             // single datapoint
             [
               // unix timestamp
               1384536323,
               // temperature value
-              &quot;-8.0&quot;
+              &amp;quot;-8.0&amp;quot;
             ]
           ]
         }
@@ -329,81 +329,81 @@
     }
   ]
 }
-</code></pre><p>In the example, we learn that the temperature in Antarctica on Nov 15, 2013 at 5:25PM UTC was -8°C. The name of the device producing this data is &quot;Exosite Device&quot;.</p>
-<h2 id="data-availability">Data Availability</h2>
-<p>The contents of the <code>portal</code> parameter are are based on what dataports and time periods are set in the widget configuration. </p>
-<p>In the case of a domain widget, a domain administrator may additionally select a client model whose data should be included.</p>
-<h2 id="procedures">Procedures</h2>
-<p>The custom widget sandbox environment exposes an API of functions for interacting with Portals and the One Platform. </p>
-<h3 id="read">read</h3>
-<p>Reads data from the One Platform resource(s) specified. This throws an exception if there is any error in the arguments.</p>
-<pre><code>read(TargetResource, Options) -&gt; Deferred
-</code></pre><ul>
-<li><p><code>TargetResource</code> is an array with the following format, where <code>DeviceAlias</code> and <code>DataportAlias</code> are strings.</p>
-<pre><code>[
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;In the example, we learn that the temperature in Antarctica on Nov 15, 2013 at 5:25PM UTC was -8°C. The name of the device producing this data is &amp;quot;Exosite Device&amp;quot;.&lt;/p&gt;
+&lt;h2 id=&quot;data-availability&quot;&gt;Data Availability&lt;/h2&gt;
+&lt;p&gt;The contents of the &lt;code&gt;portal&lt;/code&gt; parameter are are based on what dataports and time periods are set in the widget configuration. &lt;/p&gt;
+&lt;p&gt;In the case of a domain widget, a domain administrator may additionally select a client model whose data should be included.&lt;/p&gt;
+&lt;h2 id=&quot;procedures&quot;&gt;Procedures&lt;/h2&gt;
+&lt;p&gt;The custom widget sandbox environment exposes an API of functions for interacting with Portals and the One Platform. &lt;/p&gt;
+&lt;h3 id=&quot;read&quot;&gt;read&lt;/h3&gt;
+&lt;p&gt;Reads data from the One Platform resource(s) specified. This throws an exception if there is any error in the arguments.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;read(TargetResource, Options) -&amp;gt; Deferred
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;TargetResource&lt;/code&gt; is an array with the following format, where &lt;code&gt;DeviceAlias&lt;/code&gt; and &lt;code&gt;DataportAlias&lt;/code&gt; are strings.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[
 DeviceAlias,
 DataportAlias
 ]
-</code></pre></li>
-<li><p><code>Options</code> has the following format: </p>
-<pre><code>{
-&quot;starttime&quot;:number,
-&quot;endtime&quot;:number,
-&quot;limit&quot;:number,
-&quot;sort&quot;:&quot;asc&quot; | &quot;desc&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Options&lt;/code&gt; has the following format: &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+&amp;quot;starttime&amp;quot;:number,
+&amp;quot;endtime&amp;quot;:number,
+&amp;quot;limit&amp;quot;:number,
+&amp;quot;sort&amp;quot;:&amp;quot;asc&amp;quot; | &amp;quot;desc&amp;quot;
 }
-</code></pre></li>
-<li><p><code>Deferred</code> is an object that may be called with <code>done()</code> and/or <code>fail()</code> callbacks to handle success or failure condition. The callback passed to the deferred object’s done method will get the array of points that were read passed as arguments (each point as one argument).</p>
-</li>
-</ul>
-<h4 id="example">Example</h4>
-<p>Here&#39;s an example of using <code>read</code> to read from the device provided with a Portals Community account. Note that for this example it is necessary to first assign an alias to the device by clicking on Devices -&gt; Exosite Device, setting Alias to <code>exosite_device</code>, and pressing the Update button.</p>
-<pre><code class="lang-javascript">function(container, portal) {
-  var html = &#39;Latest temperature in Antarctica: &lt;div id=&quot;temperature&quot;&gt;loading...&lt;/div&gt;&#39;;
-  html += &#39;&lt;div&gt;&lt;a class=&quot;reload&quot; href=&quot;javascript:void(0);&quot;&gt;reload&lt;/a&gt;&lt;/div&gt;&#39;;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Deferred&lt;/code&gt; is an object that may be called with &lt;code&gt;done()&lt;/code&gt; and/or &lt;code&gt;fail()&lt;/code&gt; callbacks to handle success or failure condition. The callback passed to the deferred object’s done method will get the array of points that were read passed as arguments (each point as one argument).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;example&quot;&gt;Example&lt;/h4&gt;
+&lt;p&gt;Here&amp;#39;s an example of using &lt;code&gt;read&lt;/code&gt; to read from the device provided with a Portals Community account. Note that for this example it is necessary to first assign an alias to the device by clicking on Devices -&amp;gt; Exosite Device, setting Alias to &lt;code&gt;exosite_device&lt;/code&gt;, and pressing the Update button.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;function(container, portal) {
+  var html = &amp;#39;Latest temperature in Antarctica: &amp;lt;div id=&amp;quot;temperature&amp;quot;&amp;gt;loading...&amp;lt;/div&amp;gt;&amp;#39;;
+  html += &amp;#39;&amp;lt;div&amp;gt;&amp;lt;a class=&amp;quot;reload&amp;quot; href=&amp;quot;javascript:void(0);&amp;quot;&amp;gt;reload&amp;lt;/a&amp;gt;&amp;lt;/div&amp;gt;&amp;#39;;
   function reload() {
     // call the read widget API
     var options = {
       starttime: 1,                          // beginning of epoch
       endtime: (new Date).getTime() / 1000,  // current time
       limit: 1,                              // single point
-      sort: &quot;desc&quot;                           // latest point
+      sort: &amp;quot;desc&amp;quot;                           // latest point
     };
 
-    read([&#39;exosite_device&#39;, &#39;Antarctica Temperature&#39;], options)
+    read([&amp;#39;exosite_device&amp;#39;, &amp;#39;Antarctica Temperature&amp;#39;], options)
       .done(function() {
         var data = arguments;
         // update the data.
         var latest_point = data[0];
-        var html = latest_point[1] + &#39; (&#39; + new Date(latest_point[0] * 1000)  + &#39;)&#39;;
-        $(container).find(&#39;div#temperature&#39;).html(html);
+        var html = latest_point[1] + &amp;#39; (&amp;#39; + new Date(latest_point[0] * 1000)  + &amp;#39;)&amp;#39;;
+        $(container).find(&amp;#39;div#temperature&amp;#39;).html(html);
       })
       .fail(function() {
-        $(container).find(&#39;span#temperature&#39;).html(data);
+        $(container).find(&amp;#39;span#temperature&amp;#39;).html(data);
       });
   } 
   $(container).html(html);
-  $(container).find(&#39;a.reload&#39;).click(function() {
-    // read value again when user clicks on &quot;reload&quot; link
-    alert(&quot;loading!&quot;);
+  $(container).find(&amp;#39;a.reload&amp;#39;).click(function() {
+    // read value again when user clicks on &amp;quot;reload&amp;quot; link
+    alert(&amp;quot;loading!&amp;quot;);
     reload();
   });
   // read value when widget loads
   reload();
 }
-</code></pre>
-<p><img src="images/read_example.png" alt="Read Example"></p>
-<h3 id="write">write</h3>
-<p>Writes a single value to the One Platform resource(s) specified. This throws an exception if there is any error in the arguments.</p>
-<pre><code>write(TargetResource, Value) -&gt; Deferred
-</code></pre><ul>
-<li><code>&quot;TargetResource&quot;</code> is an array of resource aliases</li>
-<li><code>&quot;Value&quot;</code> may be a number or string value</li>
-</ul>
-<h4 id="example">Example</h4>
-<pre><code>try
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&quot;images/read_example.png&quot; alt=&quot;Read Example&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;write&quot;&gt;write&lt;/h3&gt;
+&lt;p&gt;Writes a single value to the One Platform resource(s) specified. This throws an exception if there is any error in the arguments.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;write(TargetResource, Value) -&amp;gt; Deferred
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;TargetResource&amp;quot;&lt;/code&gt; is an array of resource aliases&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;Value&amp;quot;&lt;/code&gt; may be a number or string value&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;example&quot;&gt;Example&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;try
 {
-  write([&quot;blog&quot;, &quot;message&quot;], &quot;hello&quot;)
+  write([&amp;quot;blog&amp;quot;, &amp;quot;message&amp;quot;], &amp;quot;hello&amp;quot;)
     .done(function()
     {
       // means succeeded to write to the data source, message, owned by the
@@ -418,31 +418,31 @@ DataportAlias
 }
 catch ()
 {
-  // means error in the arguments e.g. [&quot;blog&quot;, &quot;message&quot;] is not accessible
-  // for this widget or doesn&#39;t exist.
+  // means error in the arguments e.g. [&amp;quot;blog&amp;quot;, &amp;quot;message&amp;quot;] is not accessible
+  // for this widget or doesn&amp;#39;t exist.
 }
-</code></pre><h3 id="update">update</h3>
-<p>Update a device’s description. This throws an exception if there is any error in the arguments.</p>
-<pre><code>update(TargetResource, Description) -&gt; Deferred
-</code></pre><ul>
-<li><code>&quot;TargetResource&quot;</code> is an array of device aliases.</li>
-<li><code>&quot;Description&quot;</code> is an object containing <code>&quot;meta&quot;</code> (device metadata as a JSON string) and <code>&quot;name&quot;</code> (name of device). Note that custom widgets may only modify <code>&quot;location&quot;</code> in <code>&quot;meta&quot;</code>.<pre><code>{
-&quot;meta&quot;:Meta :: &quot;&quot;,
-&quot;name&quot;:string :: &quot;&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;update&quot;&gt;update&lt;/h3&gt;
+&lt;p&gt;Update a device’s description. This throws an exception if there is any error in the arguments.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;update(TargetResource, Description) -&amp;gt; Deferred
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;TargetResource&amp;quot;&lt;/code&gt; is an array of device aliases.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;Description&amp;quot;&lt;/code&gt; is an object containing &lt;code&gt;&amp;quot;meta&amp;quot;&lt;/code&gt; (device metadata as a JSON string) and &lt;code&gt;&amp;quot;name&amp;quot;&lt;/code&gt; (name of device). Note that custom widgets may only modify &lt;code&gt;&amp;quot;location&amp;quot;&lt;/code&gt; in &lt;code&gt;&amp;quot;meta&amp;quot;&lt;/code&gt;.&lt;pre&gt;&lt;code&gt;{
+&amp;quot;meta&amp;quot;:Meta :: &amp;quot;&amp;quot;,
+&amp;quot;name&amp;quot;:string :: &amp;quot;&amp;quot;
 }
-</code></pre></li>
-</ul>
-<h4 id="example">Example</h4>
-<pre><code>var description =
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;example&quot;&gt;Example&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;var description =
     {
-      &quot;meta&quot;:
+      &amp;quot;meta&amp;quot;:
       {
-        &quot;location&quot;: &quot;new location&quot;
+        &amp;quot;location&amp;quot;: &amp;quot;new location&amp;quot;
       },
-      &quot;name&quot;: &quot;new name&quot;
+      &amp;quot;name&amp;quot;: &amp;quot;new name&amp;quot;
     };
 description.meta = JSON.stringify(description.meta);
-update([&quot;some_device&quot;], description)
+update([&amp;quot;some_device&amp;quot;], description)
   .done(function()
   {
     // means succeeded to update a device
@@ -452,17 +452,17 @@ update([&quot;some_device&quot;], description)
     // means failed to update a device
   })
 ;
-</code></pre><h3 id="drop">drop</h3>
-<p>Drop a device. This throws an exception if there is any error in the arguments.</p>
-<pre><code>drop(TargetResource) -&gt; Deferred
-</code></pre><ul>
-<li><p><code>TargetResource</code> is an array of device aliases</p>
-</li>
-<li><p><code>Deferred</code> is an object that may be called with <code>done()</code> and/or <code>fail()</code> callbacks to handle success or failure condition.</p>
-</li>
-</ul>
-<h4 id="example">Example</h4>
-<pre><code>drop([&quot;some_device&quot;])
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;drop&quot;&gt;drop&lt;/h3&gt;
+&lt;p&gt;Drop a device. This throws an exception if there is any error in the arguments.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;drop(TargetResource) -&amp;gt; Deferred
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;TargetResource&lt;/code&gt; is an array of device aliases&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Deferred&lt;/code&gt; is an object that may be called with &lt;code&gt;done()&lt;/code&gt; and/or &lt;code&gt;fail()&lt;/code&gt; callbacks to handle success or failure condition.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;example&quot;&gt;Example&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;drop([&amp;quot;some_device&amp;quot;])
   .done(function()
   {
     // succeeded to drop a device
@@ -472,120 +472,120 @@ update([&quot;some_device&quot;], description)
     // failed to drop a device
   })
 ;
-</code></pre><h3 id="subscribe">subscribe</h3>
-<p>Register a callback function to handle a widget event. Once registered, the callback function is called when <a href="#publish"><code>publish</code></a> is called for the widget event. This may be used to react to user interface events that occur in another custom widget.</p>
-<pre><code>subscribe(Event, Callback[, SubscribeOptions]) -&gt; undefined
-</code></pre><ul>
-<li><p><code>Event</code> is the name of the event to subscribe to. This should match the name passed to <code>publish</code>. Note that <code>Event</code> is not related to Portals events or One Platform datarules. It is an string identifier that is made up by the widget developer for identifying user interface events at the level of an individual dashboard.</p>
-</li>
-<li><p><code>Callback</code> is a function to invoke when the event occurs. When this function is invoked, its arguments are the messages passed to the publish function.</p>
-</li>
-<li><p><code>SubscribeOptions</code> is an optional object like this:</p>
-<pre><code>{
-&quot;context&quot;: anything :: undefined,
-&quot;id&quot;:string :: &quot;&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;subscribe&quot;&gt;subscribe&lt;/h3&gt;
+&lt;p&gt;Register a callback function to handle a widget event. Once registered, the callback function is called when &lt;a href=&quot;#publish&quot;&gt;&lt;code&gt;publish&lt;/code&gt;&lt;/a&gt; is called for the widget event. This may be used to react to user interface events that occur in another custom widget.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;subscribe(Event, Callback[, SubscribeOptions]) -&amp;gt; undefined
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Event&lt;/code&gt; is the name of the event to subscribe to. This should match the name passed to &lt;code&gt;publish&lt;/code&gt;. Note that &lt;code&gt;Event&lt;/code&gt; is not related to Portals events or One Platform datarules. It is an string identifier that is made up by the widget developer for identifying user interface events at the level of an individual dashboard.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Callback&lt;/code&gt; is a function to invoke when the event occurs. When this function is invoked, its arguments are the messages passed to the publish function.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;SubscribeOptions&lt;/code&gt; is an optional object like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+&amp;quot;context&amp;quot;: anything :: undefined,
+&amp;quot;id&amp;quot;:string :: &amp;quot;&amp;quot;
 }
-</code></pre></li>
-<li><p><code>&quot;context&quot;</code> is the context of the callback. If specified, this provides the value of the keyword <code>this</code> in the callback.</p>
-</li>
-<li><code>&quot;id&quot;</code> defines the id of the callback. This id is unique among all callbacks of each event. This may be used to prevent a callback from subscribing the same event multiple times.</li>
-</ul>
-<h4 id="examples">Examples</h4>
-<p><code>subscribe</code> and <code>publish</code> may be used to communicate between widgets. For example, one widget can publish a message to a named event when a link is clicked:</p>
-<pre><code>function(container, portal)
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;context&amp;quot;&lt;/code&gt; is the context of the callback. If specified, this provides the value of the keyword &lt;code&gt;this&lt;/code&gt; in the callback.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;id&amp;quot;&lt;/code&gt; defines the id of the callback. This id is unique among all callbacks of each event. This may be used to prevent a callback from subscribing the same event multiple times.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;examples&quot;&gt;Examples&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;subscribe&lt;/code&gt; and &lt;code&gt;publish&lt;/code&gt; may be used to communicate between widgets. For example, one widget can publish a message to a named event when a link is clicked:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function(container, portal)
 {
-  $(container).html(&#39;&lt;a id=&quot;publish_button&quot; href=&quot;javascript:void(0);&quot;&gt;Publish &quot;Hello subscribers!&quot;&lt;/a&gt;&#39;);
-  $(&#39;a#publish_button&#39;).click(function () {
-    // publish to &#39;myevent&#39;
-    publish(&#39;myevent&#39;, &#39;Hello, subscribers!&#39;);
+  $(container).html(&amp;#39;&amp;lt;a id=&amp;quot;publish_button&amp;quot; href=&amp;quot;javascript:void(0);&amp;quot;&amp;gt;Publish &amp;quot;Hello subscribers!&amp;quot;&amp;lt;/a&amp;gt;&amp;#39;);
+  $(&amp;#39;a#publish_button&amp;#39;).click(function () {
+    // publish to &amp;#39;myevent&amp;#39;
+    publish(&amp;#39;myevent&amp;#39;, &amp;#39;Hello, subscribers!&amp;#39;);
   });
 }
-</code></pre><p>...and another widget can subscribe to the event and update its content when it receives a callback:</p>
-<pre><code>function(container, portal)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;...and another widget can subscribe to the event and update its content when it receives a callback:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function(container, portal)
 {
-  subscribe(&#39;myevent&#39;, function(msg) {
+  subscribe(&amp;#39;myevent&amp;#39;, function(msg) {
     $(container).html(msg);
   });
 }
-</code></pre><p>Multiple arguments may be published:</p>
-<pre><code>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Multiple arguments may be published:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
 // this example demonstrates how the callback parameter works.
-subscribe(&quot;dinner&quot;, function(papasDinner, mamasDinner) {
+subscribe(&amp;quot;dinner&amp;quot;, function(papasDinner, mamasDinner) {
   console.log(papasDinner, mamasDinner);
 });
-// this shows &quot;Rice noodle&quot; &quot;Stinky tofu&quot; in the debug console.
-publish(&quot;dinner&quot;, &quot;Rice noodle&quot;, &quot;Stinky tofu&quot;);
-</code></pre><p>Here&#39;s an example of the context option:</p>
-<pre><code>subscribe(&quot;birthday&quot;, function() {
+// this shows &amp;quot;Rice noodle&amp;quot; &amp;quot;Stinky tofu&amp;quot; in the debug console.
+publish(&amp;quot;dinner&amp;quot;, &amp;quot;Rice noodle&amp;quot;, &amp;quot;Stinky tofu&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Here&amp;#39;s an example of the context option:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;subscribe(&amp;quot;birthday&amp;quot;, function() {
     console.log(this.name);
   }, 
   { 
-    context: { name: &#39;My context&#39; }  
+    context: { name: &amp;#39;My context&amp;#39; }  
   }
 );
 
-// this displays &quot;My context&quot; in the debug console.
-publish(&quot;birthday&quot;);
-</code></pre><p>Here&#39;s an example of the id option:</p>
-<pre><code>var options = { id: &quot;widgetA&quot; };
+// this displays &amp;quot;My context&amp;quot; in the debug console.
+publish(&amp;quot;birthday&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Here&amp;#39;s an example of the id option:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var options = { id: &amp;quot;widgetA&amp;quot; };
 
-// this registers a callback for &quot;season&quot; event, 
+// this registers a callback for &amp;quot;season&amp;quot; event, 
 // identifying the widget making the call
-subscribe(&quot;season&quot;, function() { console.log(&quot;Spring&quot;); }, options);
+subscribe(&amp;quot;season&amp;quot;, function() { console.log(&amp;quot;Spring&amp;quot;); }, options);
 
-// this registers another callback for &quot;season&quot; event,
+// this registers another callback for &amp;quot;season&amp;quot; event,
 // without an id set in options. 
-subscribe(&quot;season&quot;, function() { console.log(&quot;Summer&quot;); });
+subscribe(&amp;quot;season&amp;quot;, function() { console.log(&amp;quot;Summer&amp;quot;); });
 
-// this registers a callback that prints &quot;Autumn&quot;.
+// this registers a callback that prints &amp;quot;Autumn&amp;quot;.
 // options.id matches the earlier call, so it replaces the
 // earlier callback.
-subscribe(&quot;season&quot;, function() { console.log(&quot;Autumn&quot;); }, options);
+subscribe(&amp;quot;season&amp;quot;, function() { console.log(&amp;quot;Autumn&amp;quot;); }, options);
 
 // this shows Autumn and Summer in the debug console, but not 
 // Spring since that callback was replaced
-publish(&quot;season&quot;);
-</code></pre><h3 id="publish">publish</h3>
-<p>Publish a widget event. The optional parameters to <code>publish</code> following the event name are passed as parameters to all callback functions that have been registered using <a href="#subscribe"><code>subscribe</code></a>.</p>
-<pre><code>publish(Event[, Message1, Message2, ...]) -&gt; undefined
-</code></pre><ul>
-<li><p><code>Event</code> is the name of the event to publish. It is be made up by the widget developer and, for code clarity, should describe the event being published. Note that <code>Event</code> is not related to Portals events or One Platform datarules. It is an string identifier that is made up by the widget developer for identifying user interface events at the level of an individual dashboard.</p>
-</li>
-<li><p><code>Message</code> may be anything. These arguments are passed to the subscriber callbacks as parameters.</p>
-</li>
-</ul>
-<p>For examples of the <code>publish</code> command, see <a href="#subscribe"><code>subscribe</code></a>.</p>
-<h3 id="getwidgetinfo">getWidgetInfo</h3>
-<p>Get information about of the current widget. If the info of the <code>PropertyName</code> doesn’t exist, <code>undefined</code> is returned.</p>
-<pre><code>getWidgetInfo(PropertyName) -&gt; PropertyValue
-</code></pre><ul>
-<li><p><code>&quot;PropertyName&quot;</code> may take any of the following:</p>
-<p>  <code>&quot;id&quot;</code> gets the identifier of the current widget in this page. This is useful if two custom widgets shares the same code and they both subscribe to a certain event providing an ID. In this case, only one widget can successfully subscribe to the event. With this function, they both can subscribe to the same event.</p>
-</li>
-<li><p><code>&quot;PropertyValue&quot;</code> is the value of the property</p>
-</li>
-</ul>
-<h4 id="example">Example</h4>
-<pre><code>// this example demonstrates how the getWidgetInfo works
+publish(&amp;quot;season&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;publish&quot;&gt;publish&lt;/h3&gt;
+&lt;p&gt;Publish a widget event. The optional parameters to &lt;code&gt;publish&lt;/code&gt; following the event name are passed as parameters to all callback functions that have been registered using &lt;a href=&quot;#subscribe&quot;&gt;&lt;code&gt;subscribe&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;publish(Event[, Message1, Message2, ...]) -&amp;gt; undefined
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Event&lt;/code&gt; is the name of the event to publish. It is be made up by the widget developer and, for code clarity, should describe the event being published. Note that &lt;code&gt;Event&lt;/code&gt; is not related to Portals events or One Platform datarules. It is an string identifier that is made up by the widget developer for identifying user interface events at the level of an individual dashboard.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Message&lt;/code&gt; may be anything. These arguments are passed to the subscriber callbacks as parameters.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For examples of the &lt;code&gt;publish&lt;/code&gt; command, see &lt;a href=&quot;#subscribe&quot;&gt;&lt;code&gt;subscribe&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;getwidgetinfo&quot;&gt;getWidgetInfo&lt;/h3&gt;
+&lt;p&gt;Get information about of the current widget. If the info of the &lt;code&gt;PropertyName&lt;/code&gt; doesn’t exist, &lt;code&gt;undefined&lt;/code&gt; is returned.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;getWidgetInfo(PropertyName) -&amp;gt; PropertyValue
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;PropertyName&amp;quot;&lt;/code&gt; may take any of the following:&lt;/p&gt;
+&lt;p&gt;  &lt;code&gt;&amp;quot;id&amp;quot;&lt;/code&gt; gets the identifier of the current widget in this page. This is useful if two custom widgets shares the same code and they both subscribe to a certain event providing an ID. In this case, only one widget can successfully subscribe to the event. With this function, they both can subscribe to the same event.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;PropertyValue&amp;quot;&lt;/code&gt; is the value of the property&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;example&quot;&gt;Example&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;// this example demonstrates how the getWidgetInfo works
 var callback,
     options;
 options =
 {
-  id: &quot;color&quot; + getWidgetInfo(&quot;id&quot;)
+  id: &amp;quot;color&amp;quot; + getWidgetInfo(&amp;quot;id&amp;quot;)
 };
 callback = function()
 {
-  console.log(&quot;yellow&quot;);
+  console.log(&amp;quot;yellow&amp;quot;);
 };
-subscribe(&quot;color&quot;, callback, options);
-// this shows &quot;yellow&quot; in the debug console.
-publish(&quot;color&quot;);
-</code></pre><h3 id="google-loader-api">Google Loader API</h3>
-<p>The Google Loader API is available in the widget sandbox. Please see this link for more information:</p>
-<p><a href="https://developers.google.com/loader/">https://developers.google.com/loader/</a></p>
-<h2 id="widget-examples">Widget Examples</h2>
-<p>There are a number of widget examples available in the &quot;Script Template&quot; drop down available when editing a widget.</p>
-<p>More example code can be found here: <a href="https://github.com/exosite-garage/custom_widget_scripts">Custom Widget Example Code</a>.</p>
+subscribe(&amp;quot;color&amp;quot;, callback, options);
+// this shows &amp;quot;yellow&amp;quot; in the debug console.
+publish(&amp;quot;color&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;google-loader-api&quot;&gt;Google Loader API&lt;/h3&gt;
+&lt;p&gt;The Google Loader API is available in the widget sandbox. Please see this link for more information:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://developers.google.com/loader/&quot;&gt;https://developers.google.com/loader/&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;widget-examples&quot;&gt;Widget Examples&lt;/h2&gt;
+&lt;p&gt;There are a number of widget examples available in the &amp;quot;Script Template&amp;quot; drop down available when editing a widget.&lt;/p&gt;
+&lt;p&gt;More example code can be found here: &lt;a href=&quot;https://github.com/exosite-garage/custom_widget_scripts&quot;&gt;Custom Widget Example Code&lt;/a&gt;.&lt;/p&gt;
 </div>
   </div>
 
