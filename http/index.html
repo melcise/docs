@@ -84,354 +84,354 @@
       </ul>
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
-    <div role='flatdoc-content' class='content'>&lt;h1 id=&quot;http-api-overview&quot;&gt;HTTP API Overview&lt;/h1&gt;
-&lt;p&gt;This is a lightweight HTTP-based API for writing to and reading from the Exosite One Platform. It is intended for bandwidth-constrained applications. It provides the ability to write new data points or read the latest data point.&lt;/p&gt;
-&lt;p&gt;If you&amp;#39;re completely new to Exosite&amp;#39;s APIs, you may want to read the &lt;a href=&quot;../README.md&quot;&gt;API overview&lt;/a&gt; first.&lt;/p&gt;
-&lt;h2 id=&quot;procedures&quot;&gt;Procedures&lt;/h2&gt;
-&lt;h3 id=&quot;timeseries-data-procedures&quot;&gt;Timeseries Data Procedures&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;#write&quot;&gt;Write&lt;/a&gt; - write new data to a set of dataports&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#read&quot;&gt;Read&lt;/a&gt; - read the latest data from a set of dataports&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#hybrid-writeread&quot;&gt;Hybrid Write/Read&lt;/a&gt; - write a set of dataports, then read a set of dataports&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#long-polling&quot;&gt;Long-Polling&lt;/a&gt; - be notified immediately when a dataport is updated&lt;/p&gt;
-&lt;h3 id=&quot;provisioning-procedures&quot;&gt;Provisioning Procedures&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;#activate&quot;&gt;Activate&lt;/a&gt; - activate device and get device&amp;#39;s CIK&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#list-available-content&quot;&gt;List Available Content&lt;/a&gt; - get a list of content available to device&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#get-content-info&quot;&gt;Get Content Info&lt;/a&gt; - get meta information about content file&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#download-content&quot;&gt;Download Content&lt;/a&gt; - get content file&lt;/p&gt;
-&lt;h3 id=&quot;utility-procedures&quot;&gt;Utility Procedures&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;#timestamp&quot;&gt;Timestamp&lt;/a&gt; - get the current unix timestamp&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#ip&quot;&gt;IP&lt;/a&gt; - get the IP address of the host server&lt;/p&gt;
-&lt;h2 id=&quot;libraries-and-sample-code&quot;&gt;Libraries and Sample Code&lt;/h2&gt;
-&lt;p&gt;Sample code is available that uses this API.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/exosite-garage/python_helloworld&quot;&gt;Python hello world&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/exosite-garage/arduino_http_post&quot;&gt;Arduino POST&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/exosite-garage/fluid_simple_cloud&quot;&gt;Arduino-compatible devices (Using Arduino Library)&lt;/a&gt; - for, e.g., 8-bit micros running C/C++ code&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/exosite-garage/utility_scripts/blob/master/http_https_data_interface_read_write_socket_example.py&quot;&gt;Python read and write example with socket&lt;/a&gt;, &lt;a href=&quot;https://github.com/exosite-garage/utility_scripts/blob/master/http_https_data_interface_get_ip_socket_example.py&quot;&gt;Python - Get IP Address Example&lt;/a&gt; - socket level code intended as a reference for implementation in other languages&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/exosite-garage/utility_scripts/blob/master/http_https_data_interface_read_write_example.py&quot;&gt;Python read and write example with httplib&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;notational-conventions&quot;&gt;Notational Conventions&lt;/h2&gt;
-&lt;p&gt;This document uses a few notational conventions:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;JSON is pretty printed for clarity. The extra whitespace is not included in the RPC JSON.&lt;/li&gt;
-&lt;li&gt;Comments (&lt;code&gt;//&lt;/code&gt;) are occasionally included in JSON to give hints or provide detail. These comments are not included in actual requests or responses.&lt;/li&gt;
-&lt;li&gt;A name in angle brackets, e.g. &lt;code&gt;&amp;lt;myvar&amp;gt;&lt;/code&gt;, is a placeholder that will be defined elsewhere.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;number&lt;/code&gt; indicates a number, e.g. 42&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;string&lt;/code&gt; represents a string, e.g. &amp;quot;MySensor&amp;quot;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;|&lt;/code&gt; represents multiple choice&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;=&lt;/code&gt; represents default value&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;...&lt;/code&gt; represents one or more of the previous item&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;http-responses&quot;&gt;HTTP Responses&lt;/h2&gt;
-&lt;p&gt;Typical HTTP response codes include:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Code&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Response&lt;/th&gt;
-&lt;th style=&quot;text-align:left&quot;&gt;Description&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;200&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;OK&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Successful request, returning requested values&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;204&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;No Content&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Successful request, nothing will be returned&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;4xx&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Client Error&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;There was an error* with the request by the client&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;401&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Unauthorized&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;No or invalid CIK&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;5xx&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;Server Error&lt;/td&gt;
-&lt;td style=&quot;text-align:left&quot;&gt;There way an error with the request on the server&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;em&gt;* Note: aliases that are not found are not considered errors in the request. See the documentation for &lt;a href=&quot;#read&quot;&gt;read&lt;/a&gt;, and &lt;a href=&quot;#write&quot;&gt;write&lt;/a&gt; and &lt;a href=&quot;#hybrid-writeread&quot;&gt;Hybrid write/read&lt;/a&gt; for details.&lt;/em&gt;&lt;/p&gt;
-&lt;h1 id=&quot;data-procedures&quot;&gt;Data Procedures&lt;/h1&gt;
-&lt;h2 id=&quot;write&quot;&gt;Write&lt;/h2&gt;
-&lt;p&gt;Write one or more dataports of alias &lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; with given &lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt;. The client (e.g. device, portal) is identified by &lt;code&gt;&amp;lt;CIK&amp;gt;&lt;/code&gt;. Data is written with the server timestamp as of the time the data was received by the server. Data cannot be written faster than a rate of once per second, doing so results in undefined behavior. If multiple aliases are specified, they are written at the same timestamp.&lt;/p&gt;
-&lt;h3 id=&quot;request&quot;&gt;request&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;POST /onep:v1/stack/alias HTTP/1.1 
+    <div role='flatdoc-content' class='content'><h1 id="http-api-overview">HTTP API Overview</h1>
+<p>This is a lightweight HTTP-based API for writing to and reading from the Exosite One Platform. It is intended for bandwidth-constrained applications. It provides the ability to write new data points or read the latest data point.</p>
+<p>If you&#39;re completely new to Exosite&#39;s APIs, you may want to read the <a href="../README.md">API overview</a> first.</p>
+<h2 id="procedures">Procedures</h2>
+<h3 id="timeseries-data-procedures">Timeseries Data Procedures</h3>
+<p><a href="#write">Write</a> - write new data to a set of dataports</p>
+<p><a href="#read">Read</a> - read the latest data from a set of dataports</p>
+<p><a href="#hybrid-writeread">Hybrid Write/Read</a> - write a set of dataports, then read a set of dataports</p>
+<p><a href="#long-polling">Long-Polling</a> - be notified immediately when a dataport is updated</p>
+<h3 id="provisioning-procedures">Provisioning Procedures</h3>
+<p><a href="#activate">Activate</a> - activate device and get device&#39;s CIK</p>
+<p><a href="#list-available-content">List Available Content</a> - get a list of content available to device</p>
+<p><a href="#get-content-info">Get Content Info</a> - get meta information about content file</p>
+<p><a href="#download-content">Download Content</a> - get content file</p>
+<h3 id="utility-procedures">Utility Procedures</h3>
+<p><a href="#timestamp">Timestamp</a> - get the current unix timestamp</p>
+<p><a href="#ip">IP</a> - get the IP address of the host server</p>
+<h2 id="libraries-and-sample-code">Libraries and Sample Code</h2>
+<p>Sample code is available that uses this API.</p>
+<ul>
+<li><a href="https://github.com/exosite-garage/python_helloworld">Python hello world</a></li>
+<li><a href="https://github.com/exosite-garage/arduino_http_post">Arduino POST</a></li>
+<li><a href="https://github.com/exosite-garage/fluid_simple_cloud">Arduino-compatible devices (Using Arduino Library)</a> - for, e.g., 8-bit micros running C/C++ code</li>
+<li><a href="https://github.com/exosite-garage/utility_scripts/blob/master/http_https_data_interface_read_write_socket_example.py">Python read and write example with socket</a>, <a href="https://github.com/exosite-garage/utility_scripts/blob/master/http_https_data_interface_get_ip_socket_example.py">Python - Get IP Address Example</a> - socket level code intended as a reference for implementation in other languages</li>
+<li><a href="https://github.com/exosite-garage/utility_scripts/blob/master/http_https_data_interface_read_write_example.py">Python read and write example with httplib</a></li>
+</ul>
+<h2 id="notational-conventions">Notational Conventions</h2>
+<p>This document uses a few notational conventions:</p>
+<ul>
+<li>JSON is pretty printed for clarity. The extra whitespace is not included in the RPC JSON.</li>
+<li>Comments (<code>//</code>) are occasionally included in JSON to give hints or provide detail. These comments are not included in actual requests or responses.</li>
+<li>A name in angle brackets, e.g. <code>&lt;myvar&gt;</code>, is a placeholder that will be defined elsewhere.</li>
+<li><code>number</code> indicates a number, e.g. 42</li>
+<li><code>string</code> represents a string, e.g. &quot;MySensor&quot;</li>
+<li><code>|</code> represents multiple choice</li>
+<li><code>=</code> represents default value</li>
+<li><code>...</code> represents one or more of the previous item</li>
+</ul>
+<h2 id="http-responses">HTTP Responses</h2>
+<p>Typical HTTP response codes include:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th style="text-align:left">Response</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td style="text-align:left">OK</td>
+<td style="text-align:left">Successful request, returning requested values</td>
+</tr>
+<tr>
+<td>204</td>
+<td style="text-align:left">No Content</td>
+<td style="text-align:left">Successful request, nothing will be returned</td>
+</tr>
+<tr>
+<td>4xx</td>
+<td style="text-align:left">Client Error</td>
+<td style="text-align:left">There was an error* with the request by the client</td>
+</tr>
+<tr>
+<td>401</td>
+<td style="text-align:left">Unauthorized</td>
+<td style="text-align:left">No or invalid CIK</td>
+</tr>
+<tr>
+<td>5xx</td>
+<td style="text-align:left">Server Error</td>
+<td style="text-align:left">There way an error with the request on the server</td>
+</tr>
+</tbody>
+</table>
+<p><em>* Note: aliases that are not found are not considered errors in the request. See the documentation for <a href="#read">read</a>, and <a href="#write">write</a> and <a href="#hybrid-writeread">Hybrid write/read</a> for details.</em></p>
+<h1 id="data-procedures">Data Procedures</h1>
+<h2 id="write">Write</h2>
+<p>Write one or more dataports of alias <code>&lt;alias&gt;</code> with given <code>&lt;value&gt;</code>. The client (e.g. device, portal) is identified by <code>&lt;CIK&gt;</code>. Data is written with the server timestamp as of the time the data was received by the server. Data cannot be written faster than a rate of once per second, doing so results in undefined behavior. If multiple aliases are specified, they are written at the same timestamp.</p>
+<h3 id="request">request</h3>
+<pre><code>POST /onep:v1/stack/alias HTTP/1.1 
 Host: m2.exosite.com 
-X-Exosite-CIK: &amp;lt;CIK&amp;gt; 
+X-Exosite-CIK: &lt;CIK&gt; 
 Content-Type: application/x-www-form-urlencoded; charset=utf-8 
-Content-Length: &amp;lt;length&amp;gt; 
-&amp;lt;blank line&amp;gt;
-&amp;lt;alias 1&amp;gt;=&amp;lt;value 1&amp;gt;&amp;amp;&amp;lt;alias 2...&amp;gt;=&amp;lt;value 2...&amp;gt;&amp;amp;&amp;lt;alias n&amp;gt;=&amp;lt;value n&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;response&quot;&gt;response&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 204 No Content 
-Date: &amp;lt;date&amp;gt; 
-Server: &amp;lt;server&amp;gt; 
+Content-Length: &lt;length&gt; 
+&lt;blank line&gt;
+&lt;alias 1&gt;=&lt;value 1&gt;&amp;&lt;alias 2...&gt;=&lt;value 2...&gt;&amp;&lt;alias n&gt;=&lt;value n&gt;
+</code></pre><h3 id="response">response</h3>
+<pre><code>HTTP/1.1 204 No Content 
+Date: &lt;date&gt; 
+Server: &lt;server&gt; 
 Connection: Close 
 Content-Length: 0 
-&amp;lt;blank line&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;See &lt;a href=&quot;#http-responses&quot;&gt;HTTP Responses&lt;/a&gt; for a full list of responses.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;example&quot;&gt;example&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;$ curl http://m2.exosite.com/onep:v1/stack/alias \
-    -H &amp;#39;X-Exosite-CIK: &amp;lt;CIK&amp;gt;&amp;#39; \
-    -H &amp;#39;Accept: application/x-www-form-urlencoded; charset=utf-8&amp;#39; \
-    -d &amp;#39;&amp;lt;alias&amp;gt;=&amp;lt;value&amp;gt;&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;read&quot;&gt;Read&lt;/h2&gt;
-&lt;p&gt;Read the most recent value from one or more dataports with alias &lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt;. The client (e.g. device or portal) to read from is identified by &lt;code&gt;&amp;lt;CIK&amp;gt;&lt;/code&gt;. If at least one &lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; is found and has data, data will be returned.&lt;/p&gt;
-&lt;h3 id=&quot;request&quot;&gt;request&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;GET /onep:v1/stack/alias?&amp;lt;alias 1&amp;gt;&amp;amp;&amp;lt;alias 2...&amp;gt;&amp;amp;&amp;lt;alias n&amp;gt; HTTP/1.1
+&lt;blank line&gt;
+</code></pre><ul>
+<li>See <a href="#http-responses">HTTP Responses</a> for a full list of responses.</li>
+</ul>
+<h3 id="example">example</h3>
+<pre><code>$ curl http://m2.exosite.com/onep:v1/stack/alias \
+    -H &#39;X-Exosite-CIK: &lt;CIK&gt;&#39; \
+    -H &#39;Accept: application/x-www-form-urlencoded; charset=utf-8&#39; \
+    -d &#39;&lt;alias&gt;=&lt;value&gt;&#39;
+</code></pre><h2 id="read">Read</h2>
+<p>Read the most recent value from one or more dataports with alias <code>&lt;alias&gt;</code>. The client (e.g. device or portal) to read from is identified by <code>&lt;CIK&gt;</code>. If at least one <code>&lt;alias&gt;</code> is found and has data, data will be returned.</p>
+<h3 id="request">request</h3>
+<pre><code>GET /onep:v1/stack/alias?&lt;alias 1&gt;&amp;&lt;alias 2...&gt;&amp;&lt;alias n&gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &amp;lt;CIK&amp;gt;
+X-Exosite-CIK: &lt;CIK&gt;
 Accept: application/x-www-form-urlencoded; charset=utf-8
-&amp;lt;blank line&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;response&quot;&gt;response&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
-Date: &amp;lt;date&amp;gt;
-Server: &amp;lt;server&amp;gt;
+&lt;blank line&gt;
+</code></pre><h3 id="response">response</h3>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
 Connection: Close
-Content-Length: &amp;lt;length&amp;gt;
-&amp;lt;blank line&amp;gt;
-&amp;lt;alias 1&amp;gt;=&amp;lt;value 1&amp;gt;&amp;amp;&amp;lt;alias 2...&amp;gt;=&amp;lt;value 2...&amp;gt;&amp;amp;&amp;lt;alias n&amp;gt;=&amp;lt;value n&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;Response may also be &lt;code&gt;HTTP/1.1 204 No Content&lt;/code&gt; if either none of the aliases are found or they are all empty of data&lt;/li&gt;
-&lt;li&gt;See &lt;a href=&quot;#http-responses&quot;&gt;HTTP Responses&lt;/a&gt; for a full list of responses&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;example&quot;&gt;example&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;$ curl http://m2.exosite.com/onep:v1/stack/alias?&amp;lt;dataport-alias&amp;gt; \
-    -H &amp;#39;X-Exosite-CIK: &amp;lt;CIK&amp;gt;&amp;#39; \
-    -H &amp;#39;Accept: application/x-www-form-urlencoded; charset=utf-8&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;hybrid-write-read&quot;&gt;Hybrid write/read&lt;/h2&gt;
-&lt;p&gt;Write one or more dataports of alias &lt;code&gt;&amp;lt;alias w&amp;gt;&lt;/code&gt; with given &lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; and then read the most recent value from one or more dataports with alias &lt;code&gt;&amp;lt;alias r&amp;gt;&lt;/code&gt;. The client (e.g. device, portal) to write to and read from is identified by &lt;code&gt;&amp;lt;CIK&amp;gt;&lt;/code&gt;. All writes occur before all reads.&lt;/p&gt;
-&lt;h3 id=&quot;request&quot;&gt;request&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;POST /onep:v1/stack/alias?&amp;lt;alias r1&amp;gt;&amp;amp;&amp;lt;alias r2...&amp;gt;&amp;amp;&amp;lt;alias rn&amp;gt; HTTP/1.1
+Content-Length: &lt;length&gt;
+&lt;blank line&gt;
+&lt;alias 1&gt;=&lt;value 1&gt;&amp;&lt;alias 2...&gt;=&lt;value 2...&gt;&amp;&lt;alias n&gt;=&lt;value n&gt;
+</code></pre><ul>
+<li>Response may also be <code>HTTP/1.1 204 No Content</code> if either none of the aliases are found or they are all empty of data</li>
+<li>See <a href="#http-responses">HTTP Responses</a> for a full list of responses</li>
+</ul>
+<h3 id="example">example</h3>
+<pre><code>$ curl http://m2.exosite.com/onep:v1/stack/alias?&lt;dataport-alias&gt; \
+    -H &#39;X-Exosite-CIK: &lt;CIK&gt;&#39; \
+    -H &#39;Accept: application/x-www-form-urlencoded; charset=utf-8&#39;
+</code></pre><h2 id="hybrid-write-read">Hybrid write/read</h2>
+<p>Write one or more dataports of alias <code>&lt;alias w&gt;</code> with given <code>&lt;value&gt;</code> and then read the most recent value from one or more dataports with alias <code>&lt;alias r&gt;</code>. The client (e.g. device, portal) to write to and read from is identified by <code>&lt;CIK&gt;</code>. All writes occur before all reads.</p>
+<h3 id="request">request</h3>
+<pre><code>POST /onep:v1/stack/alias?&lt;alias r1&gt;&amp;&lt;alias r2...&gt;&amp;&lt;alias rn&gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &amp;lt;CIK&amp;gt;
+X-Exosite-CIK: &lt;CIK&gt;
 Accept: application/x-www-form-urlencoded; charset=utf-8
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &amp;lt;length&amp;gt;
-&amp;lt;blank line&amp;gt;
-&amp;lt;alias w1&amp;gt;=&amp;lt;value 1&amp;gt;&amp;amp;&amp;lt;alias w2...&amp;gt;=&amp;lt;value 2...&amp;gt;&amp;amp;&amp;lt;alias wn&amp;gt;=&amp;lt;value n&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;response&quot;&gt;response&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
-Date: &amp;lt;date&amp;gt;
-Server: &amp;lt;server&amp;gt;
+Content-Length: &lt;length&gt;
+&lt;blank line&gt;
+&lt;alias w1&gt;=&lt;value 1&gt;&amp;&lt;alias w2...&gt;=&lt;value 2...&gt;&amp;&lt;alias wn&gt;=&lt;value n&gt;
+</code></pre><h3 id="response">response</h3>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
 Connection: Close
-Content-Length: &amp;lt;length&amp;gt;
-&amp;lt;blank line&amp;gt;
-&amp;lt;alias r1&amp;gt;=&amp;lt;value 1&amp;gt;&amp;amp;&amp;lt;alias r2...&amp;gt;=&amp;lt;value 2...&amp;gt;&amp;amp;&amp;lt;alias rn&amp;gt;=&amp;lt;value n&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;Response may also be &lt;code&gt;HTTP/1.1 204 No Content&lt;/code&gt; if either none of the aliases are found or they are all empty of data&lt;/li&gt;
-&lt;li&gt;See &lt;a href=&quot;#http-responses&quot;&gt;HTTP Responses&lt;/a&gt; for a full list of responses.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;example&quot;&gt;example&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;$ curl http://m2.exosite.com/onep:v1/stack/alias?&amp;lt;alias_to_read&amp;gt; \
-    -H &amp;#39;X-Exosite-CIK: &amp;lt;CIK&amp;gt;&amp;#39; \
-    -H &amp;#39;Accept: application/x-www-form-urlencoded; charset=utf-8&amp;#39; \
-    -d &amp;#39;&amp;lt;alias_to_write&amp;gt;=&amp;lt;value&amp;gt;&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;long-polling&quot;&gt;Long Polling&lt;/h2&gt;
-&lt;p&gt;The &lt;a href=&quot;#read&quot;&gt;read&lt;/a&gt; procedure now supports long polling. Long polling is a method of getting a server push without the complexities of setting up publicly accessible HTTP server endpoints on your device. As the name suggests, long polling is similar to normal polling of an HTTP resource, but instead of requiring the client to make a new request to the server constantly, the server will wait to return until it has new information to return to the client (or a timeout has been reached).&lt;/p&gt;
-&lt;p&gt;To perform a request with long polling simply add the header &lt;code&gt;Request-Timeout: &amp;lt;miliseconds&amp;gt;&lt;/code&gt; to your request. The server will then wait until a new datapoint is written to the given dataport and will then immediately return the value. If no datapoint is written before that time a &lt;code&gt;304 Not Modified&lt;/code&gt; is returned and the client may make another long poling request to continue monitoring that dataport.&lt;/p&gt;
-&lt;p&gt;You may also optionally add an &lt;code&gt;If-Modified-Since&lt;/code&gt; header to specify a start time to wait. This is exactly the same as the &lt;code&gt;alias.last&lt;/code&gt; semantics in scripting. You will want to use this if it&amp;#39;s important that you receive all updates to a given dataport, otherwise it is possible to miss points that get written between long polling requests.&lt;/p&gt;
-&lt;p&gt;Note: Only one dataport may be read at a time when using long polling.&lt;/p&gt;
-&lt;h3 id=&quot;request&quot;&gt;request&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;GET /onep:v1/stack/alias?&amp;lt;alias 1&amp;gt; HTTP/1.1
+Content-Length: &lt;length&gt;
+&lt;blank line&gt;
+&lt;alias r1&gt;=&lt;value 1&gt;&amp;&lt;alias r2...&gt;=&lt;value 2...&gt;&amp;&lt;alias rn&gt;=&lt;value n&gt;
+</code></pre><ul>
+<li>Response may also be <code>HTTP/1.1 204 No Content</code> if either none of the aliases are found or they are all empty of data</li>
+<li>See <a href="#http-responses">HTTP Responses</a> for a full list of responses.</li>
+</ul>
+<h3 id="example">example</h3>
+<pre><code>$ curl http://m2.exosite.com/onep:v1/stack/alias?&lt;alias_to_read&gt; \
+    -H &#39;X-Exosite-CIK: &lt;CIK&gt;&#39; \
+    -H &#39;Accept: application/x-www-form-urlencoded; charset=utf-8&#39; \
+    -d &#39;&lt;alias_to_write&gt;=&lt;value&gt;&#39;
+</code></pre><h2 id="long-polling">Long Polling</h2>
+<p>The <a href="#read">read</a> procedure now supports long polling. Long polling is a method of getting a server push without the complexities of setting up publicly accessible HTTP server endpoints on your device. As the name suggests, long polling is similar to normal polling of an HTTP resource, but instead of requiring the client to make a new request to the server constantly, the server will wait to return until it has new information to return to the client (or a timeout has been reached).</p>
+<p>To perform a request with long polling simply add the header <code>Request-Timeout: &lt;miliseconds&gt;</code> to your request. The server will then wait until a new datapoint is written to the given dataport and will then immediately return the value. If no datapoint is written before that time a <code>304 Not Modified</code> is returned and the client may make another long poling request to continue monitoring that dataport.</p>
+<p>You may also optionally add an <code>If-Modified-Since</code> header to specify a start time to wait. This is exactly the same as the <code>alias.last</code> semantics in scripting. You will want to use this if it&#39;s important that you receive all updates to a given dataport, otherwise it is possible to miss points that get written between long polling requests.</p>
+<p>Note: Only one dataport may be read at a time when using long polling.</p>
+<h3 id="request">request</h3>
+<pre><code>GET /onep:v1/stack/alias?&lt;alias 1&gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &amp;lt;CIK&amp;gt;
+X-Exosite-CIK: &lt;CIK&gt;
 Accept: application/x-www-form-urlencoded; charset=utf-8
-Request-Timeout: &amp;lt;timeout&amp;gt;
-If-Modified-Since: &amp;lt;timestamp&amp;gt;
-&amp;lt;blank line&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; is the alias you monitor for new datapoints.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Request-Timeout&lt;/code&gt; specifies the how long to wait on changes.  &lt;code&gt;&amp;lt;timeout&amp;gt;&lt;/code&gt; is a millisecond value and cannot be more than 300 seconds (300000 ms).&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;If-Modified-Since&lt;/code&gt; specifies waiting on aliases since the &lt;code&gt;&amp;lt;timestamp&amp;gt;&lt;/code&gt;.  &lt;code&gt;&amp;lt;timestamp&amp;gt;&lt;/code&gt; can be timestamp seconds since 1970-01-01 00:00:00 UTC or standard &lt;a href=http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html&gt;HTTP-Date&lt;/a&gt; format. If this is not specified it defaults to &amp;quot;now&amp;quot;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;response&quot;&gt;response&lt;/h3&gt;
-&lt;p&gt;When the dataport is updated:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
-Date: &amp;lt;date&amp;gt;
-Server: &amp;lt;server&amp;gt;
+Request-Timeout: &lt;timeout&gt;
+If-Modified-Since: &lt;timestamp&gt;
+&lt;blank line&gt;
+</code></pre><ul>
+<li><code>&lt;alias&gt;</code> is the alias you monitor for new datapoints.</li>
+<li><code>Request-Timeout</code> specifies the how long to wait on changes.  <code>&lt;timeout&gt;</code> is a millisecond value and cannot be more than 300 seconds (300000 ms).</li>
+<li><code>If-Modified-Since</code> specifies waiting on aliases since the <code>&lt;timestamp&gt;</code>.  <code>&lt;timestamp&gt;</code> can be timestamp seconds since 1970-01-01 00:00:00 UTC or standard <a href=http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html>HTTP-Date</a> format. If this is not specified it defaults to &quot;now&quot;.</li>
+</ul>
+<h3 id="response">response</h3>
+<p>When the dataport is updated:</p>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
 Connection: Close
-Content-Length: &amp;lt;length&amp;gt;
-Last-Modified: &amp;lt;datapoint-modification-date&amp;gt;
-&amp;lt;blank line&amp;gt;
-&amp;lt;alias&amp;gt;=&amp;lt;value&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If the dataport is not updated before timeout:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 304 Not Modified
-Date: &amp;lt;date&amp;gt;
-Server: &amp;lt;server&amp;gt;
+Content-Length: &lt;length&gt;
+Last-Modified: &lt;datapoint-modification-date&gt;
+&lt;blank line&gt;
+&lt;alias&gt;=&lt;value&gt;
+</code></pre><p>If the dataport is not updated before timeout:</p>
+<pre><code>HTTP/1.1 304 Not Modified
+Date: &lt;date&gt;
+Server: &lt;server&gt;
 Connection: Close
-Content-Length: &amp;lt;length&amp;gt;
-&amp;lt;blank line&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;When the dataport is updated and a value is returned, a &lt;code&gt;Last-Modified&lt;/code&gt; header is included. When it is vital for your application to receive all updates to a dataport, you can pass the &lt;code&gt;Last-Modified&lt;/code&gt; header value back to the &lt;code&gt;If-Not-Modified-Since&lt;/code&gt; header in your next request to make sure that you don&amp;#39;t miss any points that may have been written since the last request returned.&lt;/p&gt;
-&lt;h3 id=&quot;example&quot;&gt;example&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;$ curl http://m2.exosite.com/onep:v1/stack/alias?&amp;lt;dataport-alias&amp;gt; \
-    -H &amp;#39;X-Exosite-CIK: &amp;lt;CIK&amp;gt;&amp;#39; \
-    -H &amp;#39;Accept: application/x-www-form-urlencoded; charset=utf-8&amp;#39;
-    -H &amp;#39;Request-Timeout: 30000
-    -H &amp;#39;If-Modified-Since: 1408088308
-&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;provisioning-procedures&quot;&gt;Provisioning Procedures&lt;/h1&gt;
-&lt;h2 id=&quot;activate&quot;&gt;Activate&lt;/h2&gt;
-&lt;p&gt;Activates and returns &lt;code&gt;&amp;lt;cik&amp;gt;&lt;/code&gt; of client administrated by Vendor &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt;, of
-model type &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; associated with Serial Number &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt;. Client must be
-enabled via &lt;code&gt;/provision/manage/model/&amp;lt;model&amp;gt;/&amp;lt;sn&amp;gt;&lt;/code&gt;, the enabled state must not
-have expired, and the client must not have already been activated.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;POST /provision/activate HTTP/1.1
+Content-Length: &lt;length&gt;
+&lt;blank line&gt;
+</code></pre><p>When the dataport is updated and a value is returned, a <code>Last-Modified</code> header is included. When it is vital for your application to receive all updates to a dataport, you can pass the <code>Last-Modified</code> header value back to the <code>If-Not-Modified-Since</code> header in your next request to make sure that you don&#39;t miss any points that may have been written since the last request returned.</p>
+<h3 id="example">example</h3>
+<pre><code>$ curl http://m2.exosite.com/onep:v1/stack/alias?&lt;dataport-alias&gt; \
+    -H &#39;X-Exosite-CIK: &lt;CIK&gt;&#39; \
+    -H &#39;Accept: application/x-www-form-urlencoded; charset=utf-8&#39;
+    -H &#39;Request-Timeout: 30000
+    -H &#39;If-Modified-Since: 1408088308
+</code></pre><h1 id="provisioning-procedures">Provisioning Procedures</h1>
+<h2 id="activate">Activate</h2>
+<p>Activates and returns <code>&lt;cik&gt;</code> of client administrated by Vendor <code>&lt;vendor&gt;</code>, of
+model type <code>&lt;model&gt;</code> associated with Serial Number <code>&lt;sn&gt;</code>. Client must be
+enabled via <code>/provision/manage/model/&lt;model&gt;/&lt;sn&gt;</code>, the enabled state must not
+have expired, and the client must not have already been activated.</p>
+<pre><code>POST /provision/activate HTTP/1.1
 Host: m2.exosite.com
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
-Content-Length: &amp;lt;length&amp;gt;
+Content-Length: &lt;length&gt;
 
-vendor=&amp;lt;vendor&amp;gt;&amp;amp;model=&amp;lt;model&amp;gt;&amp;amp;sn=&amp;lt;sn&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;response&quot;&gt;response&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
-Date: &amp;lt;date&amp;gt;
-Server: &amp;lt;server&amp;gt;
+vendor=&lt;vendor&gt;&amp;model=&lt;model&gt;&amp;sn=&lt;sn&gt;
+</code></pre><h3 id="response">response</h3>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
 Connection: Keep-Alive
-Content-Length: &amp;lt;length&amp;gt;
+Content-Length: &lt;length&gt;
 Content-Type: text/plain; charset=utf-8
 
-&amp;lt;cik&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;HTTP/1.1 404 Not Found&lt;/code&gt; if the client described by &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;sn&amp;gt;&lt;/code&gt; is not found on the system.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;HTTP/1.1 409 Conflict&lt;/code&gt; if the serial number is not enabled for activation.&lt;/li&gt;
-&lt;li&gt;See &lt;a href=&quot;#http-responses&quot;&gt;HTTP Responses&lt;/a&gt; for a full list of responses&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;example&quot;&gt;example&lt;/h3&gt;
-&lt;p&gt;This command activates a device with serial number 12345678 and returns its CIK.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ curl http://m2.exosite.com/provision/activate \
-    -H &amp;quot;Content-Type: application/x-www-form-urlencoded; charset=utf-8&amp;quot; \
-    -d &amp;quot;vendor=mysubdomain&amp;amp;model=myclientmodel&amp;amp;sn=12345678&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;list-available-content&quot;&gt;List Available Content&lt;/h2&gt;
-&lt;p&gt;List content &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt;s. Caller with &lt;code&gt;&amp;lt;DeviceCIK&amp;gt;&lt;/code&gt; must have an activated
-serial number in given &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; name space.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;GET /provision/download?vendor=&amp;lt;vendor&amp;gt;&amp;amp;model=&amp;lt;model&amp;gt; HTTP/1.1
+&lt;cik&gt;
+</code></pre><p>Response may also be:</p>
+<ul>
+<li><code>HTTP/1.1 404 Not Found</code> if the client described by <code>&lt;vendor&gt;</code>, <code>&lt;model&gt;</code>, <code>&lt;sn&gt;</code> is not found on the system.</li>
+<li><code>HTTP/1.1 409 Conflict</code> if the serial number is not enabled for activation.</li>
+<li>See <a href="#http-responses">HTTP Responses</a> for a full list of responses</li>
+</ul>
+<h3 id="example">example</h3>
+<p>This command activates a device with serial number 12345678 and returns its CIK.</p>
+<pre><code>$ curl http://m2.exosite.com/provision/activate \
+    -H &quot;Content-Type: application/x-www-form-urlencoded; charset=utf-8&quot; \
+    -d &quot;vendor=mysubdomain&amp;model=myclientmodel&amp;sn=12345678&quot;
+</code></pre><h2 id="list-available-content">List Available Content</h2>
+<p>List content <code>&lt;id&gt;</code>s. Caller with <code>&lt;DeviceCIK&gt;</code> must have an activated
+serial number in given <code>&lt;vendor&gt;</code> <code>&lt;model&gt;</code> name space.</p>
+<pre><code>GET /provision/download?vendor=&lt;vendor&gt;&amp;model=&lt;model&gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &amp;lt;CIK&amp;gt;
-Content-Length: &amp;lt;length&amp;gt;
-&amp;lt;blank line&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;response&quot;&gt;response&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
-Date: &amp;lt;date&amp;gt;
-Server: &amp;lt;server&amp;gt;
+X-Exosite-CIK: &lt;CIK&gt;
+Content-Length: &lt;length&gt;
+&lt;blank line&gt;
+</code></pre><h3 id="response">response</h3>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
 Connection: Keep-Alive
-Content-Length: &amp;lt;length&amp;gt;
+Content-Length: &lt;length&gt;
 Content-Type: text/csv; charset=utf-8
 
-&amp;lt;id 1&amp;gt;
-&amp;lt;id 2...&amp;gt;
-&amp;lt;id n&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;HTTP/1.1 403 Forbidden&lt;/code&gt; if the &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; pair is invalid.&lt;/li&gt;
-&lt;li&gt;See &lt;a href=&quot;#http-responses&quot;&gt;HTTP Responses&lt;/a&gt; for a full list of responses&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;download-content&quot;&gt;Download Content&lt;/h2&gt;
-&lt;p&gt;If caller with &lt;code&gt;&amp;lt;CIK&amp;gt;&lt;/code&gt; has an activated SN in given &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; name
-space, and is authorized for the content, then the &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt; content blob, or its
-requested range, is returned. The header &lt;code&gt;Range: bytes=&amp;lt;range-specifier&amp;gt;&lt;/code&gt;, if
+&lt;id 1&gt;
+&lt;id 2...&gt;
+&lt;id n&gt;
+</code></pre><p>Response may also be:</p>
+<ul>
+<li><code>HTTP/1.1 403 Forbidden</code> if the <code>&lt;vendor&gt;</code> and <code>&lt;model&gt;</code> pair is invalid.</li>
+<li>See <a href="#http-responses">HTTP Responses</a> for a full list of responses</li>
+</ul>
+<h2 id="download-content">Download Content</h2>
+<p>If caller with <code>&lt;CIK&gt;</code> has an activated SN in given <code>&lt;vendor&gt;</code> <code>&lt;model&gt;</code> name
+space, and is authorized for the content, then the <code>&lt;id&gt;</code> content blob, or its
+requested range, is returned. The header <code>Range: bytes=&lt;range-specifier&gt;</code>, if
 specified, allows the caller to request a chunk of bytes at a time.
-&lt;code&gt;&amp;lt;range-specifier&amp;gt;&lt;/code&gt; takes the form of &lt;code&gt;X-Y&lt;/code&gt; where both &lt;code&gt;X&lt;/code&gt; and &lt;code&gt;Y&lt;/code&gt; are
-optional but at least one of them must be present. &lt;code&gt;X&lt;/code&gt; is the start byte
-position to return, &lt;code&gt;Y&lt;/code&gt; is the end position. Both are 0 based. If &lt;code&gt;X&lt;/code&gt; is
-omitted, &lt;code&gt;Y&lt;/code&gt; will request the last &lt;code&gt;Y&lt;/code&gt; count of bytes of the content. If &lt;code&gt;Y&lt;/code&gt;
-is omitted, it will default to the end of the content. Note that &lt;code&gt;Content-Type&lt;/code&gt;
-of &lt;code&gt;&amp;lt;blob&amp;gt;&lt;/code&gt; is based on the type set in the &lt;code&gt;POST&lt;/code&gt; to
-&lt;code&gt;/provision/manage/content/&amp;lt;model&amp;gt;/&amp;lt;id&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;GET /provision/download?vendor=&amp;lt;vendor&amp;gt;&amp;amp;model=&amp;lt;model&amp;gt;&amp;amp;id=&amp;lt;id&amp;gt; HTTP/1.1
+<code>&lt;range-specifier&gt;</code> takes the form of <code>X-Y</code> where both <code>X</code> and <code>Y</code> are
+optional but at least one of them must be present. <code>X</code> is the start byte
+position to return, <code>Y</code> is the end position. Both are 0 based. If <code>X</code> is
+omitted, <code>Y</code> will request the last <code>Y</code> count of bytes of the content. If <code>Y</code>
+is omitted, it will default to the end of the content. Note that <code>Content-Type</code>
+of <code>&lt;blob&gt;</code> is based on the type set in the <code>POST</code> to
+<code>/provision/manage/content/&lt;model&gt;/&lt;id&gt;</code>.</p>
+<pre><code>GET /provision/download?vendor=&lt;vendor&gt;&amp;model=&lt;model&gt;&amp;id=&lt;id&gt; HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &amp;lt;CIK&amp;gt;
-{Range: bytes=&amp;lt;range-specifier&amp;gt;}
-&amp;lt;blank line&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;response&quot;&gt;response&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
-Date: &amp;lt;date&amp;gt;
-Server: &amp;lt;server&amp;gt;
+X-Exosite-CIK: &lt;CIK&gt;
+{Range: bytes=&lt;range-specifier&gt;}
+&lt;blank line&gt;
+</code></pre><h3 id="response">response</h3>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
 Connection: Keep-Alive
 {Accept-Ranges: bytes}
-Content-Length: &amp;lt;number of bytes being returned&amp;gt;
-{Content-Range: bytes &amp;lt;first position&amp;gt;-&amp;lt;last position&amp;gt;/&amp;lt;total length&amp;gt;}
-Content-Type: &amp;lt;content-type&amp;gt;
+Content-Length: &lt;number of bytes being returned&gt;
+{Content-Range: bytes &lt;first position&gt;-&lt;last position&gt;/&lt;total length&gt;}
+Content-Type: &lt;content-type&gt;
 
-&amp;lt;blob&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;HTTP/1.1 206 Partial Content&lt;/code&gt; if the response is partial.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;HTTP/1.1 403 Forbidden&lt;/code&gt; if the &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; pair is invalid.&lt;/li&gt;
-&lt;li&gt;See &lt;a href=&quot;#http-responses&quot;&gt;HTTP Responses&lt;/a&gt; for a full list of responses&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;get-content-info&quot;&gt;Get Content Info&lt;/h3&gt;
-&lt;p&gt;If caller with &lt;code&gt;&amp;lt;CIK&amp;gt;&lt;/code&gt; has an activated SN in given &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt; &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; name
-space, and is authorized for the content, then the &lt;code&gt;&amp;lt;id&amp;gt;&lt;/code&gt; content information
-is returned.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;GET /provision/download?vendor=&amp;lt;vendor&amp;gt;&amp;amp;model=&amp;lt;model&amp;gt;&amp;amp;id=&amp;lt;id&amp;gt;&amp;amp;info=true HTTP/1.1
+&lt;blob&gt;
+</code></pre><p>Response may also be:</p>
+<ul>
+<li><code>HTTP/1.1 206 Partial Content</code> if the response is partial.</li>
+<li><code>HTTP/1.1 403 Forbidden</code> if the <code>&lt;vendor&gt;</code> and <code>&lt;model&gt;</code> pair is invalid.</li>
+<li>See <a href="#http-responses">HTTP Responses</a> for a full list of responses</li>
+</ul>
+<h3 id="get-content-info">Get Content Info</h3>
+<p>If caller with <code>&lt;CIK&gt;</code> has an activated SN in given <code>&lt;vendor&gt;</code> <code>&lt;model&gt;</code> name
+space, and is authorized for the content, then the <code>&lt;id&gt;</code> content information
+is returned.</p>
+<pre><code>GET /provision/download?vendor=&lt;vendor&gt;&amp;model=&lt;model&gt;&amp;id=&lt;id&gt;&amp;info=true HTTP/1.1
 Host: m2.exosite.com
-X-Exosite-CIK: &amp;lt;CIK&amp;gt;
-Content-Length: &amp;lt;length&amp;gt;
-&amp;lt;blank line&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;response&quot;&gt;response&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
-Date: &amp;lt;date&amp;gt;
-Server: &amp;lt;server&amp;gt;
+X-Exosite-CIK: &lt;CIK&gt;
+Content-Length: &lt;length&gt;
+&lt;blank line&gt;
+</code></pre><h3 id="response">response</h3>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
 Connection: Keep-Alive
-Content-Length: &amp;lt;length&amp;gt;
+Content-Length: &lt;length&gt;
 Content-Type: text/csv; charset=utf-8
 
-&amp;lt;content-type&amp;gt;,&amp;lt;byte-size&amp;gt;,&amp;lt;updated-timestamp&amp;gt;,&amp;lt;meta&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Response may also be:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;HTTP/1.1 400 Bad Request&lt;/code&gt; if the &lt;code&gt;&amp;lt;vendor&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;model&amp;gt;&lt;/code&gt; pair is invalid.&lt;/li&gt;
-&lt;li&gt;See &lt;a href=&quot;#http-responses&quot;&gt;HTTP Responses&lt;/a&gt; for a full list of responses&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;utility-procedures&quot;&gt;Utility Procedures&lt;/h1&gt;
-&lt;h2 id=&quot;timestamp&quot;&gt;Timestamp&lt;/h2&gt;
-&lt;p&gt;Get the current time according to the server.&lt;/p&gt;
-&lt;h3 id=&quot;request&quot;&gt;request&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;GET /timestamp HTTP/1.1
+&lt;content-type&gt;,&lt;byte-size&gt;,&lt;updated-timestamp&gt;,&lt;meta&gt;
+</code></pre><p>Response may also be:</p>
+<ul>
+<li><code>HTTP/1.1 400 Bad Request</code> if the <code>&lt;vendor&gt;</code> and <code>&lt;model&gt;</code> pair is invalid.</li>
+<li>See <a href="#http-responses">HTTP Responses</a> for a full list of responses</li>
+</ul>
+<h1 id="utility-procedures">Utility Procedures</h1>
+<h2 id="timestamp">Timestamp</h2>
+<p>Get the current time according to the server.</p>
+<h3 id="request">request</h3>
+<pre><code>GET /timestamp HTTP/1.1
 Host: m2.exosite.com
-&amp;lt;blank line&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;response&quot;&gt;response&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
-Date: &amp;lt;date&amp;gt;
-Server: &amp;lt;server&amp;gt;
+&lt;blank line&gt;
+</code></pre><h3 id="response">response</h3>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
 Connection: Keep-Alive
-Content-Length: &amp;lt;length&amp;gt;
+Content-Length: &lt;length&gt;
 Content-Type: text/plain; charset=utf-8
 
-&amp;lt;timestamp&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;See &lt;a href=&quot;#http-responses&quot;&gt;HTTP Responses&lt;/a&gt; for a full list of responses&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;ip&quot;&gt;IP&lt;/h2&gt;
-&lt;p&gt;Note: Deprecated, use DNS instead.&lt;/p&gt;
-&lt;p&gt;Returns ip address and port of the server, encoded in 6 comma separated octets as a string, where the first 4 are the ip and the last 2 are the port, e.g.,  &amp;quot;192,168,0,1,0,80&amp;quot;.&lt;/p&gt;
-&lt;h3 id=&quot;request&quot;&gt;request&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;GET /ip HTTP/1.1
+&lt;timestamp&gt;
+</code></pre><ul>
+<li>See <a href="#http-responses">HTTP Responses</a> for a full list of responses</li>
+</ul>
+<h2 id="ip">IP</h2>
+<p>Note: Deprecated, use DNS instead.</p>
+<p>Returns ip address and port of the server, encoded in 6 comma separated octets as a string, where the first 4 are the ip and the last 2 are the port, e.g.,  &quot;192,168,0,1,0,80&quot;.</p>
+<h3 id="request">request</h3>
+<pre><code>GET /ip HTTP/1.1
 Host: m2.exosite.com
-&amp;lt;blank line&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;response&quot;&gt;response&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
-Date: &amp;lt;date&amp;gt;
-Server: &amp;lt;server&amp;gt;
+&lt;blank line&gt;
+</code></pre><h3 id="response">response</h3>
+<pre><code>HTTP/1.1 200 OK
+Date: &lt;date&gt;
+Server: &lt;server&gt;
 Connection: Keep-Alive
-Content-Length: &amp;lt;length&amp;gt;
+Content-Length: &lt;length&gt;
 Content-Type: text/plain; charset=utf-8
 
-&amp;lt;server ip and port&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;See &lt;a href=&quot;#http-responses&quot;&gt;HTTP Responses&lt;/a&gt; for a full list of responses&lt;/li&gt;
-&lt;/ul&gt;
+&lt;server ip and port&gt;
+</code></pre><ul>
+<li>See <a href="#http-responses">HTTP Responses</a> for a full list of responses</li>
+</ul>
 </div>
   </div>
 
