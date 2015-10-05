@@ -84,59 +84,59 @@
       </ul>
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
-    <div role='flatdoc-content' class='content'>&lt;script&gt;
+    <div role='flatdoc-content' class='content'><script>
 $(document).ready(function() {
-  &#39;use strict&#39;;
+  'use strict';
   function getParameterByName(name) {
-      name = name.replace(/[\[]/, &quot;\\[&quot;).replace(/[\]]/, &quot;\\]&quot;);
-      var regex = new RegExp(&quot;[\\?&amp;]&quot; + name + &quot;=([^&amp;#]*)&quot;),
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
           results = regex.exec(location.search);
-      return results === null ? &quot;&quot; : decodeURIComponent(results[1].replace(/\+/g, &quot; &quot;));
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
-  var contentEl = $(&#39;div[role=&quot;flatdoc-content&quot;]&#39;)
-  var query = getParameterByName(&#39;q&#39;);
-  if (query === &#39;&#39;) {
-    contentEl.html(&#39;Missing query parameter.&#39;);
+  var contentEl = $('div[role="flatdoc-content"]')
+  var query = getParameterByName('q');
+  if (query === '') {
+    contentEl.html('Missing query parameter.');
     return;
   }
-  contentEl.html(&#39;Searching documentation...&#39;);
+  contentEl.html('Searching documentation...');
   var options = {
     headers: {
-      &#39;Accept&#39;: &#39;application/vnd.github.v3.text-match+json&#39;
+      'Accept': 'application/vnd.github.v3.text-match+json'
     }
   };  
   function toDocPath(path) {
-    var href = path.replace(/README\.md$/, &#39;&#39;);
-    href = href.replace(/\.md$/, &#39;&#39;);
+    var href = path.replace(/README\.md$/, '');
+    href = href.replace(/\.md$/, '');
     return href;
   }    
-  $.ajax(&#39;https://api.github.com/search/code?q=&#39; + 
+  $.ajax('https://api.github.com/search/code?q=' + 
     encodeURIComponent(query) + 
-    &#39;+in:file+repo:exosite/docs&#39;, options).done(function(data, status) {
+    '+in:file+repo:exosite/docs', options).done(function(data, status) {
       console.log(data);
-      var querySpan = &#39;&lt;span class=&quot;search-query&quot;&gt;&#39; + query + &#39;&lt;/span&gt;&#39;;
+      var querySpan = '<span class="search-query">' + query + '</span>';
       if (data.total_count === 0) {
-        contentEl.html(&#39;No results for &#39; + querySpan);
+        contentEl.html('No results for ' + querySpan);
       } else {
-        var html = &#39;&lt;div&gt;&lt;div&gt;Documents matching &#39; + querySpan + &#39;:&lt;/div&gt;&lt;ol&gt;&#39;;
-        for (var i = 0; i &lt; data.items.length; i++) {
+        var html = '<div><div>Documents matching ' + querySpan + ':</div><ol>';
+        for (var i = 0; i < data.items.length; i++) {
           var item = data.items[i];
           var href = toDocPath(item.path);
-          html += (&#39;&lt;li class=&quot;search-result&quot;&gt;&lt;a href=&quot;&#39; + href + &#39;&quot;&gt;&#39; + href + &#39;&lt;/a&gt;&#39;);
+          html += ('<li class="search-result"><a href="' + href + '">' + href + '</a>');
           // show the first text match
-          for (var j = 0; j &lt; item.text_matches.length; j++) {
+          for (var j = 0; j < item.text_matches.length; j++) {
             var match = item.text_matches[j];
-            var fragment = &#39;...&#39; + match.fragment.replace(query, querySpan) + &#39;...&#39;;
-            html += (&#39;&lt;div class=&quot;search-result-fragment&quot;&gt;&#39; + fragment + &#39;&lt;/div&gt;&#39;);
+            var fragment = '...' + match.fragment.replace(query, querySpan) + '...';
+            html += ('<div class="search-result-fragment">' + fragment + '</div>');
           }
-          html += &#39;&lt;/li&gt;&#39;;
+          html += '</li>';
         }
-        html += &#39;&lt;/ol&gt;&lt;/div&gt;&#39;;
+        html += '</ol></div>';
         contentEl.html(html);
       }
     });
 });
-&lt;/script&gt;</div>
+</script></div>
   </div>
 
   <div id="markdown" style="display:none;">

@@ -84,96 +84,96 @@
       </ul>
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
-    <div role='flatdoc-content' class='content'>&lt;h1 id=&quot;remote-procedure-call-api&quot;&gt;Remote Procedure Call API&lt;/h1&gt;
-&lt;p&gt;The JSON RPC API provides full featured access to data and resources on the One Platform. It is intended for applications that need to do more than just read and write individual points.&lt;/p&gt;
-&lt;p&gt;If you&amp;#39;re completely new to Exosite&amp;#39;s APIs, you may want to read the &lt;a href=&quot;../README.md&quot;&gt;API overview&lt;/a&gt; first.&lt;/p&gt;
-&lt;h4 id=&quot;time-series-data&quot;&gt;Time Series Data&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;#read&quot;&gt;read&lt;/a&gt; - read time series data&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#write&quot;&gt;write&lt;/a&gt; - write new data into a time series&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#writegroup&quot;&gt;writegroup&lt;/a&gt; - write new data into multiple time series&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#record&quot;&gt;record&lt;/a&gt; - write time series data that has already been timestamped&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#recordbatch&quot;&gt;recordbatch&lt;/a&gt; - write multiple time series data at specific timestamps&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#flush&quot;&gt;flush&lt;/a&gt; - remove time series data&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#wait&quot;&gt;wait&lt;/a&gt; - long polling, i.e., wait a data and get response when the data is updated&lt;/p&gt;
-&lt;h4 id=&quot;resources&quot;&gt;Resources&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;#create-client&quot;&gt;create (client)&lt;/a&gt; - create a resource that can contain other resources&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#create-dataport&quot;&gt;create (dataport)&lt;/a&gt; - create a time series data resource&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#create-datarule&quot;&gt;create (datarule)&lt;/a&gt; - create a resource that can perform processing in response to data&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#create-dispatch&quot;&gt;create (dispatch)&lt;/a&gt; - create a resource for sending notifications &lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#create-clone&quot;&gt;create (clone)&lt;/a&gt; - copy an existing resource&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#move&quot;&gt;move&lt;/a&gt; - move an existing resource&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#update&quot;&gt;update&lt;/a&gt; - update an existing resource&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#info&quot;&gt;info&lt;/a&gt; - get information about an existing resource&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#listing&quot;&gt;listing&lt;/a&gt; - list the children of a client resource&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#drop&quot;&gt;drop&lt;/a&gt; - delete a resource&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#usage&quot;&gt;usage&lt;/a&gt; - get usage information for a resource&lt;/p&gt;
-&lt;h4 id=&quot;aliases&quot;&gt;Aliases&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;#map&quot;&gt;map&lt;/a&gt; - create an alias that can be used to refer to a resource&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#lookup&quot;&gt;lookup&lt;/a&gt; - look up the resource for an alias&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#unmap&quot;&gt;unmap&lt;/a&gt; - remove an alias for a resource&lt;/p&gt;
-&lt;h4 id=&quot;shares-and-keys&quot;&gt;Shares and Keys&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;#share&quot;&gt;share&lt;/a&gt; - generate a code that allows non-owners to access resources&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#revoke&quot;&gt;revoke&lt;/a&gt; - revoke a share code or CIK&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#lookup&quot;&gt;lookup&lt;/a&gt; - look up a resource based on a share code&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#activate&quot;&gt;activate&lt;/a&gt; - activate a share code or CIK&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;#deactivate&quot;&gt;deactivate&lt;/a&gt; - deactivate a share code or CIK&lt;/p&gt;
-&lt;h2 id=&quot;api-libraries&quot;&gt;API Libraries&lt;/h2&gt;
-&lt;p&gt;Wrapper libraries are available for this API:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Python: &lt;a href=&quot;https://github.com/exosite-labs/pyonep&quot;&gt;pyonep&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Java: &lt;a href=&quot;https://github.com/exosite-labs/javaonep&quot;&gt;javaonep&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;C++: &lt;a href=&quot;https://github.com/exosite-labs/cpponep&quot;&gt;cpponep&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;.NET: &lt;a href=&quot;https://github.com/exosite-labs/clronep&quot;&gt;clronep&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Cocoa: &lt;a href=&quot;https://github.com/exosite-labs/cocoaonep&quot;&gt;cocoaonep&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;conventions&quot;&gt;Conventions&lt;/h2&gt;
-&lt;p&gt;This document uses a few notational conventions:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;JSON is pretty printed for clarity. The extra whitespace is not included in the RPC JSON.&lt;/li&gt;
-&lt;li&gt;Comments (&lt;code&gt;//&lt;/code&gt;) are occasionally included in JSON to give hints or provide detail. These comments are not included in actual requests or responses.&lt;/li&gt;
-&lt;li&gt;A name in angle brackets, e.g. &lt;code&gt;&amp;lt;myvar&amp;gt;&lt;/code&gt;, is a placeholder that will be defined elsewhere.&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is a placeholder that may be either a 40 digit resource identifier (e.g., &lt;code&gt;&amp;quot;879542b837bfac5beee201234567890123456789&amp;quot;&lt;/code&gt;) or an alias reference (e.g., &lt;code&gt;{&amp;quot;alias&amp;quot;: &amp;quot;myalias&amp;quot;}&lt;/code&gt;). It may also be a self reference: &lt;code&gt;{&amp;quot;alias&amp;quot;: &amp;quot;&amp;quot;}&lt;/code&gt;. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;number&lt;/code&gt; indicates a number, e.g. 42&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;string&lt;/code&gt; represents a string, e.g. &amp;quot;MySensor&amp;quot;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;|&lt;/code&gt; represents multiple choice&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;=&lt;/code&gt; represents default value&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;...&lt;/code&gt; represents one or more of the previous item&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;http-request-response-example&quot;&gt;HTTP Request/Response Example&lt;/h2&gt;
-&lt;p&gt;JSON RPC are HTTP POST requests with a body containing a JSON-encoded call. Here is a full example of an HTTP request, with JSON formatted for readability:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;POST /onep:v1/rpc/process HTTP/1.1 
+    <div role='flatdoc-content' class='content'><h1 id="remote-procedure-call-api">Remote Procedure Call API</h1>
+<p>The JSON RPC API provides full featured access to data and resources on the One Platform. It is intended for applications that need to do more than just read and write individual points.</p>
+<p>If you&#39;re completely new to Exosite&#39;s APIs, you may want to read the <a href="../README.md">API overview</a> first.</p>
+<h4 id="time-series-data">Time Series Data</h4>
+<p><a href="#read">read</a> - read time series data</p>
+<p><a href="#write">write</a> - write new data into a time series</p>
+<p><a href="#writegroup">writegroup</a> - write new data into multiple time series</p>
+<p><a href="#record">record</a> - write time series data that has already been timestamped</p>
+<p><a href="#recordbatch">recordbatch</a> - write multiple time series data at specific timestamps</p>
+<p><a href="#flush">flush</a> - remove time series data</p>
+<p><a href="#wait">wait</a> - long polling, i.e., wait a data and get response when the data is updated</p>
+<h4 id="resources">Resources</h4>
+<p><a href="#create-client">create (client)</a> - create a resource that can contain other resources</p>
+<p><a href="#create-dataport">create (dataport)</a> - create a time series data resource</p>
+<p><a href="#create-datarule">create (datarule)</a> - create a resource that can perform processing in response to data</p>
+<p><a href="#create-dispatch">create (dispatch)</a> - create a resource for sending notifications </p>
+<p><a href="#create-clone">create (clone)</a> - copy an existing resource</p>
+<p><a href="#move">move</a> - move an existing resource</p>
+<p><a href="#update">update</a> - update an existing resource</p>
+<p><a href="#info">info</a> - get information about an existing resource</p>
+<p><a href="#listing">listing</a> - list the children of a client resource</p>
+<p><a href="#drop">drop</a> - delete a resource</p>
+<p><a href="#usage">usage</a> - get usage information for a resource</p>
+<h4 id="aliases">Aliases</h4>
+<p><a href="#map">map</a> - create an alias that can be used to refer to a resource</p>
+<p><a href="#lookup">lookup</a> - look up the resource for an alias</p>
+<p><a href="#unmap">unmap</a> - remove an alias for a resource</p>
+<h4 id="shares-and-keys">Shares and Keys</h4>
+<p><a href="#share">share</a> - generate a code that allows non-owners to access resources</p>
+<p><a href="#revoke">revoke</a> - revoke a share code or CIK</p>
+<p><a href="#lookup">lookup</a> - look up a resource based on a share code</p>
+<p><a href="#activate">activate</a> - activate a share code or CIK</p>
+<p><a href="#deactivate">deactivate</a> - deactivate a share code or CIK</p>
+<h2 id="api-libraries">API Libraries</h2>
+<p>Wrapper libraries are available for this API:</p>
+<ul>
+<li>Python: <a href="https://github.com/exosite-labs/pyonep">pyonep</a></li>
+<li>Java: <a href="https://github.com/exosite-labs/javaonep">javaonep</a></li>
+<li>C++: <a href="https://github.com/exosite-labs/cpponep">cpponep</a></li>
+<li>.NET: <a href="https://github.com/exosite-labs/clronep">clronep</a></li>
+<li>Cocoa: <a href="https://github.com/exosite-labs/cocoaonep">cocoaonep</a></li>
+</ul>
+<h2 id="conventions">Conventions</h2>
+<p>This document uses a few notational conventions:</p>
+<ul>
+<li>JSON is pretty printed for clarity. The extra whitespace is not included in the RPC JSON.</li>
+<li>Comments (<code>//</code>) are occasionally included in JSON to give hints or provide detail. These comments are not included in actual requests or responses.</li>
+<li>A name in angle brackets, e.g. <code>&lt;myvar&gt;</code>, is a placeholder that will be defined elsewhere.</li>
+<li><p><code>&lt;ResourceID&gt;</code> is a placeholder that may be either a 40 digit resource identifier (e.g., <code>&quot;879542b837bfac5beee201234567890123456789&quot;</code>) or an alias reference (e.g., <code>{&quot;alias&quot;: &quot;myalias&quot;}</code>). It may also be a self reference: <code>{&quot;alias&quot;: &quot;&quot;}</code>. See <a href="#identifying-resources">Identifying Resources</a> for details.</p>
+</li>
+<li><p><code>number</code> indicates a number, e.g. 42</p>
+</li>
+<li><code>string</code> represents a string, e.g. &quot;MySensor&quot;</li>
+<li><code>|</code> represents multiple choice</li>
+<li><code>=</code> represents default value</li>
+<li><code>...</code> represents one or more of the previous item</li>
+</ul>
+<h2 id="http-request-response-example">HTTP Request/Response Example</h2>
+<p>JSON RPC are HTTP POST requests with a body containing a JSON-encoded call. Here is a full example of an HTTP request, with JSON formatted for readability:</p>
+<pre><code>POST /onep:v1/rpc/process HTTP/1.1 
 Host: m2.exosite.com:80
 Content-Type: application/json; charset=utf-8
 User-Agent: API Example (danweaver@exosite.com)
 Content-Length: 235
 
 {
-    &amp;quot;auth&amp;quot;: {
-        &amp;quot;cik&amp;quot;: &amp;quot;5de0cfcf7b5bed2ea7a801234567890123456789&amp;quot;
+    &quot;auth&quot;: {
+        &quot;cik&quot;: &quot;5de0cfcf7b5bed2ea7a801234567890123456789&quot;
     }, 
-    &amp;quot;calls&amp;quot;: [
+    &quot;calls&quot;: [
         {
-            &amp;quot;id&amp;quot;: 56, 
-            &amp;quot;procedure&amp;quot;: &amp;quot;read&amp;quot;,
-            &amp;quot;arguments&amp;quot;: [
+            &quot;id&quot;: 56, 
+            &quot;procedure&quot;: &quot;read&quot;,
+            &quot;arguments&quot;: [
                 {
-                    &amp;quot;alias&amp;quot;: &amp;quot;temperature&amp;quot;
+                    &quot;alias&quot;: &quot;temperature&quot;
                 }, 
                 {
-                    &amp;quot;endtime&amp;quot;: 1376957311, 
-                    &amp;quot;limit&amp;quot;: 3, 
-                    &amp;quot;selection&amp;quot;: &amp;quot;all&amp;quot;, 
-                    &amp;quot;sort&amp;quot;: &amp;quot;desc&amp;quot;, 
-                    &amp;quot;starttime&amp;quot;: 1
+                    &quot;endtime&quot;: 1376957311, 
+                    &quot;limit&quot;: 3, 
+                    &quot;selection&quot;: &quot;all&quot;, 
+                    &quot;sort&quot;: &quot;desc&quot;, 
+                    &quot;starttime&quot;: 1
                 }
             ]
         }
     ]
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Here is the full HTTP response for that request:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;HTTP/1.1 200 OK
+</code></pre><p>Here is the full HTTP response for that request:</p>
+<pre><code>HTTP/1.1 200 OK
 Date: Tue, 20 Aug 2013 00:08:27 GMT
 Content-Length: 90
 Content-Type: application/json; charset=utf-8
@@ -182,8 +182,8 @@ Server: nginx
 
 [
     {
-        &amp;quot;id&amp;quot;: 56, 
-        &amp;quot;result&amp;quot;: [
+        &quot;id&quot;: 56, 
+        &quot;result&quot;: [
             [
                 1376957195, 
                 72.2
@@ -197,1429 +197,1429 @@ Server: nginx
                 72.5
             ]
         ], 
-        &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;
+        &quot;status&quot;: &quot;ok&quot;
     }
 ]
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;making-a-request&quot;&gt;Making a Request&lt;/h2&gt;
-&lt;p&gt;RPC API requests are HTTP POSTs to &lt;code&gt;/onep:v1/rpc/process&lt;/code&gt; and may contain the following headers.&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Header&lt;/th&gt;
-&lt;th&gt;Description&lt;/th&gt;
-&lt;th style=&quot;text-align:center&quot;&gt;Required?&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;Host: m2.exosite.com:80&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The host should be either &lt;code&gt;m2.exosite.com&lt;/code&gt; for normal Portals accounts or &lt;code&gt;&amp;lt;your domain&amp;gt;.m2.exosite.com&lt;/code&gt; for whitebox accounts. At the moment &lt;code&gt;m2.exosite.com&lt;/code&gt; works for all types of accounts, but this is not guaranteed to be supported in the future. Both HTTP and HTTPS are supported.&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Yes&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;Content-Type: application/json; charset=utf-8&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Describes the content type of the body. For the JSON RPC, this is always &lt;code&gt;application/json; charset=utf-8&lt;/code&gt;&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Yes&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;User-Agent: API Example (danweaver@exosite.com)&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;If possible your application should identify itself by putting contact information in the &lt;code&gt;User-Agent&lt;/code&gt; header. This also is not enforced, but will help us with any support requests you have.&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;No&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;Content-Length: 235&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;Content-Length&lt;/code&gt; contains the number of bytes in the body of the request.&lt;/td&gt;
-&lt;td style=&quot;text-align:center&quot;&gt;Yes&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The body of a request must be valid JSON. See &lt;a href=&quot;http://www.json.org&quot;&gt;http://www.json.org&lt;/a&gt; for details on the JSON format.&lt;/p&gt;
-&lt;p&gt;The maximum number of consecutive HTTP requests that can be sent via a single connection to the One Platform is 100. In its response to the 100th request on the same connection, the One Platform will send the header &amp;quot;Connection: close&amp;quot; and then close the underlying TCP connection. The client should in this case create a new connection to the One Platform to continue.&lt;/p&gt;
-&lt;h2 id=&quot;authentication&quot;&gt;Authentication&lt;/h2&gt;
-&lt;p&gt;Requests to the JSON RPC are made on behalf of a particular client in the system, 
-called the &amp;quot;calling client&amp;quot;. Every request passes a client key, called a 
+</code></pre><h2 id="making-a-request">Making a Request</h2>
+<p>RPC API requests are HTTP POSTs to <code>/onep:v1/rpc/process</code> and may contain the following headers.</p>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Description</th>
+<th style="text-align:center">Required?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Host: m2.exosite.com:80</code></td>
+<td>The host should be either <code>m2.exosite.com</code> for normal Portals accounts or <code>&lt;your domain&gt;.m2.exosite.com</code> for whitebox accounts. At the moment <code>m2.exosite.com</code> works for all types of accounts, but this is not guaranteed to be supported in the future. Both HTTP and HTTPS are supported.</td>
+<td style="text-align:center">Yes</td>
+</tr>
+<tr>
+<td><code>Content-Type: application/json; charset=utf-8</code></td>
+<td>Describes the content type of the body. For the JSON RPC, this is always <code>application/json; charset=utf-8</code></td>
+<td style="text-align:center">Yes</td>
+</tr>
+<tr>
+<td><code>User-Agent: API Example (danweaver@exosite.com)</code></td>
+<td>If possible your application should identify itself by putting contact information in the <code>User-Agent</code> header. This also is not enforced, but will help us with any support requests you have.</td>
+<td style="text-align:center">No</td>
+</tr>
+<tr>
+<td><code>Content-Length: 235</code></td>
+<td><code>Content-Length</code> contains the number of bytes in the body of the request.</td>
+<td style="text-align:center">Yes</td>
+</tr>
+</tbody>
+</table>
+<p>The body of a request must be valid JSON. See <a href="http://www.json.org">http://www.json.org</a> for details on the JSON format.</p>
+<p>The maximum number of consecutive HTTP requests that can be sent via a single connection to the One Platform is 100. In its response to the 100th request on the same connection, the One Platform will send the header &quot;Connection: close&quot; and then close the underlying TCP connection. The client should in this case create a new connection to the One Platform to continue.</p>
+<h2 id="authentication">Authentication</h2>
+<p>Requests to the JSON RPC are made on behalf of a particular client in the system, 
+called the &quot;calling client&quot;. Every request passes a client key, called a 
 CIK, that functions like a password and grants limited control over that
-client and full control of that client&amp;#39;s subhierarchy. This is somewhat 
+client and full control of that client&#39;s subhierarchy. This is somewhat 
 different from other APIs where authentication is done on behalf of a user
-account that is granted access to a set of resources.&lt;/p&gt;
-&lt;p&gt;For example, to &lt;a href=&quot;#read&quot;&gt;read&lt;/a&gt; from a Portals datasource, you could
+account that is granted access to a set of resources.</p>
+<p>For example, to <a href="#read">read</a> from a Portals datasource, you could
 authenticate with the CIK of the device that owns the datasource or with 
 the CIK of the portal that owns that device, all the way up to the 
-root node of the One Platform tree.&lt;/p&gt;
-&lt;p&gt;Authentication information is placed in the JSON body of a request, in
-&lt;code&gt;&amp;quot;auth&amp;quot;&lt;/code&gt;. The value of the &lt;code&gt;&amp;quot;auth&amp;quot;&lt;/code&gt; key can take any of these forms:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;{&amp;quot;cik&amp;quot;: CIK}&lt;/code&gt; authenticates as the client identified by the given CIK. This is the most common form.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;{&amp;quot;cik&amp;quot;: CIK, &amp;quot;client_id&amp;quot;: RID}&lt;/code&gt; authenticates as the given client if the CIK identifies an ancestor of the given client.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;{&amp;quot;cik&amp;quot;: CIK, &amp;quot;resource_id&amp;quot;: RID}&lt;/code&gt; authenticate as the owner of the given resource if the CIK identifies as an ancestor of the given resource.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;identifying-resources&quot;&gt;Identifying Resources&lt;/h2&gt;
-&lt;p&gt;Many procedures in the API include an argument for identifying a resource to act upon. In this documentation, that resource is identified by &lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt;. This argument can take any of these forms:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;34eaae237988167d90bfc2ffeb666daaaaaaaaaa&amp;quot;&lt;/code&gt; directly identifies a resource ID. The resource must be in the &lt;a href=&quot;#authentication&quot;&gt;calling client&lt;/a&gt;&amp;#39;s subhierarchy.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;{&amp;quot;alias&amp;quot;: &amp;quot;temperature&amp;quot;}&lt;/code&gt; looks up an immediate child of the &lt;a href=&quot;#authentication&quot;&gt;calling client&lt;/a&gt; by alias (&lt;code&gt;&amp;quot;temperature&amp;quot;&lt;/code&gt; in this example).&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;{&amp;quot;alias&amp;quot;: &amp;quot;&amp;quot;}&lt;/code&gt; identifies the calling client itself. So, for example, if &lt;code&gt;&amp;quot;auth&amp;quot;&lt;/code&gt; was set to &lt;code&gt;{&amp;quot;cik&amp;quot;:&amp;quot;e469e336ff9c8ed9176bc05ed7fa40daaaaaaaaa&amp;quot;&lt;/code&gt;, the procedure would act upon the client whose CIK is &lt;code&gt;&amp;quot;e469e336ff9c8ed9176bc05ed7fa40daaaaaaaaa&amp;quot;&lt;/code&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;request-json&quot;&gt;Request JSON&lt;/h2&gt;
-&lt;p&gt;The body of a request has the following structure:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;auth&amp;quot;: {
-            &amp;quot;cik&amp;quot;: &amp;quot;e469e336ff9c8ed9176bc05ed7fa40daaaaaaaaa&amp;quot;
+root node of the One Platform tree.</p>
+<p>Authentication information is placed in the JSON body of a request, in
+<code>&quot;auth&quot;</code>. The value of the <code>&quot;auth&quot;</code> key can take any of these forms:</p>
+<ul>
+<li><p><code>{&quot;cik&quot;: CIK}</code> authenticates as the client identified by the given CIK. This is the most common form.</p>
+</li>
+<li><p><code>{&quot;cik&quot;: CIK, &quot;client_id&quot;: RID}</code> authenticates as the given client if the CIK identifies an ancestor of the given client.</p>
+</li>
+<li><p><code>{&quot;cik&quot;: CIK, &quot;resource_id&quot;: RID}</code> authenticate as the owner of the given resource if the CIK identifies as an ancestor of the given resource.</p>
+</li>
+</ul>
+<h2 id="identifying-resources">Identifying Resources</h2>
+<p>Many procedures in the API include an argument for identifying a resource to act upon. In this documentation, that resource is identified by <code>&lt;ResourceID&gt;</code>. This argument can take any of these forms:</p>
+<ul>
+<li><p><code>&quot;34eaae237988167d90bfc2ffeb666daaaaaaaaaa&quot;</code> directly identifies a resource ID. The resource must be in the <a href="#authentication">calling client</a>&#39;s subhierarchy.</p>
+</li>
+<li><p><code>{&quot;alias&quot;: &quot;temperature&quot;}</code> looks up an immediate child of the <a href="#authentication">calling client</a> by alias (<code>&quot;temperature&quot;</code> in this example).</p>
+</li>
+<li><p><code>{&quot;alias&quot;: &quot;&quot;}</code> identifies the calling client itself. So, for example, if <code>&quot;auth&quot;</code> was set to <code>{&quot;cik&quot;:&quot;e469e336ff9c8ed9176bc05ed7fa40daaaaaaaaa&quot;</code>, the procedure would act upon the client whose CIK is <code>&quot;e469e336ff9c8ed9176bc05ed7fa40daaaaaaaaa&quot;</code>.</p>
+</li>
+</ul>
+<h2 id="request-json">Request JSON</h2>
+<p>The body of a request has the following structure:</p>
+<pre><code>{
+    &quot;auth&quot;: {
+            &quot;cik&quot;: &quot;e469e336ff9c8ed9176bc05ed7fa40daaaaaaaaa&quot;
     },
-    &amp;quot;calls&amp;quot;: [
+    &quot;calls&quot;: [
         // first call is a read
         {
-            &amp;quot;id&amp;quot;: 1, 
-            &amp;quot;procedure&amp;quot;: &amp;quot;read&amp;quot;, 
-            &amp;quot;arguments&amp;quot;: [
-                 // &amp;lt;ResourceID&amp;gt;
+            &quot;id&quot;: 1, 
+            &quot;procedure&quot;: &quot;read&quot;, 
+            &quot;arguments&quot;: [
+                 // &lt;ResourceID&gt;
                  // descendant RID of calling client
-                 &amp;quot;34eaae237988167d90bfc2ffeb666daaaaaaaaaa&amp;quot;, 
+                 &quot;34eaae237988167d90bfc2ffeb666daaaaaaaaaa&quot;, 
                  {
-                     &amp;quot;starttime&amp;quot;:1376709504,
-                      &amp;quot;endtime&amp;quot;:1376709527,
-                      &amp;quot;limit&amp;quot;:1,
-                      &amp;quot;sort&amp;quot;:&amp;quot;desc&amp;quot;,
-                      &amp;quot;selection&amp;quot;:&amp;quot;all&amp;quot;
+                     &quot;starttime&quot;:1376709504,
+                      &quot;endtime&quot;:1376709527,
+                      &quot;limit&quot;:1,
+                      &quot;sort&quot;:&quot;desc&quot;,
+                      &quot;selection&quot;:&quot;all&quot;
                  }
             ]
         },
         // second call is a write
         {
-            &amp;quot;id&amp;quot;: 2, 
-            &amp;quot;procedure&amp;quot;: &amp;quot;write&amp;quot;, 
-            &amp;quot;arguments&amp;quot;: [
-                 // &amp;lt;ResourceID&amp;gt;
+            &quot;id&quot;: 2, 
+            &quot;procedure&quot;: &quot;write&quot;, 
+            &quot;arguments&quot;: [
+                 // &lt;ResourceID&gt;
                  // instead of an RID string, this call references the 
-                 // alias of one of the calling client&amp;#39;s children.
+                 // alias of one of the calling client&#39;s children.
                  {
-                     &amp;quot;alias&amp;quot;: &amp;quot;temperature&amp;quot;
+                     &quot;alias&quot;: &quot;temperature&quot;
                  },
                  65.4
             ]
         }
     ]
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;auth&amp;quot;&lt;/code&gt; provides the authentication for the procedures listed in &lt;code&gt;&amp;quot;calls&amp;quot;&lt;/code&gt;. See &lt;a href=&quot;#authenticating&quot;&gt;Authenticating&lt;/a&gt; for details.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;&amp;quot;id&amp;quot;&lt;/code&gt; is an identifier for the call, and may be a number or a string of up to 40 characters. A matching ID is returned in the response. If &lt;code&gt;&amp;quot;id&amp;quot;&lt;/code&gt; is omitted for a particular call, no response will be returned. If &lt;code&gt;&amp;quot;id&amp;quot;&lt;/code&gt; is omitted for all calls in &lt;code&gt;&amp;quot;calls&amp;quot;&lt;/code&gt;, no response will be given for the entire request message.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;&amp;quot;procedure&amp;quot;&lt;/code&gt; and &lt;code&gt;&amp;quot;arguments&amp;quot;&lt;/code&gt; are specific to individual procedures and are documented &lt;a href=&quot;#procedures-1&quot;&gt;below&lt;/a&gt;. &lt;/p&gt;
-&lt;h2 id=&quot;response-json&quot;&gt;Response JSON&lt;/h2&gt;
-&lt;p&gt;The response body is always JSON, but its format varies based on error handling conditions. If a call succeeds, the body of the response is a JSON list of responses to the calls made in the request:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[
+</code></pre><ul>
+<li><code>&quot;auth&quot;</code> provides the authentication for the procedures listed in <code>&quot;calls&quot;</code>. See <a href="#authenticating">Authenticating</a> for details.</li>
+</ul>
+<p><code>&quot;id&quot;</code> is an identifier for the call, and may be a number or a string of up to 40 characters. A matching ID is returned in the response. If <code>&quot;id&quot;</code> is omitted for a particular call, no response will be returned. If <code>&quot;id&quot;</code> is omitted for all calls in <code>&quot;calls&quot;</code>, no response will be given for the entire request message.</p>
+<p><code>&quot;procedure&quot;</code> and <code>&quot;arguments&quot;</code> are specific to individual procedures and are documented <a href="#procedures-1">below</a>. </p>
+<h2 id="response-json">Response JSON</h2>
+<p>The response body is always JSON, but its format varies based on error handling conditions. If a call succeeds, the body of the response is a JSON list of responses to the calls made in the request:</p>
+<pre><code>[
     // response for 
     {
-        &amp;quot;id&amp;quot;: 1,
-        &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-        &amp;quot;result&amp;quot;: [[1376709527, 64.2]]
+        &quot;id&quot;: 1,
+        &quot;status&quot;: &quot;ok&quot;,
+        &quot;result&quot;: [[1376709527, 64.2]]
     }
 ]
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;id&amp;quot;&lt;/code&gt; identifies the corresponding request call. &lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;result&amp;quot;&lt;/code&gt; is the return value for the procedure. Procedures without return values omit it entirely.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;If a particular call fails, the response body is still a list, but &lt;code&gt;&amp;quot;status&amp;quot;&lt;/code&gt; for the response for that call is set to something besides &lt;code&gt;&amp;quot;ok&amp;quot;&lt;/code&gt;, and an &lt;code&gt;&amp;quot;error&amp;quot;&lt;/code&gt; key is included:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[{&amp;quot;id&amp;quot;: 0,
-  &amp;quot;status&amp;quot;: &amp;quot;fail&amp;quot;,
-  &amp;quot;error&amp;quot;: {&amp;quot;code&amp;quot;: 501,
-            &amp;quot;message&amp;quot;: &amp;quot;Error&amp;quot;,
-            &amp;quot;context&amp;quot;: &amp;quot;arguments&amp;quot;}]
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If the request message causes an error not associated with any given call, the response body is a JSON object like this:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{&amp;quot;error&amp;quot;: {&amp;quot;code&amp;quot;: 401,
-           &amp;quot;message&amp;quot;: &amp;quot;Invalid&amp;quot;,
-           &amp;quot;context&amp;quot;: &amp;quot;auth&amp;quot;}}
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;code&amp;quot;&lt;/code&gt; may have one of the following values:&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;-1&lt;/code&gt; means the request message is not a proper JSON string&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;400&lt;/code&gt; means the request is not properly formed&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;401&lt;/code&gt; means the credentials in &lt;code&gt;&amp;quot;auth&amp;quot;&lt;/code&gt; are invalid&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;500&lt;/code&gt; means an internal error occured while generating the response message.  Individual calls may or may not have completed successfully.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;501&lt;/code&gt; means the application of the given arguments to the specified procedure is not supported.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;context&amp;quot;&lt;/code&gt; indicates where the failure happened. If present, it may have one of the following values:&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;arguments&amp;quot;&lt;/code&gt; if arguments for a procedure are missing&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;auth&amp;quot;&lt;/code&gt; if the auth field is of invalid format&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;calls&amp;quot;&lt;/code&gt; if the calls field is of invalid format, i.e. not a list&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;procedure&amp;quot;&lt;/code&gt; if the procedure is missing&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;time-series-data&quot;&gt;Time Series Data&lt;/h1&gt;
-&lt;h2 id=&quot;read&quot;&gt;read&lt;/h2&gt;
-&lt;p&gt;Read data from a resource.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;read&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
+</code></pre><ul>
+<li><code>&quot;id&quot;</code> identifies the corresponding request call. </li>
+<li><code>&quot;result&quot;</code> is the return value for the procedure. Procedures without return values omit it entirely.</li>
+</ul>
+<p>If a particular call fails, the response body is still a list, but <code>&quot;status&quot;</code> for the response for that call is set to something besides <code>&quot;ok&quot;</code>, and an <code>&quot;error&quot;</code> key is included:</p>
+<pre><code>[{&quot;id&quot;: 0,
+  &quot;status&quot;: &quot;fail&quot;,
+  &quot;error&quot;: {&quot;code&quot;: 501,
+            &quot;message&quot;: &quot;Error&quot;,
+            &quot;context&quot;: &quot;arguments&quot;}]
+</code></pre><p>If the request message causes an error not associated with any given call, the response body is a JSON object like this:</p>
+<pre><code>{&quot;error&quot;: {&quot;code&quot;: 401,
+           &quot;message&quot;: &quot;Invalid&quot;,
+           &quot;context&quot;: &quot;auth&quot;}}
+</code></pre><ul>
+<li><p><code>&quot;code&quot;</code> may have one of the following values:</p>
+<p>  <code>-1</code> means the request message is not a proper JSON string</p>
+<p>  <code>400</code> means the request is not properly formed</p>
+<p>  <code>401</code> means the credentials in <code>&quot;auth&quot;</code> are invalid</p>
+<p>  <code>500</code> means an internal error occured while generating the response message.  Individual calls may or may not have completed successfully.</p>
+<p>  <code>501</code> means the application of the given arguments to the specified procedure is not supported.</p>
+</li>
+</ul>
+<ul>
+<li><p><code>&quot;context&quot;</code> indicates where the failure happened. If present, it may have one of the following values:</p>
+<p>  <code>&quot;arguments&quot;</code> if arguments for a procedure are missing</p>
+<p>  <code>&quot;auth&quot;</code> if the auth field is of invalid format</p>
+<p>  <code>&quot;calls&quot;</code> if the calls field is of invalid format, i.e. not a list</p>
+<p>  <code>&quot;procedure&quot;</code> if the procedure is missing</p>
+</li>
+</ul>
+<h1 id="time-series-data">Time Series Data</h1>
+<h2 id="read">read</h2>
+<p>Read data from a resource.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;read&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
         {
-            &amp;quot;starttime&amp;quot;: number = 0
-            &amp;quot;endtime&amp;quot;: number = &amp;lt;current unix time&amp;gt;,
-            &amp;quot;sort&amp;quot;: &amp;quot;asc&amp;quot; | &amp;quot;desc&amp;quot; = &amp;quot;desc&amp;quot;
-            &amp;quot;limit&amp;quot;: number = 1,
-            &amp;quot;selection&amp;quot;: &amp;quot;all&amp;quot; | &amp;quot;givenwindow&amp;quot; | &amp;quot;autowindow&amp;quot; = &amp;quot;all&amp;quot;,
+            &quot;starttime&quot;: number = 0
+            &quot;endtime&quot;: number = &lt;current unix time&gt;,
+            &quot;sort&quot;: &quot;asc&quot; | &quot;desc&quot; = &quot;desc&quot;
+            &quot;limit&quot;: number = 1,
+            &quot;selection&quot;: &quot;all&quot; | &quot;givenwindow&quot; | &quot;autowindow&quot; = &quot;all&quot;,
         }
     ],
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is the identifier of the device to read. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;starttime&amp;quot;&lt;/code&gt; and &lt;code&gt;&amp;quot;endtime&amp;quot;&lt;/code&gt; are &lt;a href=&quot;http://en.wikipedia.org/wiki/Unix_time&quot;&gt;Unix timestamps&lt;/a&gt; that specify the window of time to read. &lt;code&gt;&amp;quot;starttime&amp;quot;&lt;/code&gt; defaults to &lt;code&gt;0&lt;/code&gt; and &lt;code&gt;&amp;quot;endtime&amp;quot;&lt;/code&gt; defaults to the current time.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;sort&amp;quot;&lt;/code&gt; defines the order in which points should be ordered: ascending (&lt;code&gt;&amp;quot;asc&amp;quot;&lt;/code&gt;) or descending (&lt;code&gt;&amp;quot;desc&amp;quot;&lt;/code&gt;) timestamp order. Defaults to &lt;code&gt;&amp;quot;desc&amp;quot;&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;limit&amp;quot;&lt;/code&gt; sets a maximum on the number of points to return. &lt;code&gt;&amp;quot;limit&amp;quot;&lt;/code&gt; is applied after the results have been sorted, so different values of &lt;code&gt;&amp;quot;sort&amp;quot;&lt;/code&gt; will return different sets of points. Defaults to &lt;code&gt;1&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;selection&amp;quot;&lt;/code&gt; supports downsampling. &lt;code&gt;&amp;quot;givenwindow&amp;quot;&lt;/code&gt; splits the time window evenly into &lt;code&gt;&amp;quot;limit&amp;quot;&lt;/code&gt; parts and returns at most one point from each part. &lt;code&gt;&amp;quot;autowindow&amp;quot;&lt;/code&gt; samples evenly across points in the time window up to &lt;code&gt;&amp;quot;limit&amp;quot;&lt;/code&gt;. Note that these options provide a blind sampling function, not averaging or other type of rollup calculation. Defaults to &lt;code&gt;&amp;quot;all&amp;quot;&lt;/code&gt;, which turns off downsampling, returning all points up to &lt;code&gt;&amp;quot;limit&amp;quot;&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;p&gt;Response is a list of &lt;a href=&quot;http://en.wikipedia.org/wiki/Unix_time&quot;&gt;timestamp&lt;/a&gt;, value pairs.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
+</code></pre><ul>
+<li><code>&lt;ResourceID&gt;</code> is the identifier of the device to read. See <a href="#identifying-resources">Identifying Resources</a> for details.</li>
+<li><code>&quot;starttime&quot;</code> and <code>&quot;endtime&quot;</code> are <a href="http://en.wikipedia.org/wiki/Unix_time">Unix timestamps</a> that specify the window of time to read. <code>&quot;starttime&quot;</code> defaults to <code>0</code> and <code>&quot;endtime&quot;</code> defaults to the current time.</li>
+<li><code>&quot;sort&quot;</code> defines the order in which points should be ordered: ascending (<code>&quot;asc&quot;</code>) or descending (<code>&quot;desc&quot;</code>) timestamp order. Defaults to <code>&quot;desc&quot;</code>.</li>
+<li><code>&quot;limit&quot;</code> sets a maximum on the number of points to return. <code>&quot;limit&quot;</code> is applied after the results have been sorted, so different values of <code>&quot;sort&quot;</code> will return different sets of points. Defaults to <code>1</code>.</li>
+<li><code>&quot;selection&quot;</code> supports downsampling. <code>&quot;givenwindow&quot;</code> splits the time window evenly into <code>&quot;limit&quot;</code> parts and returns at most one point from each part. <code>&quot;autowindow&quot;</code> samples evenly across points in the time window up to <code>&quot;limit&quot;</code>. Note that these options provide a blind sampling function, not averaging or other type of rollup calculation. Defaults to <code>&quot;all&quot;</code>, which turns off downsampling, returning all points up to <code>&quot;limit&quot;</code>.</li>
+</ul>
+<h4 id="response">response</h4>
+<p>Response is a list of <a href="http://en.wikipedia.org/wiki/Unix_time">timestamp</a>, value pairs.</p>
+<pre><code>
 // float resource 
 {
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;result&amp;quot;: [[1376709527,64.2]],
-    &amp;quot;id&amp;quot;: 1
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;result&quot;: [[1376709527,64.2]],
+    &quot;id&quot;: 1
 }
 
 // string resource 
 {
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;result&amp;quot;: [[1376950234,&amp;quot;World&amp;quot;],[1376950230,&amp;quot;Hello&amp;quot;]],
-    &amp;quot;id&amp;quot;: 1
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;result&quot;: [[1376950234,&quot;World&quot;],[1376950230,&quot;Hello&quot;]],
+    &quot;id&quot;: 1
 }
 
 // integer resource 
 {
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;result&amp;quot;: [[1376950410,11],[1376950405,10]],
-    &amp;quot;id&amp;quot;: 1
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;result&quot;: [[1376950410,11],[1376950405,10]],
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;example&quot;&gt;Example&lt;/h4&gt;
-&lt;p&gt;Read the most recent single value for a datasource:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ curl -d &amp;#39;{&amp;quot;auth&amp;quot;:{&amp;quot;cik&amp;quot;:&amp;quot;bef3c7f91ac3562e6a2212345678901234567890&amp;quot;},&amp;quot;calls&amp;quot;:[{&amp;quot;procedure&amp;quot;:&amp;quot;read&amp;quot;,&amp;quot;arguments&amp;quot;:[{&amp;quot;alias&amp;quot;: 
-&amp;quot;log&amp;quot;}, {}],&amp;quot;id&amp;quot;:0}]}&amp;#39; -H &amp;#39;Content-type: application/json; charset=utf-8&amp;#39; http://m2.exosite.com/onep:v1/rpc/process
-[{&amp;quot;id&amp;quot;:0,&amp;quot;status&amp;quot;:&amp;quot;ok&amp;quot;,&amp;quot;result&amp;quot;:[[1390622248,&amp;quot;test value&amp;quot;]]}]
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Read the earliest two points for a datasource:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ curl -d &amp;#39;{&amp;quot;auth&amp;quot;:{&amp;quot;cik&amp;quot;:&amp;quot;bef3c7f91ac3562e6a2212345678901234567890&amp;quot;},&amp;quot;calls&amp;quot;:[{&amp;quot;procedure&amp;quot;:&amp;quot;read&amp;quot;,&amp;quot;arguments&amp;quot;:[{&amp;quot;alias&amp;quot;: 
-&amp;quot;log&amp;quot;}, {&amp;quot;sort&amp;quot;:&amp;quot;asc&amp;quot;, &amp;quot;limit&amp;quot;:2}],&amp;quot;id&amp;quot;:0}]}&amp;#39; -H &amp;#39;Content-type: application/json; charset=utf-8&amp;#39; http://m2.exosite.com/onep:v1/rpc/process
-[{&amp;quot;id&amp;quot;:0,&amp;quot;status&amp;quot;:&amp;quot;ok&amp;quot;,&amp;quot;result&amp;quot;:[[1390622242,&amp;quot;second value&amp;quot;],[1390622240,&amp;quot;first value&amp;quot;]]}]
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;write&quot;&gt;write&lt;/h2&gt;
-&lt;p&gt;Writes a single value to the resource specified.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;write&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;, 
-        &amp;lt;value&amp;gt; 
+</code></pre><h4 id="example">Example</h4>
+<p>Read the most recent single value for a datasource:</p>
+<pre><code>$ curl -d &#39;{&quot;auth&quot;:{&quot;cik&quot;:&quot;bef3c7f91ac3562e6a2212345678901234567890&quot;},&quot;calls&quot;:[{&quot;procedure&quot;:&quot;read&quot;,&quot;arguments&quot;:[{&quot;alias&quot;: 
+&quot;log&quot;}, {}],&quot;id&quot;:0}]}&#39; -H &#39;Content-type: application/json; charset=utf-8&#39; http://m2.exosite.com/onep:v1/rpc/process
+[{&quot;id&quot;:0,&quot;status&quot;:&quot;ok&quot;,&quot;result&quot;:[[1390622248,&quot;test value&quot;]]}]
+</code></pre><p>Read the earliest two points for a datasource:</p>
+<pre><code>$ curl -d &#39;{&quot;auth&quot;:{&quot;cik&quot;:&quot;bef3c7f91ac3562e6a2212345678901234567890&quot;},&quot;calls&quot;:[{&quot;procedure&quot;:&quot;read&quot;,&quot;arguments&quot;:[{&quot;alias&quot;: 
+&quot;log&quot;}, {&quot;sort&quot;:&quot;asc&quot;, &quot;limit&quot;:2}],&quot;id&quot;:0}]}&#39; -H &#39;Content-type: application/json; charset=utf-8&#39; http://m2.exosite.com/onep:v1/rpc/process
+[{&quot;id&quot;:0,&quot;status&quot;:&quot;ok&quot;,&quot;result&quot;:[[1390622242,&quot;second value&quot;],[1390622240,&quot;first value&quot;]]}]
+</code></pre><h2 id="write">write</h2>
+<p>Writes a single value to the resource specified.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;write&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;, 
+        &lt;value&gt; 
     ], 
-    &amp;quot;id&amp;quot;: 1 
+    &quot;id&quot;: 1 
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is the identifier of the device to write. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; is the value to write.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1 
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> is the identifier of the device to write. See <a href="#identifying-resources">Identifying Resources</a> for details.</p>
+</li>
+<li><p><code>&lt;value&gt;</code> is the value to write.</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1 
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h2 id=&quot;writegroup&quot;&gt;writegroup&lt;/h2&gt;
-&lt;p&gt;Writes the given values for the respective resources in the list. The difference between calling &lt;code&gt;writegroup&lt;/code&gt; and combining multiple &lt;code&gt;write&lt;/code&gt; calls into a single request is that &lt;code&gt;writegroup&lt;/code&gt; guarantees the points are written at the same timestamp.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;writegroup&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        [[&amp;lt;ResourceID&amp;gt;, &amp;lt;value&amp;gt;], ...]
+</code></pre><hr>
+<h2 id="writegroup">writegroup</h2>
+<p>Writes the given values for the respective resources in the list. The difference between calling <code>writegroup</code> and combining multiple <code>write</code> calls into a single request is that <code>writegroup</code> guarantees the points are written at the same timestamp.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;writegroup&quot;,
+    &quot;arguments&quot;: [
+        [[&lt;ResourceID&gt;, &lt;value&gt;], ...]
     ],
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is the identifier of the resource to which to write. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; is the value to write.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> is the identifier of the resource to which to write. See <a href="#identifying-resources">Identifying Resources</a> for details.</p>
+</li>
+<li><p><code>&lt;value&gt;</code> is the value to write.</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h2 id=&quot;record&quot;&gt;record&lt;/h2&gt;
-&lt;p&gt;Records a list of historical entries to the resource specified. NOTE: this API is deprecated. Please use &lt;a href=&quot;#recordbatch&quot;&gt;&lt;code&gt;recordbatch&lt;/code&gt;&lt;/a&gt; instead.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;record&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
-        [[&amp;lt;timestamp&amp;gt;, &amp;lt;value&amp;gt;], ...],
+</code></pre><hr>
+<h2 id="record">record</h2>
+<p>Records a list of historical entries to the resource specified. NOTE: this API is deprecated. Please use <a href="#recordbatch"><code>recordbatch</code></a> instead.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;record&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        [[&lt;timestamp&gt;, &lt;value&gt;], ...],
         {}
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is a resource identifier. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The second argument is a list of timestamp, value entries to record to the resource. If 
-  &lt;code&gt;&amp;lt;timestamp&amp;gt;&lt;/code&gt; is a negative value, it means an offset back into the past from the current time.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The behavior of the platform when &lt;code&gt;&amp;lt;timestamp&amp;gt;&lt;/code&gt; is set to times in the future is undefined.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;The third argument is currently unused.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><code>&lt;ResourceID&gt;</code> is a resource identifier. See <a href="#identifying-resources">Identifying Resources</a> for details.</li>
+<li><p>The second argument is a list of timestamp, value entries to record to the resource. If 
+  <code>&lt;timestamp&gt;</code> is a negative value, it means an offset back into the past from the current time.</p>
+</li>
+<li><p>The behavior of the platform when <code>&lt;timestamp&gt;</code> is set to times in the future is undefined.</p>
+</li>
+<li>The third argument is currently unused.</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the entries were successfully recorded.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;recordbatch&quot;&gt;recordbatch&lt;/h2&gt;
-&lt;p&gt;Records a list of historical entries to the resource specified. &lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;recordbatch&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
-        [[&amp;lt;timestamp&amp;gt;, &amp;lt;value&amp;gt;], ...]
+</code></pre><ul>
+<li><code>&quot;status&quot;: &quot;ok&quot;</code> means the entries were successfully recorded.</li>
+</ul>
+<hr>
+<h2 id="recordbatch">recordbatch</h2>
+<p>Records a list of historical entries to the resource specified. </p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;recordbatch&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        [[&lt;timestamp&gt;, &lt;value&gt;], ...]
     ],
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is a resource identifier. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The second argument is a list of timestamp, value entries to record to the resource. If
-  &lt;code&gt;&amp;lt;timestamp&amp;gt;&lt;/code&gt; is a negative value, it means an offset back into the past from the current time.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The behavior of the platform when &lt;code&gt;&amp;lt;timestamp&amp;gt;&lt;/code&gt; is set to times in the future is undefined.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> is a resource identifier. See <a href="#identifying-resources">Identifying Resources</a> for details.</p>
+</li>
+<li><p>The second argument is a list of timestamp, value entries to record to the resource. If
+  <code>&lt;timestamp&gt;</code> is a negative value, it means an offset back into the past from the current time.</p>
+</li>
+<li><p>The behavior of the platform when <code>&lt;timestamp&gt;</code> is set to times in the future is undefined.</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the entries were successfully recorded.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: [[&amp;lt;timestamp&amp;gt;, &amp;#39;invalid&amp;#39;], ...],
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><code>&quot;status&quot;: &quot;ok&quot;</code> means the entries were successfully recorded.</li>
+</ul>
+<pre><code>{
+    &quot;status&quot;: [[&lt;timestamp&gt;, &#39;invalid&#39;], ...],
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;If &lt;code&gt;&amp;quot;status&amp;quot;&lt;/code&gt; is not &lt;code&gt;&amp;quot;ok&amp;quot;&lt;/code&gt;, it will return an array to indicate which &lt;code&gt;&amp;lt;timestamp&amp;gt;&lt;/code&gt; is failed to be writen.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;example&quot;&gt;example&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;arguments&amp;quot;: [
-        &amp;quot;553d1367fa4613f0eea894d1677a13ef1f091150&amp;quot;,
+</code></pre><ul>
+<li>If <code>&quot;status&quot;</code> is not <code>&quot;ok&quot;</code>, it will return an array to indicate which <code>&lt;timestamp&gt;</code> is failed to be writen.</li>
+</ul>
+<h4 id="example">example</h4>
+<pre><code>{
+    &quot;arguments&quot;: [
+        &quot;553d1367fa4613f0eea894d1677a13ef1f091150&quot;,
         [[1421906172,30],[1421906160,20]]
     ],
-    &amp;quot;id&amp;quot;: 1,
-    &amp;quot;procedure&amp;quot;: &amp;quot;recordbatch&amp;quot;
+    &quot;id&quot;: 1,
+    &quot;procedure&quot;: &quot;recordbatch&quot;
 }
 
 response:
 
 {
-    &amp;quot;status&amp;quot;: [[1421906172, &amp;#39;invalid&amp;#39;]],
-    &amp;quot;id&amp;quot;: 1
+    &quot;status&quot;: [[1421906172, &#39;invalid&#39;]],
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h2 id=&quot;flush&quot;&gt;flush&lt;/h2&gt;
-&lt;p&gt;Empties the specified resource of data per specified constraints. If no constraints are specified, all data gets flushed.  &lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;flush&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
+</code></pre><hr>
+<h2 id="flush">flush</h2>
+<p>Empties the specified resource of data per specified constraints. If no constraints are specified, all data gets flushed.  </p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;flush&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
         {
-            &amp;quot;newerthan&amp;quot;: number,
-            &amp;quot;olderthan&amp;quot;: number
+            &quot;newerthan&quot;: number,
+            &quot;olderthan&quot;: number
         }
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; specifies what resource to flush. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;newerthan&amp;quot;&lt;/code&gt; and &lt;code&gt;&amp;quot;olderthan&amp;quot;&lt;/code&gt; are optional timestamps that constrain what data is flushed. If both are specified, only points with timestamp larger than &lt;code&gt;&amp;quot;newerthan&amp;quot;&lt;/code&gt; and smaller than &lt;code&gt;&amp;quot;olderthan&amp;quot;&lt;/code&gt; will be flushed. If only &lt;code&gt;&amp;quot;newerthan&amp;quot;&lt;/code&gt; is specified, then all data with timestamps larger than that timestamp will be removed.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: string,
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><code>&lt;ResourceID&gt;</code> specifies what resource to flush. See <a href="#identifying-resources">Identifying Resources</a> for details.</li>
+</ul>
+<ul>
+<li><code>&quot;newerthan&quot;</code> and <code>&quot;olderthan&quot;</code> are optional timestamps that constrain what data is flushed. If both are specified, only points with timestamp larger than <code>&quot;newerthan&quot;</code> and smaller than <code>&quot;olderthan&quot;</code> will be flushed. If only <code>&quot;newerthan&quot;</code> is specified, then all data with timestamps larger than that timestamp will be removed.</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: string,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the resource was successfully flushed &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;invalid&amp;quot;&lt;/code&gt; means one or both of &amp;quot;olderthan&amp;quot; and &amp;quot;newerthan&amp;quot; options provided was not a valid timestamp&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;restricted&amp;quot;&lt;/code&gt; means the resource specified to be dropped is not owned by the caller client&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h1 id=&quot;resources&quot;&gt;Resources&lt;/h1&gt;
-&lt;h2 id=&quot;create-client-&quot;&gt;create (client)&lt;/h2&gt;
-&lt;p&gt;Creates a generic client under the client specified in &lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt;. &lt;/p&gt;
-&lt;p&gt;&lt;em&gt;NOTE:&lt;/em&gt; To create a client based on a client model and connected with a serial number, use the &lt;a href=&quot;http://docs.exosite.com/portals/#create-new-device-under-a-portal-of-authenticated-user&quot;&gt;portals create device API&lt;/a&gt; or the &lt;a href=&quot;http://docs.exosite.com/provision/management/#provisionmanagemodelmodelsn&quot;&gt;fleet management create client from model POST API&lt;/a&gt; instead.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;create&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
-        &amp;quot;client&amp;quot;, 
+</code></pre><ul>
+<li><p><code>&quot;status&quot;: &quot;ok&quot;</code> means the resource was successfully flushed </p>
+</li>
+<li><p><code>&quot;status&quot;: &quot;invalid&quot;</code> means one or both of &quot;olderthan&quot; and &quot;newerthan&quot; options provided was not a valid timestamp</p>
+</li>
+<li><p><code>&quot;status&quot;: &quot;restricted&quot;</code> means the resource specified to be dropped is not owned by the caller client</p>
+</li>
+</ul>
+<hr>
+<h1 id="resources">Resources</h1>
+<h2 id="create-client-">create (client)</h2>
+<p>Creates a generic client under the client specified in <code>&lt;ResourceID&gt;</code>. </p>
+<p><em>NOTE:</em> To create a client based on a client model and connected with a serial number, use the <a href="http://docs.exosite.com/portals/#create-new-device-under-a-portal-of-authenticated-user">portals create device API</a> or the <a href="http://docs.exosite.com/provision/management/#provisionmanagemodelmodelsn">fleet management create client from model POST API</a> instead.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;create&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        &quot;client&quot;, 
         {
-            &amp;quot;limits&amp;quot;: {
-                &amp;quot;client&amp;quot;:       number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;dataport&amp;quot;:     number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;datarule&amp;quot;:     number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;disk&amp;quot;:         number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;dispatch&amp;quot;:     number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;email&amp;quot;:        number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;email_bucket&amp;quot;: number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;http&amp;quot;:         number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;http_bucket&amp;quot;:  number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;share&amp;quot;:        number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;sms&amp;quot;:          number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;sms_bucket&amp;quot;:   number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;xmpp&amp;quot;:         number | &amp;quot;inherit&amp;quot; = 0,
-                &amp;quot;xmpp_bucket&amp;quot;:  number | &amp;quot;inherit&amp;quot; = 0
+            &quot;limits&quot;: {
+                &quot;client&quot;:       number | &quot;inherit&quot; = 0,
+                &quot;dataport&quot;:     number | &quot;inherit&quot; = 0,
+                &quot;datarule&quot;:     number | &quot;inherit&quot; = 0,
+                &quot;disk&quot;:         number | &quot;inherit&quot; = 0,
+                &quot;dispatch&quot;:     number | &quot;inherit&quot; = 0,
+                &quot;email&quot;:        number | &quot;inherit&quot; = 0,
+                &quot;email_bucket&quot;: number | &quot;inherit&quot; = 0,
+                &quot;http&quot;:         number | &quot;inherit&quot; = 0,
+                &quot;http_bucket&quot;:  number | &quot;inherit&quot; = 0,
+                &quot;share&quot;:        number | &quot;inherit&quot; = 0,
+                &quot;sms&quot;:          number | &quot;inherit&quot; = 0,
+                &quot;sms_bucket&quot;:   number | &quot;inherit&quot; = 0,
+                &quot;xmpp&quot;:         number | &quot;inherit&quot; = 0,
+                &quot;xmpp_bucket&quot;:  number | &quot;inherit&quot; = 0
             },
-            &amp;quot;locked&amp;quot;: boolean = false,
-            &amp;quot;meta&amp;quot;: string = &amp;quot;&amp;quot;,
-            &amp;quot;name&amp;quot;: string = &amp;quot;&amp;quot;,
-            &amp;quot;public&amp;quot;: boolean = false
+            &quot;locked&quot;: boolean = false,
+            &quot;meta&quot;: string = &quot;&quot;,
+            &quot;name&quot;: string = &quot;&quot;,
+            &quot;public&quot;: boolean = false
         }
     ],
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is the client id under which to create a resource. (Please note: an earlier previous form of &lt;code&gt;create&lt;/code&gt; that omitted this argument is deprecated and should not be used.)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;limits&amp;quot;&lt;/code&gt; is an object containing limits for various entities and consumables. Each limit is either number, or &lt;code&gt;&amp;quot;inherit&amp;quot;&lt;/code&gt;, which inherits the limit of the client&amp;#39;s owner.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;client&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;dataport&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;datarule&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;dispatch&amp;quot;&lt;/code&gt; represent the number of each type of resource this client can own.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;disk&amp;quot;&lt;/code&gt; is the amount of disk space this client can occupy. Currently this limit is not enforced. &lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;email&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;http&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;sms&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;xmpp&amp;quot;&lt;/code&gt; is the number of each type of consumable this client can use in each UTC day. These throttle the rate that a client may draw from their corresponding &lt;code&gt;_bucket&lt;/code&gt; limits.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;email_bucket&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;http_bucket&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;sms_bucket&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;xmpp_bucket&amp;quot;&lt;/code&gt; is the number of each type of consumable this client can use. The bucket can be refilled when depleted by updating the client&amp;#39;s description. Updating the limit in the description draws from the client&amp;#39;s parent&amp;#39;s bucket for as long as the parent (or other ancestor, in the case of a parent bucket set to &lt;code&gt;&amp;quot;inherit&amp;quot;&lt;/code&gt;) has anything left in its bucket.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;share&amp;quot;&lt;/code&gt; is the number of shares this client can create.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;locked&amp;quot;&lt;/code&gt;, if set to &lt;code&gt;true&lt;/code&gt;, prevents this client from interacting with the One Platform. Every API call will return the error code &amp;quot;locked&amp;quot;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;meta&amp;quot;&lt;/code&gt; is general purpose metadata. It can be used for application-specific purposes. For example, Portals uses meta to store a client&amp;#39;s vendor and model, among other things.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;name&amp;quot;&lt;/code&gt; is a descriptive name. This field has no further function and the One Platform does not use this name to identify the resource.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;public&amp;quot;&lt;/code&gt; provides public read-only access to the resource. If set to &lt;code&gt;true&lt;/code&gt;, it makes the resource readable by any client. If set to &lt;code&gt;false&lt;/code&gt;, the resource is readable only by ancestors of the resource or any client with which the resource has been shared.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1,
-    &amp;quot;result&amp;quot;: &amp;quot;&amp;lt;ResourceID&amp;gt;&amp;quot;
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> is the client id under which to create a resource. (Please note: an earlier previous form of <code>create</code> that omitted this argument is deprecated and should not be used.)</p>
+</li>
+<li><p><code>&quot;limits&quot;</code> is an object containing limits for various entities and consumables. Each limit is either number, or <code>&quot;inherit&quot;</code>, which inherits the limit of the client&#39;s owner.</p>
+<p>  <code>&quot;client&quot;</code>, <code>&quot;dataport&quot;</code>, <code>&quot;datarule&quot;</code>, <code>&quot;dispatch&quot;</code> represent the number of each type of resource this client can own.</p>
+<p>  <code>&quot;disk&quot;</code> is the amount of disk space this client can occupy. Currently this limit is not enforced. </p>
+<p>  <code>&quot;email&quot;</code>, <code>&quot;http&quot;</code>, <code>&quot;sms&quot;</code>, <code>&quot;xmpp&quot;</code> is the number of each type of consumable this client can use in each UTC day. These throttle the rate that a client may draw from their corresponding <code>_bucket</code> limits.</p>
+<p>  <code>&quot;email_bucket&quot;</code>, <code>&quot;http_bucket&quot;</code>, <code>&quot;sms_bucket&quot;</code>, <code>&quot;xmpp_bucket&quot;</code> is the number of each type of consumable this client can use. The bucket can be refilled when depleted by updating the client&#39;s description. Updating the limit in the description draws from the client&#39;s parent&#39;s bucket for as long as the parent (or other ancestor, in the case of a parent bucket set to <code>&quot;inherit&quot;</code>) has anything left in its bucket.</p>
+<p>  <code>&quot;share&quot;</code> is the number of shares this client can create.</p>
+</li>
+<li><p><code>&quot;locked&quot;</code>, if set to <code>true</code>, prevents this client from interacting with the One Platform. Every API call will return the error code &quot;locked&quot;.</p>
+</li>
+<li><p><code>&quot;meta&quot;</code> is general purpose metadata. It can be used for application-specific purposes. For example, Portals uses meta to store a client&#39;s vendor and model, among other things.</p>
+</li>
+<li><p><code>&quot;name&quot;</code> is a descriptive name. This field has no further function and the One Platform does not use this name to identify the resource.</p>
+</li>
+<li><p><code>&quot;public&quot;</code> provides public read-only access to the resource. If set to <code>true</code>, it makes the resource readable by any client. If set to <code>false</code>, the resource is readable only by ancestors of the resource or any client with which the resource has been shared.</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1,
+    &quot;result&quot;: &quot;&lt;ResourceID&gt;&quot;
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h2 id=&quot;create-dataport-&quot;&gt;create (dataport)&lt;/h2&gt;
-&lt;p&gt;Creates a dataport.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;create&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;quot;dataport&amp;quot;, 
+</code></pre><hr>
+<h2 id="create-dataport-">create (dataport)</h2>
+<p>Creates a dataport.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;create&quot;,
+    &quot;arguments&quot;: [
+        &quot;dataport&quot;, 
         {
-            &amp;quot;format&amp;quot;: &amp;quot;float&amp;quot; | &amp;quot;integer&amp;quot; | &amp;quot;string&amp;quot;,
-            &amp;quot;meta&amp;quot;: string = &amp;quot;&amp;quot;,
-            &amp;quot;name&amp;quot;: string = &amp;quot;&amp;quot;,
-            &amp;quot;preprocess&amp;quot;: list = [],
-            &amp;quot;public&amp;quot;: boolean = false,
-            &amp;quot;retention&amp;quot;: {
-                &amp;quot;count&amp;quot;: number | &amp;quot;infinity&amp;quot;,
-                &amp;quot;duration&amp;quot;: number | &amp;quot;infinity&amp;quot;
+            &quot;format&quot;: &quot;float&quot; | &quot;integer&quot; | &quot;string&quot;,
+            &quot;meta&quot;: string = &quot;&quot;,
+            &quot;name&quot;: string = &quot;&quot;,
+            &quot;preprocess&quot;: list = [],
+            &quot;public&quot;: boolean = false,
+            &quot;retention&quot;: {
+                &quot;count&quot;: number | &quot;infinity&quot;,
+                &quot;duration&quot;: number | &quot;infinity&quot;
             },
-            &amp;quot;subscribe&amp;quot;: &amp;lt;ResourceID&amp;gt; |  null = null
+            &quot;subscribe&quot;: &lt;ResourceID&gt; |  null = null
        }
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;format&amp;quot;&lt;/code&gt; is the format in which the dataport will store its data.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;meta&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;name&amp;quot;&lt;/code&gt;, and &lt;code&gt;&amp;quot;public&amp;quot;&lt;/code&gt; are described in &lt;a href=&quot;#create-client&quot;&gt;create (client)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;preprocess&amp;quot;&lt;/code&gt; is a list of &lt;code&gt;[&amp;lt;operation&amp;gt;, &amp;lt;value&amp;gt; | &amp;lt;ResourceID&amp;gt;]&lt;/code&gt; pairs describing operations to be performed on incoming data.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;lt;operation&amp;gt;&lt;/code&gt; may be &lt;code&gt;&amp;quot;add&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;sub&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;mul&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;div&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;mod&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;gt&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;geq&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;lt&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;leq&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;eq&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;neq&amp;quot;&lt;/code&gt;, or &lt;code&gt;&amp;quot;value&amp;quot;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;lt;value&amp;gt;&lt;/code&gt; is the value to use in the operation.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is a an resource identifier of any resource in this client, will use the value of that resource in this operation.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;retention&amp;quot;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;count&amp;quot;&lt;/code&gt; is the maximum number of entries this resource will retain.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;duration&amp;quot;&lt;/code&gt; is the maximum number of hours this resource will retain its data.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;subscribe&amp;quot;&lt;/code&gt; is an RID to which this resource is subscribed, or null if it is not subscribed to another resource. If set to an RID, this resource will receive a publication whenever a value is written to the specified RID. &lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1,
-    &amp;quot;result&amp;quot;: &amp;quot;&amp;lt;ResourceID&amp;gt;&amp;quot;
+</code></pre><ul>
+<li><code>&quot;format&quot;</code> is the format in which the dataport will store its data.</li>
+<li><code>&quot;meta&quot;</code>, <code>&quot;name&quot;</code>, and <code>&quot;public&quot;</code> are described in <a href="#create-client">create (client)</a></li>
+<li><p><code>&quot;preprocess&quot;</code> is a list of <code>[&lt;operation&gt;, &lt;value&gt; | &lt;ResourceID&gt;]</code> pairs describing operations to be performed on incoming data.</p>
+<p>  <code>&lt;operation&gt;</code> may be <code>&quot;add&quot;</code>, <code>&quot;sub&quot;</code>, <code>&quot;mul&quot;</code>, <code>&quot;div&quot;</code>, <code>&quot;mod&quot;</code>, <code>&quot;gt&quot;</code>, <code>&quot;geq&quot;</code>, <code>&quot;lt&quot;</code>, <code>&quot;leq&quot;</code>, <code>&quot;eq&quot;</code>, <code>&quot;neq&quot;</code>, or <code>&quot;value&quot;</code></p>
+<p>  <code>&lt;value&gt;</code> is the value to use in the operation.</p>
+<p>  <code>&lt;ResourceID&gt;</code> is a an resource identifier of any resource in this client, will use the value of that resource in this operation.</p>
+</li>
+<li><p><code>&quot;retention&quot;</code></p>
+<p>  <code>&quot;count&quot;</code> is the maximum number of entries this resource will retain.</p>
+<p>  <code>&quot;duration&quot;</code> is the maximum number of hours this resource will retain its data.</p>
+</li>
+<li><p><code>&quot;subscribe&quot;</code> is an RID to which this resource is subscribed, or null if it is not subscribed to another resource. If set to an RID, this resource will receive a publication whenever a value is written to the specified RID. </p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1,
+    &quot;result&quot;: &quot;&lt;ResourceID&gt;&quot;
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h2 id=&quot;create-datarule-&quot;&gt;create (datarule)&lt;/h2&gt;
-&lt;p&gt;Creates a datarule.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;create&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;quot;datarule&amp;quot;, 
+</code></pre><hr>
+<h2 id="create-datarule-">create (datarule)</h2>
+<p>Creates a datarule.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;create&quot;,
+    &quot;arguments&quot;: [
+        &quot;datarule&quot;, 
         {
-            &amp;quot;format&amp;quot;: &amp;quot;float&amp;quot; | &amp;quot;integer&amp;quot; | &amp;quot;string&amp;quot;,
-            &amp;quot;meta&amp;quot;: string = &amp;quot;&amp;quot;,
-            &amp;quot;name&amp;quot;: string = &amp;quot;&amp;quot;,
-            &amp;quot;preprocess&amp;quot;: list = [],
-            &amp;quot;public&amp;quot;: boolean = false,
-            &amp;quot;retention&amp;quot;: {
-                &amp;quot;count&amp;quot;: number | &amp;quot;infinity&amp;quot;,
-                &amp;quot;duration&amp;quot;: number | &amp;quot;infinity&amp;quot;
+            &quot;format&quot;: &quot;float&quot; | &quot;integer&quot; | &quot;string&quot;,
+            &quot;meta&quot;: string = &quot;&quot;,
+            &quot;name&quot;: string = &quot;&quot;,
+            &quot;preprocess&quot;: list = [],
+            &quot;public&quot;: boolean = false,
+            &quot;retention&quot;: {
+                &quot;count&quot;: number | &quot;infinity&quot;,
+                &quot;duration&quot;: number | &quot;infinity&quot;
             }
-            &amp;quot;rule&amp;quot;: object,
-            &amp;quot;subscribe&amp;quot;: &amp;lt;ResourceID&amp;gt; | null = null
+            &quot;rule&quot;: object,
+            &quot;subscribe&quot;: &lt;ResourceID&gt; | null = null
         }
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;format&amp;quot;&lt;/code&gt; is the format in which the datarule will store its data.  Lua script datarules should be format &lt;code&gt;&amp;quot;string&amp;quot;&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;meta&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;name&amp;quot;&lt;/code&gt;, and &lt;code&gt;&amp;quot;public&amp;quot;&lt;/code&gt; are described in &lt;a href=&quot;#create-client&quot;&gt;create (client)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;preprocess&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;retention&amp;quot;&lt;/code&gt;, and &lt;code&gt;&amp;quot;subscribe&amp;quot;&lt;/code&gt; are described in &lt;a href=&quot;#create-dataport&quot;&gt;create (dataport)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;rule&amp;quot;&lt;/code&gt; is a JSON object describing the main processing this resource will do on each incoming datapoint. It may be one of the following:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;Rule&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;&lt;/p&gt;
-&lt;tr&gt;&lt;td&gt;
-&lt;pre&gt;&lt;code&gt;
+</code></pre><ul>
+<li><code>&quot;format&quot;</code> is the format in which the datarule will store its data.  Lua script datarules should be format <code>&quot;string&quot;</code>.</li>
+<li><code>&quot;meta&quot;</code>, <code>&quot;name&quot;</code>, and <code>&quot;public&quot;</code> are described in <a href="#create-client">create (client)</a></li>
+<li><code>&quot;preprocess&quot;</code>, <code>&quot;retention&quot;</code>, and <code>&quot;subscribe&quot;</code> are described in <a href="#create-dataport">create (dataport)</a></li>
+<li><code>&quot;rule&quot;</code> is a JSON object describing the main processing this resource will do on each incoming datapoint. It may be one of the following:</li>
+</ul>
+<p><table><tr><th>Rule</th><th>Description</th></tr></p>
+<tr><td>
+<pre><code>
 {
-    &amp;quot;simple&amp;quot;: {
-        &amp;quot;comparison&amp;quot;: &amp;quot;gt&amp;quot; | &amp;quot;lt&amp;quot; | 
-                      &amp;quot;eq&amp;quot; | &amp;quot;geq&amp;quot; | 
-                      &amp;quot;leq&amp;quot; | &amp;quot;neq&amp;quot;,
-        &amp;quot;constant&amp;quot;: number,
-        &amp;quot;repeat&amp;quot;: boolean
+    &quot;simple&quot;: {
+        &quot;comparison&quot;: &quot;gt&quot; | &quot;lt&quot; | 
+                      &quot;eq&quot; | &quot;geq&quot; | 
+                      &quot;leq&quot; | &quot;neq&quot;,
+        &quot;constant&quot;: number,
+        &quot;repeat&quot;: boolean
     }
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/td&gt;&lt;td&gt;
-&lt;p&gt;Values received by this rule are compared to a numerical constant and the result is the boolean result of that comparison.
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;constant&amp;quot;&lt;/code&gt; is a numerical constant used by comparison&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;comparison&amp;quot;&lt;/code&gt; is the comparison to perform.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;repeat&amp;quot;&lt;/code&gt; specifies whether new inputs that would not change 
+</code></pre>
+</td><td>
+<p>Values received by this rule are compared to a numerical constant and the result is the boolean result of that comparison.
+<ul>
+<li><code>&quot;constant&quot;</code> is a numerical constant used by comparison</li>
+<li><code>&quot;comparison&quot;</code> is the comparison to perform.</li>
+<li><code>&quot;repeat&quot;</code> specifies whether new inputs that would not change 
 the output should be written to the output data stack anyway. If set to 
-&lt;code&gt;true&lt;/code&gt;, the output of this rule is always written to the rule&amp;#39;s
-data stack. If set to &lt;code&gt;false&lt;/code&gt;, a output is only written if it&amp;#39;s 
-different from the previous value.&lt;/li&gt;
-&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;
-&lt;pre&gt;&lt;code&gt;
+<code>true</code>, the output of this rule is always written to the rule&#39;s
+data stack. If set to <code>false</code>, a output is only written if it&#39;s 
+different from the previous value.</li>
+</td></tr>
+<tr><td>
+<pre><code>
 {
-    &amp;quot;timeout&amp;quot;: {
-        &amp;quot;timeout&amp;quot;: number,
-        &amp;quot;repeat&amp;quot;: boolean
+    &quot;timeout&quot;: {
+        &quot;timeout&quot;: number,
+        &quot;repeat&quot;: boolean
     }
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/td&gt;&lt;td&gt;
-&lt;p&gt;Output &lt;code&gt;true&lt;/code&gt; if no input value is received within a timeout period. If an input value is received within the period, output &lt;code&gt;false&lt;/code&gt;. The timer is restarted when an input value is received, when the timeout elapses and when the script is first started. A timeout value of 0 indicates that the timeout shall not repeat.
+</code></pre>
+</td><td>
+<p>Output <code>true</code> if no input value is received within a timeout period. If an input value is received within the period, output <code>false</code>. The timer is restarted when an input value is received, when the timeout elapses and when the script is first started. A timeout value of 0 indicates that the timeout shall not repeat.
 
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;timeout&amp;quot;&lt;/code&gt; is a timeout in seconds&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;repeat&amp;quot;&lt;/code&gt; specifies whether new inputs that would not change 
+<ul>
+<li><code>&quot;timeout&quot;</code> is a timeout in seconds</li>
+<li><code>&quot;repeat&quot;</code> specifies whether new inputs that would not change 
 the output should be written to the output data stack anyway. If set to 
-&lt;code&gt;true&lt;/code&gt;, the output of this rule is always written to the rule&amp;#39;s
-data stack. If set to &lt;code&gt;false&lt;/code&gt;, a output is only written if it&amp;#39;s 
-different from the previous value.&lt;/li&gt;
-&lt;/ul&gt;
+<code>true</code>, the output of this rule is always written to the rule&#39;s
+data stack. If set to <code>false</code>, a output is only written if it&#39;s 
+different from the previous value.</li>
+</ul>
 
-&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;
-&lt;pre&gt;&lt;code&gt;
+</td></tr>
+<tr><td>
+<pre><code>
 {
-    &amp;quot;interval&amp;quot;: {
-        &amp;quot;comparison&amp;quot;: &amp;quot;gt&amp;quot; | &amp;quot;lt&amp;quot; | 
-                      &amp;quot;eq&amp;quot; | &amp;quot;geq&amp;quot; | 
-                      &amp;quot;leq&amp;quot; | &amp;quot;neq&amp;quot;,
-        &amp;quot;constant&amp;quot;: number,
-        &amp;quot;timeout&amp;quot;: number,
-        &amp;quot;repeat&amp;quot;: boolean
+    &quot;interval&quot;: {
+        &quot;comparison&quot;: &quot;gt&quot; | &quot;lt&quot; | 
+                      &quot;eq&quot; | &quot;geq&quot; | 
+                      &quot;leq&quot; | &quot;neq&quot;,
+        &quot;constant&quot;: number,
+        &quot;timeout&quot;: number,
+        &quot;repeat&quot;: boolean
     }
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/td&gt;&lt;td&gt;
-&lt;p&gt;This rule outputs the result of the comparison any time an input value is received.
-Additionally, if the comparison result is &lt;code&gt;true&lt;/code&gt;, a timer is
-started. If the timer elapses, the rule output becomes &lt;code&gt;true&lt;/code&gt;,
+</code></pre>
+</td><td>
+<p>This rule outputs the result of the comparison any time an input value is received.
+Additionally, if the comparison result is <code>true</code>, a timer is
+started. If the timer elapses, the rule output becomes <code>true</code>,
 and the timer is restarted. If a input value is received that makes the comparison
-&lt;code&gt;false&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; is output and the timer is canceled.&lt;/p&gt;
+<code>false</code>, <code>false</code> is output and the timer is canceled.</p>
 
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;comparison&amp;quot;&lt;/code&gt; is the comparison to do&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;constant&amp;quot;&lt;/code&gt; is a numerical constant used by comparison&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;timeout&amp;quot;&lt;/code&gt; is a timeout in seconds&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;repeat&amp;quot;&lt;/code&gt; specifies whether new inputs that would not change 
+<ul>
+<li><code>&quot;comparison&quot;</code> is the comparison to do</li>
+<li><code>&quot;constant&quot;</code> is a numerical constant used by comparison</li>
+<li><code>&quot;timeout&quot;</code> is a timeout in seconds</li>
+<li><code>&quot;repeat&quot;</code> specifies whether new inputs that would not change 
 the output should be written to the output data stack anyway. If set to 
-&lt;code&gt;true&lt;/code&gt;, the output of this rule is always written to the rule&amp;#39;s
-data stack. If set to &lt;code&gt;false&lt;/code&gt;, a output is only written if it&amp;#39;s 
-different from the previous value.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;
-&lt;pre&gt;&lt;code&gt;
+<code>true</code>, the output of this rule is always written to the rule&#39;s
+data stack. If set to <code>false</code>, a output is only written if it&#39;s 
+different from the previous value.</li>
+</ul>
+</td></tr>
+<tr><td>
+<pre><code>
 {
-    &amp;quot;duration&amp;quot;: {
-        &amp;quot;comparison&amp;quot;: &amp;quot;gt&amp;quot; | &amp;quot;lt&amp;quot; | 
-                      &amp;quot;eq&amp;quot; | &amp;quot;geq&amp;quot; |
-                      &amp;quot;leq&amp;quot; | &amp;quot;neq&amp;quot;,
-        &amp;quot;constant&amp;quot;: number,
-        &amp;quot;timeout&amp;quot;: number,
-        &amp;quot;repeat&amp;quot;: boolean
+    &quot;duration&quot;: {
+        &quot;comparison&quot;: &quot;gt&quot; | &quot;lt&quot; | 
+                      &quot;eq&quot; | &quot;geq&quot; |
+                      &quot;leq&quot; | &quot;neq&quot;,
+        &quot;constant&quot;: number,
+        &quot;timeout&quot;: number,
+        &quot;repeat&quot;: boolean
     }
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/td&gt;&lt;td&gt;
-&lt;p&gt;When a value is received, it is immediately used in the configured 
-comparison.  If the comparison result is &lt;code&gt;true&lt;/code&gt;, the rule waits for 
-the specified timeout period before setting its output to &lt;code&gt;true&lt;/code&gt;. 
-If instead the comparison result is &lt;code&gt;false&lt;/code&gt;, then 
-&lt;code&gt;false&lt;/code&gt; becomes the output of the rule immediately, cancelling
-any existing timeout.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;comparison&amp;quot;&lt;/code&gt; is the comparison to do&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;constant&amp;quot;&lt;/code&gt; is a numerical constant used by comparison&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;timeout&amp;quot;&lt;/code&gt; is a timeout in seconds&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;repeat&amp;quot;&lt;/code&gt; specifies whether output from this rule should
+</code></pre>
+</td><td>
+<p>When a value is received, it is immediately used in the configured 
+comparison.  If the comparison result is <code>true</code>, the rule waits for 
+the specified timeout period before setting its output to <code>true</code>. 
+If instead the comparison result is <code>false</code>, then 
+<code>false</code> becomes the output of the rule immediately, cancelling
+any existing timeout.</p>
+<ul>
+<li><code>&quot;comparison&quot;</code> is the comparison to do</li>
+<li><code>&quot;constant&quot;</code> is a numerical constant used by comparison</li>
+<li><code>&quot;timeout&quot;</code> is a timeout in seconds</li>
+<li><code>&quot;repeat&quot;</code> specifies whether output from this rule should
 be written to its data stack if it is the same as the latest
-value already on the data stack. If set to &lt;code&gt;true&lt;/code&gt;, the output of 
-this rule is always written to the rule&amp;#39;s data stack. If set to 
-&lt;code&gt;false&lt;/code&gt;, a output is only written if it is different from the 
-previous value.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/td&gt;&lt;/tr&gt;
+value already on the data stack. If set to <code>true</code>, the output of 
+this rule is always written to the rule&#39;s data stack. If set to 
+<code>false</code>, a output is only written if it is different from the 
+previous value.</li>
+</ul>
+</td></tr>
 
-&lt;p&gt;&lt;tr&gt;&lt;td&gt;&lt;/p&gt;
-&lt;p&gt;&lt;pre&gt;&lt;code&gt;
+<p><tr><td></p>
+<p><pre><code>
 {
-    &amp;quot;count&amp;quot;: {
-        &amp;quot;comparison&amp;quot;: &amp;quot;gt&amp;quot; | &amp;quot;lt&amp;quot; |
-                      &amp;quot;eq&amp;quot; | &amp;quot;geq&amp;quot; | 
-                      &amp;quot;leq&amp;quot; | &amp;quot;neq&amp;quot;,
-        &amp;quot;constant&amp;quot;: number,
-        &amp;quot;count&amp;quot;: number,
-        &amp;quot;timeout&amp;quot;: number,
-        &amp;quot;repeat&amp;quot;: boolean
+    &quot;count&quot;: {
+        &quot;comparison&quot;: &quot;gt&quot; | &quot;lt&quot; |
+                      &quot;eq&quot; | &quot;geq&quot; | 
+                      &quot;leq&quot; | &quot;neq&quot;,
+        &quot;constant&quot;: number,
+        &quot;count&quot;: number,
+        &quot;timeout&quot;: number,
+        &quot;repeat&quot;: boolean
     }
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/td&gt;&lt;td&gt;&lt;/p&gt;
-&lt;p&gt;&lt;p&gt;
+</code></pre>
+</td><td></p>
+<p><p>
 When a value is received it is used in the comparison. If the comparison 
-result is &lt;code&gt;true&lt;/code&gt; and there is no existing timeout then a timeout
-is started and an internal counter is set to &lt;code&gt;1&lt;/code&gt;. If a timeout 
+result is <code>true</code> and there is no existing timeout then a timeout
+is started and an internal counter is set to <code>1</code>. If a timeout 
 already exists then the internal counter is incremented. If the internal 
 counter matches the count configuration parameter, then the timeout is 
-restarted, the internal counter is set to &lt;code&gt;0&lt;/code&gt; and the condition 
-evaluates to &lt;code&gt;true&lt;/code&gt;. If the timeout elapses, the counter is set 
-to &lt;code&gt;0&lt;/code&gt;, the timeout is cancelled and the rule outputs 
-&lt;code&gt;false&lt;/code&gt;.
-&lt;/p&gt;&lt;/p&gt;
-&lt;p&gt;&lt;ul&gt;&lt;/p&gt;
-&lt;p&gt;&lt;li&gt;&lt;code&gt;&amp;quot;comparison&amp;quot;&lt;/code&gt; is the comparison to do&lt;/li&gt;&lt;/p&gt;
-&lt;p&gt;&lt;li&gt;&lt;code&gt;&amp;quot;constant&amp;quot;&lt;/code&gt; is a numerical constant used by comparison&lt;/li&gt;&lt;/p&gt;
-&lt;p&gt;&lt;li&gt;&lt;code&gt;&amp;quot;count&amp;quot;&lt;/code&gt; is the number of data points accumulated that satisfy the comparison&lt;/li&gt;&lt;/p&gt;
-&lt;p&gt;&lt;li&gt;&lt;code&gt;&amp;quot;timeout&amp;quot;&lt;/code&gt; is a timeout in seconds&lt;/li&gt;&lt;/p&gt;
-&lt;p&gt;&lt;li&gt;&lt;code&gt;&amp;quot;repeat&amp;quot;&lt;/code&gt; specifies whether output from this rule should
+restarted, the internal counter is set to <code>0</code> and the condition 
+evaluates to <code>true</code>. If the timeout elapses, the counter is set 
+to <code>0</code>, the timeout is cancelled and the rule outputs 
+<code>false</code>.
+</p></p>
+<p><ul></p>
+<p><li><code>&quot;comparison&quot;</code> is the comparison to do</li></p>
+<p><li><code>&quot;constant&quot;</code> is a numerical constant used by comparison</li></p>
+<p><li><code>&quot;count&quot;</code> is the number of data points accumulated that satisfy the comparison</li></p>
+<p><li><code>&quot;timeout&quot;</code> is a timeout in seconds</li></p>
+<p><li><code>&quot;repeat&quot;</code> specifies whether output from this rule should
 be written to its data stack if it is the same as the latest
-value already on the data stack. If set to &lt;code&gt;true&lt;/code&gt;, the output of 
-this rule is always written to the rule&amp;#39;s data stack. If set to 
-&lt;code&gt;false&lt;/code&gt;, a output is only written if it is different from the 
-previous value.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/p&gt;
-&lt;p&gt;&lt;tr&gt;&lt;td&gt;&lt;/p&gt;
-&lt;p&gt;&lt;pre&gt;&lt;code&gt;
+value already on the data stack. If set to <code>true</code>, the output of 
+this rule is always written to the rule&#39;s data stack. If set to 
+<code>false</code>, a output is only written if it is different from the 
+previous value.</li>
+</ul>
+</td></tr></p>
+<p><tr><td></p>
+<p><pre><code>
 {
-    &amp;quot;script&amp;quot;: string
+    &quot;script&quot;: string
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/td&gt;&lt;td&gt;
-&lt;code&gt;&amp;quot;script&amp;quot;&lt;/code&gt; is a string containing Lua source code to run on the server.
-&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;&lt;/p&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1,
-    &amp;quot;result&amp;quot;: &amp;quot;&amp;lt;ResourceID&amp;gt;&amp;quot;
+</code></pre>
+</td><td>
+<code>&quot;script&quot;</code> is a string containing Lua source code to run on the server.
+</td></tr>
+</table></p>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1,
+    &quot;result&quot;: &quot;&lt;ResourceID&gt;&quot;
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h2 id=&quot;create-dispatch-&quot;&gt;create (dispatch)&lt;/h2&gt;
-&lt;p&gt;Creates a dispatch.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;create&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;quot;dispatch&amp;quot;, 
+</code></pre><hr>
+<h2 id="create-dispatch-">create (dispatch)</h2>
+<p>Creates a dispatch.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;create&quot;,
+    &quot;arguments&quot;: [
+        &quot;dispatch&quot;, 
         {
-            &amp;quot;locked&amp;quot;: boolean = false,
-            &amp;quot;message&amp;quot;: string = &amp;quot;&amp;quot;,
-            &amp;quot;meta&amp;quot;: string = &amp;quot;&amp;quot;,
-            &amp;quot;method&amp;quot;: &amp;quot;email&amp;quot; | &amp;quot;http_get&amp;quot; | &amp;quot;http_post&amp;quot; | &amp;quot;http_put&amp;quot; | &amp;quot;sms&amp;quot; | &amp;quot;xmpp&amp;quot;,
-            &amp;quot;name&amp;quot;: string = &amp;quot;&amp;quot;,
-            &amp;quot;preprocess&amp;quot;: list = [],
-            &amp;quot;public&amp;quot;: boolean = false,
-            &amp;quot;recipient&amp;quot;: string,
-            &amp;quot;retention&amp;quot;: {
-                &amp;quot;count&amp;quot;: number | &amp;quot;infinity&amp;quot;,
-                &amp;quot;duration&amp;quot;: number | &amp;quot;infinity&amp;quot;
+            &quot;locked&quot;: boolean = false,
+            &quot;message&quot;: string = &quot;&quot;,
+            &quot;meta&quot;: string = &quot;&quot;,
+            &quot;method&quot;: &quot;email&quot; | &quot;http_get&quot; | &quot;http_post&quot; | &quot;http_put&quot; | &quot;sms&quot; | &quot;xmpp&quot;,
+            &quot;name&quot;: string = &quot;&quot;,
+            &quot;preprocess&quot;: list = [],
+            &quot;public&quot;: boolean = false,
+            &quot;recipient&quot;: string,
+            &quot;retention&quot;: {
+                &quot;count&quot;: number | &quot;infinity&quot;,
+                &quot;duration&quot;: number | &quot;infinity&quot;
             },
-            &amp;quot;subject&amp;quot;: string,
-            &amp;quot;subscribe&amp;quot;: &amp;lt;ResourceID&amp;gt; | null = null
+            &quot;subject&quot;: string,
+            &quot;subscribe&quot;: &lt;ResourceID&gt; | null = null
         }
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;locked&amp;quot;&lt;/code&gt;, if set to &lt;code&gt;true&lt;/code&gt;, will prevent the dispatch resource from sending messages to its configured recipient. The output from a locked dispatch resource will be &amp;#39;undelivered&amp;#39;.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;message&amp;quot;&lt;/code&gt; is the message to dispatch. If this string is empty, the value output from the preprocessing stage will be output instead.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;meta&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;name&amp;quot;&lt;/code&gt;, and &lt;code&gt;&amp;quot;public&amp;quot;&lt;/code&gt; are described in &lt;a href=&quot;#create-client&quot;&gt;create (client)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;method&amp;quot;&lt;/code&gt; is the method to be used to deliver messages by this dispatch resource.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;preprocess&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;retention&amp;quot;&lt;/code&gt;, and &lt;code&gt;&amp;quot;subscribe&amp;quot;&lt;/code&gt; are described in &lt;a href=&quot;#create-dataport&quot;&gt;create (dataport)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;recipient&amp;quot;&lt;/code&gt; is the intended recipient for messages from this dispatch resources. It must be a valid email address or phone number, depending on the configured delivery method.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;subject&amp;quot;&lt;/code&gt; is the subject string for delivery methods that support a subject line, such as email.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1,
-    &amp;quot;result&amp;quot;: &amp;quot;&amp;lt;ResourceID&amp;gt;&amp;quot;
+</code></pre><ul>
+<li><code>&quot;locked&quot;</code>, if set to <code>true</code>, will prevent the dispatch resource from sending messages to its configured recipient. The output from a locked dispatch resource will be &#39;undelivered&#39;.</li>
+<li><code>&quot;message&quot;</code> is the message to dispatch. If this string is empty, the value output from the preprocessing stage will be output instead.</li>
+<li><code>&quot;meta&quot;</code>, <code>&quot;name&quot;</code>, and <code>&quot;public&quot;</code> are described in <a href="#create-client">create (client)</a></li>
+<li><code>&quot;method&quot;</code> is the method to be used to deliver messages by this dispatch resource.</li>
+<li><code>&quot;preprocess&quot;</code>, <code>&quot;retention&quot;</code>, and <code>&quot;subscribe&quot;</code> are described in <a href="#create-dataport">create (dataport)</a></li>
+<li><code>&quot;recipient&quot;</code> is the intended recipient for messages from this dispatch resources. It must be a valid email address or phone number, depending on the configured delivery method.</li>
+<li><code>&quot;subject&quot;</code> is the subject string for delivery methods that support a subject line, such as email.</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1,
+    &quot;result&quot;: &quot;&lt;ResourceID&gt;&quot;
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h2 id=&quot;create-clone-&quot;&gt;create (clone)&lt;/h2&gt;
-&lt;p&gt;Create a clone from an existing One Platform resource given its RID or a non-activated sharecode for that resource. The resource to clone must be a client.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;create&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;quot;clone&amp;quot;, 
+</code></pre><hr>
+<h2 id="create-clone-">create (clone)</h2>
+<p>Create a clone from an existing One Platform resource given its RID or a non-activated sharecode for that resource. The resource to clone must be a client.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;create&quot;,
+    &quot;arguments&quot;: [
+        &quot;clone&quot;, 
         {
-             // &amp;#39;rid&amp;#39; and &amp;#39;code&amp;#39; are mutually exclusive options
-             &amp;quot;rid&amp;quot;: string,
-             &amp;quot;code&amp;quot;: string,
-             &amp;quot;noaliases&amp;quot;:boolean = false,
-             &amp;quot;nohistorical&amp;quot;:boolean = false
+             // &#39;rid&#39; and &#39;code&#39; are mutually exclusive options
+             &quot;rid&quot;: string,
+             &quot;code&quot;: string,
+             &quot;noaliases&quot;:boolean = false,
+             &quot;nohistorical&quot;:boolean = false
         }
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;rid&amp;quot;&lt;/code&gt; is the resource identifier to clone&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;code&lt;/code&gt; is the share code for the resource to clone&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;noaliases&amp;quot;&lt;/code&gt; specifies whether to create clone aliases&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;nohistorical&amp;quot;&lt;/code&gt; specifies whether to clone historical data&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1,
-    &amp;quot;result&amp;quot;: &amp;quot;&amp;lt;ResourceID&amp;gt;&amp;quot;
+</code></pre><ul>
+<li><code>&quot;rid&quot;</code> is the resource identifier to clone</li>
+<li><code>&quot;code</code> is the share code for the resource to clone</li>
+<li><code>&quot;noaliases&quot;</code> specifies whether to create clone aliases</li>
+<li><code>&quot;nohistorical&quot;</code> specifies whether to clone historical data</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1,
+    &quot;result&quot;: &quot;&lt;ResourceID&gt;&quot;
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h2 id=&quot;move&quot;&gt;move&lt;/h2&gt;
-&lt;p&gt;Moves a resource from one parent client to another.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;move&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
-        &amp;lt;DestinationClientID&amp;gt;,
-        &amp;lt;Options&amp;gt;
+</code></pre><hr>
+<h2 id="move">move</h2>
+<p>Moves a resource from one parent client to another.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;move&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        &lt;DestinationClientID&gt;,
+        &lt;Options&gt;
     ],
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; identifies the resource to be moved. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details. Note, however, that a resource may not move itself.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;DestinationClientID&amp;gt;&lt;/code&gt; identifies the client under which the resource should be moved. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;Options&amp;gt;&lt;/code&gt; is a JSON object and can contain these options:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;aliases&lt;/code&gt; is a boolean that when set to true will try to re-create aliases pointing the the moved resource in the new context. When set to false all aliases that would become invalid are being deleted without replacement. &lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> identifies the resource to be moved. See <a href="#identifying-resources">Identifying Resources</a> for details. Note, however, that a resource may not move itself.</p>
+</li>
+<li><p><code>&lt;DestinationClientID&gt;</code> identifies the client under which the resource should be moved. See <a href="#identifying-resources">Identifying Resources</a> for details.</p>
+</li>
+<li><p><code>&lt;Options&gt;</code> is a JSON object and can contain these options:</p>
+<ul>
+<li><code>aliases</code> is a boolean that when set to true will try to re-create aliases pointing the the moved resource in the new context. When set to false all aliases that would become invalid are being deleted without replacement. </li>
+</ul>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the resource was moved&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;update&quot;&gt;update&lt;/h2&gt;
-&lt;p&gt;Updates the description of the resource. &lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;update&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
-        &amp;lt;description&amp;gt; 
+</code></pre><ul>
+<li><code>&quot;status&quot;: &quot;ok&quot;</code> means the resource was moved</li>
+</ul>
+<hr>
+<h2 id="update">update</h2>
+<p>Updates the description of the resource. </p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;update&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        &lt;description&gt; 
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; identifies the resource to update. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details. Note, however, that a resource may not update itself.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;description&amp;gt;&lt;/code&gt; is an object, e.g. &lt;code&gt;{&amp;quot;name&amp;quot;: &amp;quot;My Name&amp;quot;}&lt;/code&gt;. It is documented in &lt;a href=&quot;#create-client&quot;&gt;create (client)&lt;/a&gt;, &lt;a href=&quot;#create-dataport&quot;&gt;create (dataport)&lt;/a&gt;, &lt;a href=&quot;#create-datarule&quot;&gt;create (datarule)&lt;/a&gt;, and &lt;a href=&quot;#create-dispatch&quot;&gt;create (dispatch)&lt;/a&gt;, but its use for update has some limitations:&lt;/p&gt;
-&lt;p&gt;  Client limits must not be lowered below current use level. Resources
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> identifies the resource to update. See <a href="#identifying-resources">Identifying Resources</a> for details. Note, however, that a resource may not update itself.</p>
+</li>
+<li><p><code>&lt;description&gt;</code> is an object, e.g. <code>{&quot;name&quot;: &quot;My Name&quot;}</code>. It is documented in <a href="#create-client">create (client)</a>, <a href="#create-dataport">create (dataport)</a>, <a href="#create-datarule">create (datarule)</a>, and <a href="#create-dispatch">create (dispatch)</a>, but its use for update has some limitations:</p>
+<p>  Client limits must not be lowered below current use level. Resources
   must be dropped prior to lowering the limits. For daily limits, those
-  may be lowered at any point and take immediate affect.&lt;/p&gt;
-&lt;p&gt;  Dataport and datarule format may not be changed.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1
+  may be lowered at any point and take immediate affect.</p>
+<p>  Dataport and datarule format may not be changed.</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the resource was updated&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;wait&quot;&gt;wait&lt;/h2&gt;
-&lt;p&gt;This is a HTTP Long Polling API which allows a user to wait on specific resources to be updated. It will return a timestamp which is the time the resource was updated.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;auth&amp;quot;: {
-        &amp;quot;cik&amp;quot;: &amp;lt;CIK&amp;gt;
+</code></pre><ul>
+<li><code>&quot;status&quot;: &quot;ok&quot;</code> means the resource was updated</li>
+</ul>
+<hr>
+<h2 id="wait">wait</h2>
+<p>This is a HTTP Long Polling API which allows a user to wait on specific resources to be updated. It will return a timestamp which is the time the resource was updated.</p>
+<pre><code>{
+    &quot;auth&quot;: {
+        &quot;cik&quot;: &lt;CIK&gt;
     },
-    &amp;quot;calls&amp;quot;: [
+    &quot;calls&quot;: [
         {
-            &amp;quot;procedure&amp;quot;: &amp;quot;wait&amp;quot;,
-            &amp;quot;arguments&amp;quot;: [
-                &amp;lt;ResourceID&amp;gt;,
+            &quot;procedure&quot;: &quot;wait&quot;,
+            &quot;arguments&quot;: [
+                &lt;ResourceID&gt;,
                 {
-                    &amp;quot;timeout&amp;quot;: &amp;lt;Number&amp;gt; = 30000
-                    &amp;quot;since&amp;quot;: &amp;lt;Timestamp&amp;gt; = null
+                    &quot;timeout&quot;: &lt;Number&gt; = 30000
+                    &quot;since&quot;: &lt;Timestamp&gt; = null
                 }
             ], 
-            &amp;quot;id&amp;quot;: 1
+            &quot;id&quot;: 1
         }
     ]
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; specifies what resource to wait on. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;timeout&lt;/code&gt; is a number that specifies a timeout value, in milliseconds. If you don&amp;#39;t provide &lt;code&gt;timeout&lt;/code&gt; key, it will default to 30000 (30 seconds).&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;since&lt;/code&gt; is a Unix timestamp to specify when you want to wait from.  If you wait since a timestamp, the first updated value after that timestamp will be returned.  If you don&amp;#39;t provide &lt;code&gt;since&lt;/code&gt; key or if you set &lt;Timestamp&gt; &lt;code&gt;null&lt;/code&gt;, you wait from the time the wait call is received.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The following is an JSON example of the wait API.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;auth&amp;quot;: {
-    &amp;quot;cik&amp;quot;: &amp;quot;1c5410607e30469aeedfe899b56011f5ce51ffed&amp;quot;,
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> specifies what resource to wait on. See <a href="#identifying-resources">Identifying Resources</a> for details.</p>
+</li>
+<li><p><code>timeout</code> is a number that specifies a timeout value, in milliseconds. If you don&#39;t provide <code>timeout</code> key, it will default to 30000 (30 seconds).</p>
+</li>
+<li><p><code>since</code> is a Unix timestamp to specify when you want to wait from.  If you wait since a timestamp, the first updated value after that timestamp will be returned.  If you don&#39;t provide <code>since</code> key or if you set <Timestamp> <code>null</code>, you wait from the time the wait call is received.</p>
+</li>
+</ul>
+<p>The following is an JSON example of the wait API.</p>
+<pre><code>{
+  &quot;auth&quot;: {
+    &quot;cik&quot;: &quot;1c5410607e30469aeedfe899b56011f5ce51ffed&quot;,
   },
-  &amp;quot;calls&amp;quot;: [
+  &quot;calls&quot;: [
     {
-      &amp;quot;procedure&amp;quot;: &amp;quot;wait&amp;quot;,
-      &amp;quot;arguments&amp;quot;: [
-        {&amp;quot;alias&amp;quot;: &amp;quot;wait_dataport&amp;quot;},
+      &quot;procedure&quot;: &quot;wait&quot;,
+      &quot;arguments&quot;: [
+        {&quot;alias&quot;: &quot;wait_dataport&quot;},
         {
-          &amp;quot;timeout&amp;quot;: 5000,
-          &amp;quot;since&amp;quot;: null
+          &quot;timeout&quot;: 5000,
+          &quot;since&quot;: null
         }
       ],  
-      &amp;quot;id&amp;quot;: 1
+      &quot;id&quot;: 1
     }
   ]
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The following is an example to wait with default timeout, 30 seconds from now.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;auth&amp;quot;: {
-    &amp;quot;cik&amp;quot;: &amp;quot;1c5410607e30469aeedfe899b56011f5ce51ffed&amp;quot;,
+</code></pre><p>The following is an example to wait with default timeout, 30 seconds from now.</p>
+<pre><code>{
+  &quot;auth&quot;: {
+    &quot;cik&quot;: &quot;1c5410607e30469aeedfe899b56011f5ce51ffed&quot;,
   },
-  &amp;quot;calls&amp;quot;: [
+  &quot;calls&quot;: [
     {
-      &amp;quot;procedure&amp;quot;: &amp;quot;wait&amp;quot;,
-      &amp;quot;arguments&amp;quot;: [
-          {&amp;quot;alias&amp;quot;: &amp;quot;wait_dataport&amp;quot;},
+      &quot;procedure&quot;: &quot;wait&quot;,
+      &quot;arguments&quot;: [
+          {&quot;alias&quot;: &quot;wait_dataport&quot;},
           {}
       ],  
-      &amp;quot;id&amp;quot;: 1
+      &quot;id&quot;: 1
     }
   ]
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: string,
-    &amp;quot;result&amp;quot;: [timestamp, value], 
-    &amp;quot;id&amp;quot;: 1
+</code></pre><h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: string,
+    &quot;result&quot;: [timestamp, value], 
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the resource was updated&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;expire&amp;quot;&lt;/code&gt; means the long poll request is expired. You may need to send another wait request.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;error&amp;quot;&lt;/code&gt; means there is something wrong in the request. You have to check the returned error message.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;result&amp;quot;&lt;/code&gt;: &lt;code&gt;timestamp&lt;/code&gt; is the time that the resource is updated. &lt;code&gt;value&lt;/code&gt; is the corresponding value for that timestamp.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;info&quot;&gt;info&lt;/h2&gt;
-&lt;p&gt;Request creation and usage information of specified resource according 
+</code></pre><ul>
+<li><p><code>&quot;status&quot;: &quot;ok&quot;</code> means the resource was updated</p>
+</li>
+<li><p><code>&quot;status&quot;: &quot;expire&quot;</code> means the long poll request is expired. You may need to send another wait request.</p>
+</li>
+<li><p><code>&quot;status&quot;: &quot;error&quot;</code> means there is something wrong in the request. You have to check the returned error message.</p>
+</li>
+<li><p><code>&quot;result&quot;</code>: <code>timestamp</code> is the time that the resource is updated. <code>value</code> is the corresponding value for that timestamp.</p>
+</li>
+</ul>
+<hr>
+<h2 id="info">info</h2>
+<p>Request creation and usage information of specified resource according 
 to the specified options. Information is returned for the options
 specified. If no option is specified, a full information report is
-returned.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;info&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
-        // &amp;lt;options&amp;gt;
+returned.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;info&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        // &lt;options&gt;
         {
-            &amp;quot;aliases&amp;quot;: true,
-            &amp;quot;basic&amp;quot;: true,
-            &amp;quot;counts&amp;quot;: true,
-            &amp;quot;description&amp;quot;: true,
-            &amp;quot;key&amp;quot;: true,
-            &amp;quot;shares&amp;quot;: true,
-            &amp;quot;storage&amp;quot;:true,
-            &amp;quot;subscribers&amp;quot;:true,
-            &amp;quot;tagged&amp;quot;: true,
-            &amp;quot;tags&amp;quot;: true,
-            &amp;quot;usage&amp;quot;: true
+            &quot;aliases&quot;: true,
+            &quot;basic&quot;: true,
+            &quot;counts&quot;: true,
+            &quot;description&quot;: true,
+            &quot;key&quot;: true,
+            &quot;shares&quot;: true,
+            &quot;storage&quot;:true,
+            &quot;subscribers&quot;:true,
+            &quot;tagged&quot;: true,
+            &quot;tags&quot;: true,
+            &quot;usage&quot;: true
         }
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; specifies what resource to query. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;options&amp;gt;&lt;/code&gt; is a JSON object with boolean entries. Each boolean entry defaults
-  to &lt;code&gt;false&lt;/code&gt;. If &lt;code&gt;&amp;lt;options&amp;gt;&lt;/code&gt; is set to &lt;code&gt;{}&lt;/code&gt; then all available boolean options 
-  are set to &lt;code&gt;true&lt;/code&gt; Not all resource types have the same set of options. Valid 
-  options are the following:&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;aliases&amp;quot;&lt;/code&gt; returns all aliases associated with the calling client&amp;#39;s child resources.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;basic&amp;quot;&lt;/code&gt; returns basic information about a resource, such as its type, when 
-  it was created, last modified and, for &amp;#39;client&amp;#39; and &amp;#39;dispatch&amp;#39; type resources, its current status.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;comments&amp;quot;&lt;/code&gt; are deprecated and should not be used.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;counts&amp;quot;&lt;/code&gt; returns the actual count of the resources/consumables used by the client, does not include
-  resources/consumables by subresources.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;description&amp;quot;&lt;/code&gt; returns the description of the resource that was used to create 
-  or last update the resource.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;key&amp;quot;&lt;/code&gt; returns the Client Interface Key (CIK) associated with the resource.
-  This is valid for client resources only.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;shares&amp;quot;&lt;/code&gt; returns share activation codes along with information about how many 
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> specifies what resource to query. See <a href="#identifying-resources">Identifying Resources</a> for details.</p>
+</li>
+<li><p><code>&lt;options&gt;</code> is a JSON object with boolean entries. Each boolean entry defaults
+  to <code>false</code>. If <code>&lt;options&gt;</code> is set to <code>{}</code> then all available boolean options 
+  are set to <code>true</code> Not all resource types have the same set of options. Valid 
+  options are the following:</p>
+<p>  <code>&quot;aliases&quot;</code> returns all aliases associated with the calling client&#39;s child resources.</p>
+<p>  <code>&quot;basic&quot;</code> returns basic information about a resource, such as its type, when 
+  it was created, last modified and, for &#39;client&#39; and &#39;dispatch&#39; type resources, its current status.</p>
+<p>  <code>&quot;comments&quot;</code> are deprecated and should not be used.</p>
+<p>  <code>&quot;counts&quot;</code> returns the actual count of the resources/consumables used by the client, does not include
+  resources/consumables by subresources.</p>
+<p>  <code>&quot;description&quot;</code> returns the description of the resource that was used to create 
+  or last update the resource.</p>
+<p>  <code>&quot;key&quot;</code> returns the Client Interface Key (CIK) associated with the resource.
+  This is valid for client resources only.</p>
+<p>  <code>&quot;shares&quot;</code> returns share activation codes along with information about how many 
   times and for what duration this resource has been shared and which clients the 
-  activators are.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;storage&amp;quot;&lt;/code&gt; Available for dataport,datarule, and dispatch resources. Returns the numbers for
-  &amp;quot;count&amp;quot;, &amp;quot;first&amp;quot;, &amp;quot;last&amp;quot;, and &amp;quot;size.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;subscribers&amp;quot;&lt;/code&gt; returns the resources subscribed to this resource.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;tagged&amp;quot;&lt;/code&gt; is reserved for future use.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;tags&amp;quot;&lt;/code&gt; is reserved for future use.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;usage&amp;quot;&lt;/code&gt; returns current usage information for the resource.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Clients can call &lt;code&gt;info&lt;/code&gt; on any resource in their sub-hierarchy, including themselves. The type of info available to the caller depends on whether the caller is the client itself on which info is being called or the resource&amp;#39;s direct owner or some other client up the hierarchy. For information about making a call on behalf of a particular client, see &lt;a href=&quot;#authentication&quot;&gt;Authentication&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Available to any client up the hierarchy:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;basic&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;counts&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;usage&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;description&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;storage&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;subscribers&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;tags&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Available only to the client&amp;#39;s direct owner and itself:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;aliases&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;tagged&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;shares&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Available only to the client&amp;#39;s direct owner.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;key&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1,
-    &amp;quot;result&amp;quot;: {
-        &amp;quot;aliases&amp;quot;: {
+  activators are.</p>
+<p>  <code>&quot;storage&quot;</code> Available for dataport,datarule, and dispatch resources. Returns the numbers for
+  &quot;count&quot;, &quot;first&quot;, &quot;last&quot;, and &quot;size.</p>
+<p>  <code>&quot;subscribers&quot;</code> returns the resources subscribed to this resource.</p>
+<p>  <code>&quot;tagged&quot;</code> is reserved for future use.</p>
+<p>  <code>&quot;tags&quot;</code> is reserved for future use.</p>
+<p>  <code>&quot;usage&quot;</code> returns current usage information for the resource.</p>
+</li>
+</ul>
+<p>Clients can call <code>info</code> on any resource in their sub-hierarchy, including themselves. The type of info available to the caller depends on whether the caller is the client itself on which info is being called or the resource&#39;s direct owner or some other client up the hierarchy. For information about making a call on behalf of a particular client, see <a href="#authentication">Authentication</a>.</p>
+<p>Available to any client up the hierarchy:</p>
+<ul>
+<li><code>&quot;basic&quot;</code></li>
+<li><code>&quot;counts&quot;</code></li>
+<li><code>&quot;usage&quot;</code></li>
+<li><code>&quot;description&quot;</code></li>
+<li><code>&quot;storage&quot;</code></li>
+<li><code>&quot;subscribers&quot;</code></li>
+<li><code>&quot;tags&quot;</code></li>
+</ul>
+<p>Available only to the client&#39;s direct owner and itself:</p>
+<ul>
+<li><code>&quot;aliases&quot;</code></li>
+<li><code>&quot;tagged&quot;</code></li>
+<li><code>&quot;shares&quot;</code></li>
+</ul>
+<p>Available only to the client&#39;s direct owner.</p>
+<ul>
+<li><code>&quot;key&quot;</code></li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1,
+    &quot;result&quot;: {
+        &quot;aliases&quot;: {
             // Child resource to alias mapping. If calling client is not
-            // the aliased resource or its owner, the value is &amp;quot;undefined&amp;quot;
+            // the aliased resource or its owner, the value is &quot;undefined&quot;
             // rather than a list of aliases.
-            &amp;quot;1b1ae80c224b4df0c74401234567890123456789&amp;quot;: [
-                &amp;quot;myinteger&amp;quot; 
+            &quot;1b1ae80c224b4df0c74401234567890123456789&quot;: [
+                &quot;myinteger&quot; 
             ],
-            &amp;quot;6154e05357efac4ec3d801234567890123456789&amp;quot;: [
-                &amp;quot;temperature&amp;quot;,
-                &amp;quot;myfloat&amp;quot;
+            &quot;6154e05357efac4ec3d801234567890123456789&quot;: [
+                &quot;temperature&quot;,
+                &quot;myfloat&quot;
             ],
         },
-        &amp;quot;basic&amp;quot;: {
+        &quot;basic&quot;: {
             // The timestamp at which this resource was last updated via 
-            // the &amp;#39;update&amp;#39; API.
-            &amp;quot;modified&amp;quot;: 1374553089,
+            // the &#39;update&#39; API.
+            &quot;modified&quot;: 1374553089,
             // The current status of this resource. Applicable to client 
             // and dispatch type resources only.
-            // &amp;quot;activated&amp;quot; | &amp;quot;locked&amp;quot; | &amp;quot;notactivated&amp;quot;
-            &amp;quot;status&amp;quot;: &amp;quot;activated&amp;quot;,
+            // &quot;activated&quot; | &quot;locked&quot; | &quot;notactivated&quot;
+            &quot;status&quot;: &quot;activated&quot;,
             // the number of resources subscribed to this one 
-            &amp;quot;subscribers&amp;quot;: 0,
+            &quot;subscribers&quot;: 0,
             // Type of resource
-            // &amp;quot;client&amp;quot; | &amp;quot;dataport&amp;quot; | &amp;quot;datarule&amp;quot; | &amp;quot;dispatch&amp;quot;
-            &amp;quot;type&amp;quot;: &amp;quot;client&amp;quot;
+            // &quot;client&quot; | &quot;dataport&quot; | &quot;datarule&quot; | &quot;dispatch&quot;
+            &quot;type&quot;: &quot;client&quot;
         },
         // The actual count of the resources/consumables used by the client on which info 
-        // was called. This is different from &amp;quot;usage&amp;quot; in that &amp;quot;counts&amp;quot; does not include
+        // was called. This is different from &quot;usage&quot; in that &quot;counts&quot; does not include
         // resources allocated to subresources but not actually used by them.
-        &amp;quot;counts&amp;quot;: {
-            &amp;quot;client&amp;quot;: 3,
-            &amp;quot;dataport&amp;quot;: 14,
-            &amp;quot;datarule&amp;quot;: 0,
-            &amp;quot;disk&amp;quot;: 40516,
-            &amp;quot;dispatch&amp;quot;: 0,
-            &amp;quot;email&amp;quot;: 0,
-            &amp;quot;http&amp;quot;: 0,
-            &amp;quot;share&amp;quot;: 0,
-            &amp;quot;sms&amp;quot;: 0,
-            &amp;quot;xmpp&amp;quot;: 0
+        &quot;counts&quot;: {
+            &quot;client&quot;: 3,
+            &quot;dataport&quot;: 14,
+            &quot;datarule&quot;: 0,
+            &quot;disk&quot;: 40516,
+            &quot;dispatch&quot;: 0,
+            &quot;email&quot;: 0,
+            &quot;http&quot;: 0,
+            &quot;share&quot;: 0,
+            &quot;sms&quot;: 0,
+            &quot;xmpp&quot;: 0
         },
         // description as passed to create procedure
-        &amp;quot;description&amp;quot;: {
-            &amp;quot;limits&amp;quot;: {
-                &amp;quot;client&amp;quot;: 500,
-                &amp;quot;dataport&amp;quot;: 10000,
-                &amp;quot;datarule&amp;quot;: 5100,
-                &amp;quot;disk&amp;quot;: &amp;quot;inherit&amp;quot;,
-                &amp;quot;dispatch&amp;quot;: 5100,
-                &amp;quot;email&amp;quot;: 2500,
-                &amp;quot;email_bucket&amp;quot;: &amp;quot;inherit&amp;quot;,
-                &amp;quot;http&amp;quot;: 1000,
-                &amp;quot;http_bucket&amp;quot;: &amp;quot;inherit&amp;quot;,
-                &amp;quot;share&amp;quot;: 5100,
-                &amp;quot;sms&amp;quot;: 5,
-                &amp;quot;sms_bucket&amp;quot;: 30,
-                &amp;quot;xmpp&amp;quot;: 1000,
-                &amp;quot;xmpp_bucket&amp;quot;: &amp;quot;inherit&amp;quot;
+        &quot;description&quot;: {
+            &quot;limits&quot;: {
+                &quot;client&quot;: 500,
+                &quot;dataport&quot;: 10000,
+                &quot;datarule&quot;: 5100,
+                &quot;disk&quot;: &quot;inherit&quot;,
+                &quot;dispatch&quot;: 5100,
+                &quot;email&quot;: 2500,
+                &quot;email_bucket&quot;: &quot;inherit&quot;,
+                &quot;http&quot;: 1000,
+                &quot;http_bucket&quot;: &quot;inherit&quot;,
+                &quot;share&quot;: 5100,
+                &quot;sms&quot;: 5,
+                &quot;sms_bucket&quot;: 30,
+                &quot;xmpp&quot;: 1000,
+                &quot;xmpp_bucket&quot;: &quot;inherit&quot;
             },
-            &amp;quot;locked&amp;quot;: false,
-            &amp;quot;meta&amp;quot;: &amp;quot;&amp;quot;,
-            &amp;quot;name&amp;quot;: &amp;quot;Dev&amp;quot;,
-            &amp;quot;public&amp;quot;: false
+            &quot;locked&quot;: false,
+            &quot;meta&quot;: &quot;&quot;,
+            &quot;name&quot;: &quot;Dev&quot;,
+            &quot;public&quot;: false
         },
         // List of shares in this format:
-        // {&amp;quot;activator&amp;quot;: Activator,  client that activated the code
+        // {&quot;activator&quot;: Activator,  client that activated the code
         //                           or null if the code has not yet 
         //                           been activated.
-        //  &amp;quot;code&amp;quot;: Code,            The code to be used to activate 
+        //  &quot;code&quot;: Code,            The code to be used to activate 
         //                           the share.
-        //  &amp;quot;meta&amp;quot;: Meta}            Meta information string, similar to 
+        //  &quot;meta&quot;: Meta}            Meta information string, similar to 
         //                           the meta field in resource descriptions.
-        &amp;quot;shares&amp;quot;: [],
+        &quot;shares&quot;: [],
         // List of resources that are subscribed to this one in the form {Type, RID}
-        &amp;quot;subscribers&amp;quot;: [],
+        &quot;subscribers&quot;: [],
         // Numbers for the resource storage retention
         // Available for dataport, datarule, dispatch only
-        &amp;quot;storage&amp;quot;:{
-            &amp;quot;count&amp;quot;:0
-           ,&amp;quot;first&amp;quot;:0
-           ,&amp;quot;last&amp;quot;:0
-           ,&amp;quot;size&amp;quot;:0
+        &quot;storage&quot;:{
+            &quot;count&quot;:0
+           ,&quot;first&quot;:0
+           ,&quot;last&quot;:0
+           ,&quot;size&quot;:0
         },
-        &amp;quot;tagged&amp;quot;: [],
-        &amp;quot;tags&amp;quot;: [],
-        &amp;quot;usage&amp;quot;: {
+        &quot;tagged&quot;: [],
+        &quot;tags&quot;: [],
+        &quot;usage&quot;: {
             // Number of the respective resource type owned by this
             // and allocated to descendant clients. Applicable to 
             // client type resources only.
-            &amp;quot;client&amp;quot;: 3,
-            &amp;quot;dataport&amp;quot;: 14,
-            &amp;quot;datarule&amp;quot;: 0,
-            &amp;quot;dispatch&amp;quot;: 0,
+            &quot;client&quot;: 3,
+            &quot;dataport&quot;: 14,
+            &quot;datarule&quot;: 0,
+            &quot;dispatch&quot;: 0,
             // Number of resources
             // shared by this and allocated to descendant clients. 
             // Applicable to client type resources only.
-            &amp;quot;share&amp;quot;: 0,
+            &quot;share&quot;: 0,
             // Current total disk space in bytes used by this and descendant 
             // clients, expressed in bytes. Applicable to client type 
             // resources only.
-            &amp;quot;disk&amp;quot;: 40516,
+            &quot;disk&quot;: 40516,
             // Current daily usage of the respective dispatch type by this
-            // and descendant clients. Applicable to &amp;#39;client&amp;#39; type
+            // and descendant clients. Applicable to &#39;client&#39; type
             // resources only.
-            &amp;quot;email&amp;quot;: 0,
-            &amp;quot;http&amp;quot;: 0,
-            &amp;quot;sms&amp;quot;: 0,
-            &amp;quot;xmpp&amp;quot;: 0
+            &quot;email&quot;: 0,
+            &quot;http&quot;: 0,
+            &quot;sms&quot;: 0,
+            &quot;xmpp&quot;: 0
         }
     }
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the information was returned in &lt;code&gt;&amp;quot;result&amp;quot;&lt;/code&gt;. Any other value for &lt;code&gt;&amp;quot;status&amp;quot;&lt;/code&gt; indicates failure.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;listing&quot;&gt;listing&lt;/h2&gt;
-&lt;p&gt;Returns lists of RIDs of types specified in &lt;code&gt;&amp;lt;type_list&amp;gt;&lt;/code&gt; under client specified in &lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;listing&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
-        &amp;lt;type_list&amp;gt;,
-        &amp;lt;options&amp;gt;
+</code></pre><ul>
+<li><code>&quot;status&quot;: &quot;ok&quot;</code> means the information was returned in <code>&quot;result&quot;</code>. Any other value for <code>&quot;status&quot;</code> indicates failure.</li>
+</ul>
+<hr>
+<h2 id="listing">listing</h2>
+<p>Returns lists of RIDs of types specified in <code>&lt;type_list&gt;</code> under client specified in <code>&lt;ResourceID&gt;</code>.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;listing&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        &lt;type_list&gt;,
+        &lt;options&gt;
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is the client id under which to list RIDs. (Please note: an earlier previous form of &lt;code&gt;listing&lt;/code&gt; that omitted this argument is deprecated and should not be used.)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;type_list&amp;gt;&lt;/code&gt; is a list of resource types. Valid types are &lt;code&gt;&amp;quot;client&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;dataport&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;datarule&amp;quot;&lt;/code&gt;, and &lt;code&gt;&amp;quot;dispatch&amp;quot;&lt;/code&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;options&amp;gt;&lt;/code&gt; is an object describing what should be returned. If options is set to &lt;code&gt;{}&lt;/code&gt;, it defaults to &lt;code&gt;{&amp;quot;owned&amp;quot;:true}&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;activated&amp;quot;: true&lt;/code&gt; includes resources that have been shared with and activated by caller client&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;aliased&amp;quot;: true&lt;/code&gt; includes resources that have been aliased by caller client&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;owned&amp;quot;: true&lt;/code&gt; includes resources owned by caller client&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;public&amp;quot;: true&lt;/code&gt; includes public resources&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;tagged&amp;quot;&lt;/code&gt; specifies a list of tags and includes only resources that have tags in the list. For example, &lt;code&gt;&amp;quot;tagged&amp;quot;: [&amp;quot;tag1&amp;quot;, &amp;quot;tag2&amp;quot;]&lt;/code&gt; would include resources that have been tagged with &amp;quot;tag1&amp;quot; or &amp;quot;tag2&amp;quot; by any client.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: string,
-    &amp;quot;id&amp;quot;: 1
-    &amp;quot;result&amp;quot;: {
-        &amp;quot;client&amp;quot;: [],
-        &amp;quot;dataport&amp;quot;: [   
-            &amp;quot;85a85bd51361b976260d01234567890123456789&amp;quot;,
-            &amp;quot;ba423f0dd8c62039239601234567890123456789&amp;quot;,
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> is the client id under which to list RIDs. (Please note: an earlier previous form of <code>listing</code> that omitted this argument is deprecated and should not be used.)</p>
+</li>
+<li><p><code>&lt;type_list&gt;</code> is a list of resource types. Valid types are <code>&quot;client&quot;</code>, <code>&quot;dataport&quot;</code>, <code>&quot;datarule&quot;</code>, and <code>&quot;dispatch&quot;</code>.</p>
+</li>
+<li><p><code>&lt;options&gt;</code> is an object describing what should be returned. If options is set to <code>{}</code>, it defaults to <code>{&quot;owned&quot;:true}</code>.</p>
+<p>  <code>&quot;activated&quot;: true</code> includes resources that have been shared with and activated by caller client</p>
+<p>  <code>&quot;aliased&quot;: true</code> includes resources that have been aliased by caller client</p>
+<p>  <code>&quot;owned&quot;: true</code> includes resources owned by caller client</p>
+<p>  <code>&quot;public&quot;: true</code> includes public resources</p>
+<p>  <code>&quot;tagged&quot;</code> specifies a list of tags and includes only resources that have tags in the list. For example, <code>&quot;tagged&quot;: [&quot;tag1&quot;, &quot;tag2&quot;]</code> would include resources that have been tagged with &quot;tag1&quot; or &quot;tag2&quot; by any client.</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: string,
+    &quot;id&quot;: 1
+    &quot;result&quot;: {
+        &quot;client&quot;: [],
+        &quot;dataport&quot;: [   
+            &quot;85a85bd51361b976260d01234567890123456789&quot;,
+            &quot;ba423f0dd8c62039239601234567890123456789&quot;,
         ],
-        &amp;quot;datarule&amp;quot;: [],
-        &amp;quot;dispatch&amp;quot;: []
+        &quot;datarule&quot;: [],
+        &quot;dispatch&quot;: []
     }
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means &lt;code&gt;&amp;quot;result&amp;quot;&lt;/code&gt; contains an object containing list(s) of resource IDs.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;error&amp;quot;&lt;/code&gt; means one or more specified resource types are invalid, and &lt;code&gt;&amp;quot;result&amp;quot;&lt;/code&gt; contains an error string.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;DEPRECATED&lt;/strong&gt; If the &lt;code&gt;&amp;lt;options&amp;gt;&lt;/code&gt; argument is left out, the result is instead a list of resource IDs in the same order as the input type list. This form of the &lt;code&gt;listing&lt;/code&gt; command is deprecated and should not be used.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: string,
-    &amp;quot;id&amp;quot;: 1
-    &amp;quot;result&amp;quot;: [
+</code></pre><ul>
+<li><p><code>&quot;status&quot;: &quot;ok&quot;</code> means <code>&quot;result&quot;</code> contains an object containing list(s) of resource IDs.</p>
+</li>
+<li><p><code>&quot;status&quot;: &quot;error&quot;</code> means one or more specified resource types are invalid, and <code>&quot;result&quot;</code> contains an error string.</p>
+</li>
+</ul>
+<p><strong>DEPRECATED</strong> If the <code>&lt;options&gt;</code> argument is left out, the result is instead a list of resource IDs in the same order as the input type list. This form of the <code>listing</code> command is deprecated and should not be used.</p>
+<pre><code>{
+    &quot;status&quot;: string,
+    &quot;id&quot;: 1
+    &quot;result&quot;: [
         [],
         [
-            &amp;quot;85a85bd51361b976260d01234567890123456789&amp;quot;,
-            &amp;quot;ba423f0dd8c62039239601234567890123456789&amp;quot;,
+            &quot;85a85bd51361b976260d01234567890123456789&quot;,
+            &quot;ba423f0dd8c62039239601234567890123456789&quot;,
         ],
         [],
         []
     ]
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h2 id=&quot;drop&quot;&gt;drop&lt;/h2&gt;
-&lt;p&gt;Deletes the specified resource. If the resource is a client, the client&amp;#39;s subhierarchy are deleted, too. If 
+</code></pre><hr>
+<h2 id="drop">drop</h2>
+<p>Deletes the specified resource. If the resource is a client, the client&#39;s subhierarchy are deleted, too. If 
 the resource is a script type datarule, or the hierarchy being dropped contains scripts, the script will 
-be terminated.  &lt;/p&gt;
-&lt;p&gt;&lt;em&gt;NOTE:&lt;/em&gt; The drop procedure should only be used to drop generic clients, i.e. clients that were created without a client model. To drop/delete a client based on a client model, use the &lt;a href=&quot;http://docs.exosite.com/portals/#delete-device&quot;&gt;Portals API delete device&lt;/a&gt;. This will free up the serial number associated with that device.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;drop&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
+be terminated.  </p>
+<p><em>NOTE:</em> The drop procedure should only be used to drop generic clients, i.e. clients that were created without a client model. To drop/delete a client based on a client model, use the <a href="http://docs.exosite.com/portals/#delete-device">Portals API delete device</a>. This will free up the serial number associated with that device.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;drop&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; specifies the resource to drop.  See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: string,
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><code>&lt;ResourceID&gt;</code> specifies the resource to drop.  See <a href="#identifying-resources">Identifying Resources</a> for details.</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: string,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the resource was successfully dropped&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;restricted&amp;quot;&lt;/code&gt; means the resource specified to be dropped is not owned by the caller client&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;usage&quot;&gt;usage&lt;/h2&gt;
-&lt;p&gt;Returns metric usage for client and its subhierarchy.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;usage&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
-        &amp;lt;metric&amp;gt;,
-        &amp;lt;starttime&amp;gt;,
-        &amp;lt;endtime&amp;gt;,
+</code></pre><ul>
+<li><p><code>&quot;status&quot;: &quot;ok&quot;</code> means the resource was successfully dropped</p>
+</li>
+<li><p><code>&quot;status&quot;: &quot;restricted&quot;</code> means the resource specified to be dropped is not owned by the caller client</p>
+</li>
+</ul>
+<hr>
+<h2 id="usage">usage</h2>
+<p>Returns metric usage for client and its subhierarchy.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;usage&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        &lt;metric&gt;,
+        &lt;starttime&gt;,
+        &lt;endtime&gt;,
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; identifies the client resource whose usage will be measured. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;metric&amp;gt;&lt;/code&gt; is the usage metric to measure. It may be:
-  ...an entity: &amp;quot;client&amp;quot; | &amp;quot;dataport&amp;quot; | &amp;quot;datarule&amp;quot; | dispatch&amp;quot;
-  ...or a consumable: &amp;quot;share&amp;quot; | &amp;quot;email&amp;quot; | &amp;quot;http&amp;quot; | &amp;quot;sms&amp;quot; | &amp;quot;xmpp&amp;quot;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;starttime&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;endtime&amp;gt;&lt;/code&gt; specify the window in which to measure usage&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;result&amp;quot;: number, 
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> identifies the client resource whose usage will be measured. See <a href="#identifying-resources">Identifying Resources</a> for details.</p>
+</li>
+<li><p><code>&lt;metric&gt;</code> is the usage metric to measure. It may be:
+  ...an entity: &quot;client&quot; | &quot;dataport&quot; | &quot;datarule&quot; | dispatch&quot;
+  ...or a consumable: &quot;share&quot; | &quot;email&quot; | &quot;http&quot; | &quot;sms&quot; | &quot;xmpp&quot;</p>
+</li>
+<li><p><code>&lt;starttime&gt;</code> and <code>&lt;endtime&gt;</code> specify the window in which to measure usage</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;result&quot;: number, 
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means &lt;code&gt;&amp;quot;result&amp;quot;&lt;/code&gt; contains the value for the metric&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;result&amp;quot;&lt;/code&gt; depends on usage metric being measured.&lt;/p&gt;
-&lt;p&gt;  For consumables, &lt;code&gt;&amp;quot;result&amp;quot;&lt;/code&gt; is the sum of the consumable used during the given window.&lt;/p&gt;
-&lt;p&gt;  For entities, &lt;code&gt;&amp;quot;result&amp;quot;&lt;/code&gt; is the sum of the number of that entity used in one second for
-  each second in the given window&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;aliases&quot;&gt;Aliases&lt;/h1&gt;
-&lt;h2 id=&quot;unmap&quot;&gt;unmap&lt;/h2&gt;
-&lt;p&gt;Removes a mapping of specified type under the client specified in &lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt;.
-After the removal, the previously mapped resource will not be able to be looked up by the mapping.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;unmap&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
-        &amp;quot;alias&amp;quot;,
-        &amp;lt;alias&amp;gt; 
+</code></pre><ul>
+<li><p><code>&quot;status&quot;: &quot;ok&quot;</code> means <code>&quot;result&quot;</code> contains the value for the metric</p>
+</li>
+<li><p><code>&quot;result&quot;</code> depends on usage metric being measured.</p>
+<p>  For consumables, <code>&quot;result&quot;</code> is the sum of the consumable used during the given window.</p>
+<p>  For entities, <code>&quot;result&quot;</code> is the sum of the number of that entity used in one second for
+  each second in the given window</p>
+</li>
+</ul>
+<h1 id="aliases">Aliases</h1>
+<h2 id="unmap">unmap</h2>
+<p>Removes a mapping of specified type under the client specified in <code>&lt;ResourceID&gt;</code>.
+After the removal, the previously mapped resource will not be able to be looked up by the mapping.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;unmap&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        &quot;alias&quot;,
+        &lt;alias&gt; 
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is the client id under which to unmap a mapping. (Please note: an earlier previous form of &lt;code&gt;unmap&lt;/code&gt; that omitted this argument is deprecated and should not be used.)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt; is the alias string to unmap.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> is the client id under which to unmap a mapping. (Please note: an earlier previous form of <code>unmap</code> that omitted this argument is deprecated and should not be used.)</p>
+</li>
+<li><p><code>&lt;alias&gt;</code> is the alias string to unmap.</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the alias was successfully unmapped&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;lookup&quot;&gt;lookup&lt;/h2&gt;
-&lt;p&gt;Look up a Resource ID by alias, owned Resource ID, or share activation code
-under the client specified in &lt;code&gt;&amp;lt;ClientID&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;lookup&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ClientID&amp;gt;,
-        &amp;quot;alias&amp;quot; | &amp;quot;owner&amp;quot; | &amp;quot;shared&amp;quot;,
-        &amp;lt;alias&amp;gt; | &amp;lt;ResourceID&amp;gt; | &amp;lt;Code&amp;gt;
+</code></pre><ul>
+<li><code>&quot;status&quot;: &quot;ok&quot;</code> means the alias was successfully unmapped</li>
+</ul>
+<hr>
+<h2 id="lookup">lookup</h2>
+<p>Look up a Resource ID by alias, owned Resource ID, or share activation code
+under the client specified in <code>&lt;ClientID&gt;</code>.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;lookup&quot;,
+    &quot;arguments&quot;: [
+        &lt;ClientID&gt;,
+        &quot;alias&quot; | &quot;owner&quot; | &quot;shared&quot;,
+        &lt;alias&gt; | &lt;ResourceID&gt; | &lt;Code&gt;
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ClientID&amp;gt;&lt;/code&gt; is the client id under which to lookup a resource. (Please note: an earlier previous form of &lt;code&gt;lookup&lt;/code&gt; that omitted this argument is deprecated and should not be used.)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;If the first argument is &lt;code&gt;&amp;quot;alias&amp;quot;&lt;/code&gt;, the second argument is a string alias, or &lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt; to 
-  look up the caller client&amp;#39;s Resource ID.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;If the first argument is &lt;code&gt;&amp;quot;owner&amp;quot;&lt;/code&gt;, the second argument is a ResourceID whose owner will 
-  be looked up. Owner lookup is restricted to within the caller client&amp;#39;s subhierarchy. 
-  Also, a client is not allowed to look up its own owner&amp;#39;s resource id. See 
-  &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;If the first argument is &lt;code&gt;&amp;quot;shared&amp;quot;&lt;/code&gt;, the second argument is a share activation code whose
-  Resource ID will be looked up. &lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;result&amp;quot;: &amp;lt;ResourceID&amp;gt;,
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><p><code>&lt;ClientID&gt;</code> is the client id under which to lookup a resource. (Please note: an earlier previous form of <code>lookup</code> that omitted this argument is deprecated and should not be used.)</p>
+</li>
+<li><p>If the first argument is <code>&quot;alias&quot;</code>, the second argument is a string alias, or <code>&quot;&quot;</code> to 
+  look up the caller client&#39;s Resource ID.</p>
+</li>
+<li><p>If the first argument is <code>&quot;owner&quot;</code>, the second argument is a ResourceID whose owner will 
+  be looked up. Owner lookup is restricted to within the caller client&#39;s subhierarchy. 
+  Also, a client is not allowed to look up its own owner&#39;s resource id. See 
+  <a href="#identifying-resources">Identifying Resources</a> for details.</p>
+</li>
+</ul>
+<ul>
+<li>If the first argument is <code>&quot;shared&quot;</code>, the second argument is a share activation code whose
+  Resource ID will be looked up. </li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;result&quot;: &lt;ResourceID&gt;,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means &lt;code&gt;&amp;quot;result&amp;quot;&lt;/code&gt; contains a Resource ID. Other values of &lt;code&gt;&amp;quot;status&amp;quot;&lt;/code&gt; indicate failure.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h1 id=&quot;shares-and-keys&quot;&gt;Shares and Keys&lt;/h1&gt;
-&lt;h2 id=&quot;share&quot;&gt;share&lt;/h2&gt;
-&lt;p&gt;Generates a share code for the given resource. The share code can
-subsequently be used to &lt;a href=&quot;#activate&quot;&gt;activate&lt;/a&gt; the share and gain access 
-to the shared resource.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;share&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
+</code></pre><ul>
+<li><code>&quot;status&quot;: &quot;ok&quot;</code> means <code>&quot;result&quot;</code> contains a Resource ID. Other values of <code>&quot;status&quot;</code> indicate failure.</li>
+</ul>
+<hr>
+<h1 id="shares-and-keys">Shares and Keys</h1>
+<h2 id="share">share</h2>
+<p>Generates a share code for the given resource. The share code can
+subsequently be used to <a href="#activate">activate</a> the share and gain access 
+to the shared resource.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;share&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
         {
-            &amp;quot;meta&amp;quot;: &amp;lt;string&amp;gt;
+            &quot;meta&quot;: &lt;string&gt;
         }
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;meta&amp;quot;&lt;/code&gt; is a string that describes the share. It defaults to &lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt;. &lt;code&gt;&amp;quot;meta&amp;quot;&lt;/code&gt; may be updated for an existing share by passing a previous share code &lt;code&gt;&amp;quot;code&amp;quot;&lt;/code&gt; in options.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;result&amp;quot;: &amp;quot;ab24f30dd8c62039239601234567890123456789&amp;quot; 
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><code>&quot;meta&quot;</code> is a string that describes the share. It defaults to <code>&quot;&quot;</code>. <code>&quot;meta&quot;</code> may be updated for an existing share by passing a previous share code <code>&quot;code&quot;</code> in options.</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;result&quot;: &quot;ab24f30dd8c62039239601234567890123456789&quot; 
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the share code was successfully generated and returned in &lt;code&gt;&amp;quot;result&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;revoke&quot;&gt;revoke&lt;/h2&gt;
-&lt;p&gt;Given an activation code, the associated entity is revoked after which
+</code></pre><ul>
+<li><code>&quot;status&quot;: &quot;ok&quot;</code> means the share code was successfully generated and returned in <code>&quot;result&quot;</code></li>
+</ul>
+<hr>
+<h2 id="revoke">revoke</h2>
+<p>Given an activation code, the associated entity is revoked after which
 the activation code can no longer be used. The calling client must be
-the owner of the resource with which the activation code is associated.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;revoke&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;quot;client&amp;quot; | &amp;quot;share&amp;quot;,
-        &amp;lt;code&amp;gt;
+the owner of the resource with which the activation code is associated.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;revoke&quot;,
+    &quot;arguments&quot;: [
+        &quot;client&quot; | &quot;share&quot;,
+        &lt;code&gt;
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;The first argument specifies what to revoke.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;client&amp;quot;&lt;/code&gt; revokes the specified client interface key (CIK) passed in 
-  &lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt; and generates a new one. If the revoked code was previously 
+</code></pre><ul>
+<li><p>The first argument specifies what to revoke.</p>
+<p>  <code>&quot;client&quot;</code> revokes the specified client interface key (CIK) passed in 
+  <code>&lt;code&gt;</code> and generates a new one. If the revoked code was previously 
   activated, the new one replacing it will need to be activated. The new 
-  code will expire after the default CIK expiration period.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;share&amp;quot;&lt;/code&gt; revokes the specified share activation code after which the 
+  code will expire after the default CIK expiration period.</p>
+<p>  <code>&quot;share&quot;</code> revokes the specified share activation code after which the 
   resource associated with the share activation code will no longer be 
-  accessible by the activator.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt; is either a CIK (if the first argument was &lt;code&gt;&amp;quot;client&amp;quot;&lt;/code&gt;), or a share activation code (if the first argument was &lt;code&gt;&amp;quot;share&amp;quot;&lt;/code&gt;).&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1
+  accessible by the activator.</p>
+</li>
+<li><p><code>&lt;code&gt;</code> is either a CIK (if the first argument was <code>&quot;client&quot;</code>), or a share activation code (if the first argument was <code>&quot;share&quot;</code>).</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the specified item was successfully revoked.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;invalid&amp;quot;&lt;/code&gt; means the specified CIK or code was not found.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;noauth&amp;quot;&lt;/code&gt; means the client associated with the specified CIK or client activation code is&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;not owned by caller client.
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;activate&quot;&gt;activate&lt;/h2&gt;
-&lt;p&gt;Given an activation code, activate an entity for the client specified in &lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;activate&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
-        &amp;quot;client&amp;quot; | &amp;quot;share&amp;quot;, 
-        &amp;lt;code&amp;gt;
+</code></pre><ul>
+<li><p><code>&quot;status&quot;: &quot;ok&quot;</code> means the specified item was successfully revoked.</p>
+</li>
+<li><p><code>&quot;status&quot;: &quot;invalid&quot;</code> means the specified CIK or code was not found.</p>
+</li>
+<li><p><code>&quot;status&quot;: &quot;noauth&quot;</code> means the client associated with the specified CIK or client activation code is</p>
+<pre><code>not owned by caller client.
+</code></pre></li>
+</ul>
+<hr>
+<h2 id="activate">activate</h2>
+<p>Given an activation code, activate an entity for the client specified in <code>&lt;ResourceID&gt;</code>.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;activate&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        &quot;client&quot; | &quot;share&quot;, 
+        &lt;code&gt;
     ], 
-    &amp;quot;id&amp;quot;: 1 
+    &quot;id&quot;: 1 
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is the client id under which to activate an entity. (Please note: an earlier previous form of &lt;code&gt;activate&lt;/code&gt; that omitted this argument is deprecated and should not be used.)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The second argument indicates the type of thing to activate:&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;client&amp;quot;&lt;/code&gt; activates the specified client
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> is the client id under which to activate an entity. (Please note: an earlier previous form of <code>activate</code> that omitted this argument is deprecated and should not be used.)</p>
+</li>
+<li><p>The second argument indicates the type of thing to activate:</p>
+<p>  <code>&quot;client&quot;</code> activates the specified client
   interface key (CIK) if it is not already activated or expired. Only the
-  owner of the client associated with the CIK can activate it.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;share&amp;quot;&lt;/code&gt; activates the specified share code
+  owner of the client associated with the CIK can activate it.</p>
+<p>  <code>&quot;share&quot;</code> activates the specified share code
   for the specified activator if the activator has not already activated
-  a share for the same resource, either using this share code or another.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt; is a CIK or share code&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: string,
-    &amp;quot;id&amp;quot;: 1
+  a share for the same resource, either using this share code or another.</p>
+</li>
+<li><p><code>&lt;code&gt;</code> is a CIK or share code</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: string,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the activation was successful.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;invalid&amp;quot;&lt;/code&gt; means the specified activation code was not found or already activated
+</code></pre><ul>
+<li><p><code>&quot;status&quot;: &quot;ok&quot;</code> means the activation was successful.</p>
+</li>
+<li><p><code>&quot;status&quot;: &quot;invalid&quot;</code> means the specified activation code was not found or already activated
   (client only) or expired (client only) or activated by another client
   (share only).  Or, the resource associated with the activation code has already been
-  activated either via this or another activation code (share only).&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;noauth&amp;quot;&lt;/code&gt; means the calling client does not own the client associated with the 
-  specified activation code (client only).&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;deactivate&quot;&gt;deactivate&lt;/h2&gt;
-&lt;p&gt;Given an activation code, deactivate an entity for the client specified in &lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;deactivate&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;lt;ResourceID&amp;gt;,
-        &amp;quot;client&amp;quot; | &amp;quot;share&amp;quot;, 
-        &amp;lt;code&amp;gt;
+  activated either via this or another activation code (share only).</p>
+</li>
+<li><p><code>&quot;status&quot;: &quot;noauth&quot;</code> means the calling client does not own the client associated with the 
+  specified activation code (client only).</p>
+</li>
+</ul>
+<hr>
+<h2 id="deactivate">deactivate</h2>
+<p>Given an activation code, deactivate an entity for the client specified in <code>&lt;ResourceID&gt;</code>.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;deactivate&quot;,
+    &quot;arguments&quot;: [
+        &lt;ResourceID&gt;,
+        &quot;client&quot; | &quot;share&quot;, 
+        &lt;code&gt;
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; is the client id under which to deactivate the entity. (Please note: an earlier previous form of &lt;code&gt;deactivate&lt;/code&gt; that omitted this argument is deprecated and should not be used.)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The second argument indicates the type of thing to deactivate:&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;client&amp;quot;&lt;/code&gt; deactivate and expire the specified client interface 
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> is the client id under which to deactivate the entity. (Please note: an earlier previous form of <code>deactivate</code> that omitted this argument is deprecated and should not be used.)</p>
+</li>
+<li><p>The second argument indicates the type of thing to deactivate:</p>
+<p>  <code>&quot;client&quot;</code> deactivate and expire the specified client interface 
   key (CIK) if it was previously activated. If the key was not previously 
-  activated, the call will expire the key.&lt;/p&gt;
-&lt;p&gt;  &lt;code&gt;&amp;quot;share&amp;quot;&lt;/code&gt; deactivate a previous activation of a resource share for the specified activator&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt; is the client or share activation code or the shared resource ID to be deactivated&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1
+  activated, the call will expire the key.</p>
+<p>  <code>&quot;share&quot;</code> deactivate a previous activation of a resource share for the specified activator</p>
+</li>
+<li><p><code>&lt;code&gt;</code> is the client or share activation code or the shared resource ID to be deactivated</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
-&lt;h2 id=&quot;map&quot;&gt;map&lt;/h2&gt;
-&lt;p&gt;Creates an alias for a resource. Subsequently the resource can be looked up using the &lt;a href=&quot;#lookup&quot;&gt;lookup&lt;/a&gt; method.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;procedure&amp;quot;: &amp;quot;map&amp;quot;,
-    &amp;quot;arguments&amp;quot;: [
-        &amp;quot;alias&amp;quot;,
-        &amp;lt;ResourceID&amp;gt;,
+</code></pre><hr>
+<h2 id="map">map</h2>
+<p>Creates an alias for a resource. Subsequently the resource can be looked up using the <a href="#lookup">lookup</a> method.</p>
+<pre><code>{
+    &quot;procedure&quot;: &quot;map&quot;,
+    &quot;arguments&quot;: [
+        &quot;alias&quot;,
+        &lt;ResourceID&gt;,
         string  
     ], 
-    &amp;quot;id&amp;quot;: 1
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt; identifies the resource to which the alias should map. See &lt;a href=&quot;#identifying-resources&quot;&gt;Identifying Resources&lt;/a&gt; for details.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;string&lt;/code&gt; is an alias string to map to &lt;code&gt;&amp;lt;ResourceID&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;response&quot;&gt;response&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;{
-    &amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;,
-    &amp;quot;id&amp;quot;: 1
+</code></pre><ul>
+<li><p><code>&lt;ResourceID&gt;</code> identifies the resource to which the alias should map. See <a href="#identifying-resources">Identifying Resources</a> for details.</p>
+</li>
+<li><p><code>string</code> is an alias string to map to <code>&lt;ResourceID&gt;</code>.</p>
+</li>
+</ul>
+<h4 id="response">response</h4>
+<pre><code>{
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;id&quot;: 1
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;status&amp;quot;: &amp;quot;ok&amp;quot;&lt;/code&gt; means the mapping was successfully created&lt;/li&gt;
-&lt;/ul&gt;
+</code></pre><ul>
+<li><code>&quot;status&quot;: &quot;ok&quot;</code> means the mapping was successfully created</li>
+</ul>
 </div>
   </div>
 
