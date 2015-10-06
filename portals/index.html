@@ -184,8 +184,10 @@
 </ul>
 <h4 id="groups">Groups</h4>
 <ul>
+<li><a href="#add-group-permission">Add group permission</a></li>
 <li><a href="#create-group-under-user">Create group under user</a></li>
 <li><a href="#delete-group">Delete group</a></li>
+<li><a href="#delete-group-permission">Delete group permission</a></li>
 <li><a href="#get-group">Get group</a></li>
 <li><a href="#get-group-permissions">Get group permissions</a></li>
 <li><a href="#get-multiple-groups">Get multiple groups</a></li>
@@ -328,6 +330,8 @@
 <li>[GET] <a href="#get-group-permissions">/api/portals/v1/groups/{group-id}/permissions</a></li>
 <li>[PUT] <a href="#update-group">/api/portals/v1/groups/{group-id}</a></li>
 <li>[DELETE] <a href="#delete-group">/api/portals/v1/groups/{group-id}</a></li>
+<li>[POST] <a href="#add-group-permission">/api/portals/v1/groups/{group-id}/permissions</a></li>
+<li>[DELETE] <a href="#delete-group-permission">/api/portals/v1/groups/{group-id}/permissions</a></li>
 </ul>
 <h4 id="-portal">/portal</h4>
 <ul>
@@ -4798,7 +4802,7 @@ Content-Type: application/json; charset=UTF-8
 </ul>
 <h5 id="response">Response</h5>
 <ul>
-<li><code>204 No Content</code>: Returned if the group is deleted successfully.</li>
+<li><code>204 No Content</code>: Returned if the group was deleted successfully.</li>
 <li><code>403 Forbidden</code>: one of the following:<ul>
 <li>Returned if the caller user is not authenticated.</li>
 <li>Returned if the caller user does not have permission to delete the group.</li>
@@ -4816,6 +4820,82 @@ Date: Tue, 18 Nov 2014 07:42:00 GMT
 Status: 204 No Content
 Vary: Accept-Encoding
 Content-Length: 0
+Content-Type: application/json; charset=UTF-8
+</code></pre><h4 id="add-group-permission">Add group permission</h4>
+<p><code>POST /api/portals/v1/groups/{group-id}/permissions</code></p>
+<p>Add one or multiple <a href="#permission-object">permission objects</a> to a group.</p>
+<h5 id="permissions">Permissions</h5>
+<ul>
+<li>the caller group must have at least <code>g_update</code> <a href="#permission-object">permission</a> to the group.</li>
+<li>the caller group must have access to the <a href="#permission-object">permission objects</a>.</li>
+</ul>
+<h5 id="request">Request</h5>
+<ul>
+<li>The request body is an array of <a href="#permission-object">permission objects</a>.</li>
+<li>Requires authentication.</li>
+</ul>
+<h5 id="response">Response</h5>
+<ul>
+<li><code>202 Accepted</code>: Returned if the group permission(s) was added successfully.</li>
+<li><code>400 Bad Request</code>: Returned if the request body is invalid.</li>
+<li><code>403 Forbidden</code>: one of the following:<ul>
+<li>Returned if the caller group is not authenticated.</li>
+<li>Returned if the caller group does not have access to the <a href="#permission-object">permission objects</a>.</li>
+<li>Returned if the caller group does not have permission to add the permission(s) to the callee group.</li>
+</ul>
+</li>
+<li><code>404 Not Found</code>: Returned if the group id is invalid.</li>
+<li><code>409 Conflict</code>: Returned if <a href="#permission-object">permission objects</a> already exists in callee group permissions.</li>
+</ul>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/groups/3167859736/permissions&#39; \
+     -X POST \
+     -d &#39;[{&quot;access&quot;:&quot;d_u_list&quot;,&quot;oid&quot;:{&quot;id&quot;:&quot;1576946496&quot;,&quot;type&quot;:&quot;Domain&quot;}}]&#39; \
+     -u &#39;groupemail@gmail.com:groupP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 202 Accepted
+Date: Tue, 18 Nov 2014 02:48:23 GMT
+Status: 202 Accepted
+Location: https://mydomain.exosite.com/api/portals/v1/groups/3167859736/permissions
+Vary: Accept-Encoding
+Content-Type: application/json; charset=UTF-8
+</code></pre><h4 id="delete-group-permission">Delete group permission</h4>
+<p><code>DELETE /api/portals/v1/groups/{group-id}/permissions</code></p>
+<p>Delete one or multiple <a href="#permission-object">permission objects</a> on a group.</p>
+<h5 id="permissions">Permissions</h5>
+<ul>
+<li>the caller group must have at least <code>g_update</code> <a href="#permission-object">permission</a> to the group.</li>
+<li>the caller group must have access to the <a href="#permission-object">permission objects</a>.</li>
+</ul>
+<h5 id="request">Request</h5>
+<ul>
+<li>The request body is an array of <a href="#permission-object">permission objects</a>.</li>
+<li>Requires authentication.</li>
+</ul>
+<h5 id="response">Response</h5>
+<ul>
+<li><code>204 No Content</code>: Returned if the group permission(s) was deleted successfully.</li>
+<li><code>400 Bad Request</code>: Returned if the request body is invalid.</li>
+<li><code>403 Forbidden</code>: one of the following:<ul>
+<li>Returned if the caller group is not authenticated.</li>
+<li>Returned if the caller group does not have permission to delete the group permission(s).</li>
+<li>Returned if the <a href="#permission-object">permission objects</a> were deleted by another group and the callee group no longer has permissions on the object(s).</li>
+</ul>
+</li>
+<li><code>404 Not Found</code>: Returned if the group id is invalid.</li>
+<li><code>409 Conflict</code>: Returned if the <a href="#permission-object">permission objects</a> were deleted by the callee group and the group no longer has permissions on the object(s).</li>
+</ul>
+<h5 id="example">Example</h5>
+<pre><code>curl &#39;https://mydomain.exosite.com/api/portals/v1/groups/3167859736/permissions&#39; \
+     -X DELETE \
+     -d &#39;[{&quot;access&quot;:&quot;d_u_list&quot;,&quot;oid&quot;:{&quot;id&quot;:&quot;1576946496&quot;,&quot;type&quot;:&quot;Domain&quot;}}]&#39; \
+     -u &#39;groupemail@gmail.com:groupP4ssword&#39; \
+     -i
+</code></pre><pre><code>HTTP/1.1 204 No Content
+Date: Tue, 18 Nov 2014 02:48:23 GMT
+Status: 204 No Content
+Location: https://mydomain.exosite.com/api/portals/v1/groups/3167859736/permissions
+Vary: Accept-Encoding
 Content-Type: application/json; charset=UTF-8
 </code></pre><h3 id="portal">Portal</h3>
 <h4 id="list-portals-of-authenticated-user">List portals of authenticated user</h4>
