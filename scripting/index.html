@@ -918,7 +918,8 @@ and specifies the email <code>Content-Type</code> header, and defaults to:</p>
   ------------------------------------------------------------------------------
   Returns:         true :: boolean         - sms was successfully sent
           false, reason :: boolean, string - sms was not successfully sent
-</code></pre><ul>
+</code></pre><p>Note: Currently <code>true</code> is always returned. This function does not wait for delivery becuase SMS can take several minutes or more to be delivered. There is currently no way to verify that a message has been delivered.</p>
+<ul>
 <li><p><code>dispatch.tweet(auth, message)</code></p>
 <p>  Sends a <code>message</code> on behalf of the authenticated twitter user application.</p>
 </li>
