@@ -34,7 +34,7 @@
   <!-- Initializer -->
   <script></script>
 </head>
-<body role='flatdoc' class="no-literate">
+<body role='flatdoc'>
   <div class='header'>
     <div class='left'>
       <a href="/">
@@ -55,7 +55,7 @@
       <ul class='topmenu'>
         <li><a class="level-0" href="/">Overview</a></li>
         <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Tutorials</p>
-	  <li><a class="level-0" href="/tutorials/get-started">Getting Started Portals</a></li>
+	  <li><a class="level-0" href="/tutorials/get-started">Getting Started</a></li>
     <li><a class="level-0" href="/tutorials/get-started-arduinoyun">Getting Started Arduino Yún</a></li>
 	  <li><a class"level-0" href="/videos">Videos</a></li>
         </ul>
@@ -116,21 +116,21 @@
 <p><img src="assets/onep_client_attributes1.png" alt="image"></p>
 <p>A Client&#39;s attributes include the following:</p>
 <ul>
-<li>RID - Resource Identifier</li>
-<li>CIK - Client Interface Key</li>
-<li>name - A string for application-specific purposes (it has no relation to identity in the platform)</li>
-<li>meta - A string field for meta data to be used for application-specific purposes</li>
-<li>locked - if set to true - will prevent any use of the CIK to make API calls</li>
-<li>public - If set to true, allows any other resource in the platform to read from it.  If false, only it&#39;s ancestors.</li>
-<li>limits - Is an object containing limits for various entities and consumables.</li>
-<li>resources - Any resources such as dataports, datarules, dispatches, and other clients owned by this client.</li>
+<li><code>RID</code> - Resource Identifier</li>
+<li><code>CIK</code> - Client Interface Key</li>
+<li><code>name</code> - A string for application-specific purposes (it has no relation to identity in the platform)</li>
+<li><code>meta</code> - A string field for meta data to be used for application-specific purposes</li>
+<li><code>locked</code> - if set to true - will prevent any use of the CIK to make API calls</li>
+<li><code>public</code> - If set to true, allows any other resource in the platform to read from it.  If false, only it&#39;s ancestors.</li>
+<li><code>limits</code> - Is an object containing limits for various entities and consumables.</li>
+<li><code>resources</code> - Any resources such as dataports, datarules, dispatches, and other clients owned by this client.</li>
 </ul>
 <p>In addition - by asking for &#39;info&#39; about a client, you can receive the following information:</p>
 <ul>
-<li>aliases</li>
-<li>modified time, status, subscribers, type</li>
-<li>counts</li>
-<li>usage</li>
+<li><code>aliases</code></li>
+<li><code>modified time</code>, <code>status</code>, <code>subscribers</code>, <code>type</code></li>
+<li><code>counts</code></li>
+<li><code>usage</code></li>
 </ul>
 <h2 id="resources">Resources</h2>
 <p>Each client has functional resources that allow for storing, processing, and taking action on data.  There are no limits to how many of each resource are used, although applications should optimize based on performance for things like user applications.</p>
@@ -144,15 +144,15 @@
 <p>Each resource has similiar attributes as clients.  Each resource has a name, a meta field, and public field.  In addition, all resources have the following that are unique to resources.  Each type of resource also has it&#39;s own set of attributes specific to that resource.</p>
 <p><strong>Attributes across all resources</strong></p>
 <ul>
-<li><a href="#alias-/-rid">Resource Identifier / RID</a></li>
-<li><a href="#alias-/-rid">Alias</a></li>
-<li>name</li>
-<li>Meta</li>
-<li>public</li>
-<li>format - Format of stored data -&#39;integer&#39;, &#39;float&#39;, &#39;string&#39;</li>
-<li><a href="#preprocess">preprocess</a></li>
-<li><a href="#retention">retention</a></li>
-<li><a href="#subscriptions">subscribe</a></li>
+<li><a href="#alias-/-rid"><code>Resource Identifier / RID</code></a></li>
+<li><a href="#alias-/-rid"><code>Alias</code></a></li>
+<li><code>name</code></li>
+<li><code>Meta</code></li>
+<li><code>public</code></li>
+<li><code>format</code> - Format of stored data -&#39;integer&#39;, &#39;float&#39;, &#39;string&#39;</li>
+<li><a href="#preprocess"><code>preprocess</code></a></li>
+<li><a href="#retention"><code>retention</code></a></li>
+<li><a href="#subscriptions"><code>subscribe</code></a></li>
 </ul>
 <h4 id="alias-rid">Alias / RID</h4>
 <p>Each resource has a Resource ID (RID) that may be used with the RPC API.  To simplify interactions with the API, resources may also use Aliases, which can be used with the APIs.   An Alias is a simple string that is mapped to a RID.  Each alias is unique to that client.  For example, a dataport that is storing sensor data like temperature, may use an alias of &#39;temp&#39; or &#39;temperature&#39;.  </p>
@@ -357,8 +357,30 @@ previous value.</li>
 <h2 id="lua-scripts">Lua Scripts</h2>
 <p>The most powerful of the resources available in the platform clients are <a href="http://www.lua.org/manual/5.2/">Lua</a> Scripts.  The scripts have access to all of the other resources for that client, including any child clients.  This allows developers to processing incoming data into the dataports, trigger actions or alerts, and manage resources based on the state of different data and time.  </p>
 <p><a href="/scripting">One Platform Lua Scripting Reference Guide</a></p>
+<pre><code class="lang-lua">local input = alias[&#39;input&#39;]
+local output = alias[&#39;output&#39;]
+
+local constant = 23.456
+local last_value = nil
+
+local function process(var1, var2, var3)
+  if var1 &gt; var2 then --compare values
+    output.value = var1 * var3 -- save data to output dataport
+  end
+end
+
+while true do -- loop forever
+  local timestamp = input.wait()
+  local new_value = input[timestamp]
+  if new_value ~= nil and new_value &gt; 10 then
+    process(new_value,last_value, constant)
+  else
+    debug(&#39;not useful, ignore&#39;)
+  end
+  last_value = new_value
+end
+</code></pre>
 <p><img src="assets/onep_script_lua_overview1.png" alt="image"></p>
-<p><img src="assets/onep_script_lua_code_snippet_example1.png" alt="image"></p>
 <p><strong>A few use cases are:</strong></p>
 <ul>
 <li>Advanced data analytics using math functions and multiple dataports</li>
