@@ -283,10 +283,11 @@ Content-Length: &lt;length&gt;
     -H &#39;If-Modified-Since: 1408088308
 </code></pre><h1 id="provisioning-procedures">Provisioning Procedures</h1>
 <h2 id="activate">Activate</h2>
-<p>Activates and returns <code>&lt;cik&gt;</code> of client administrated by Vendor <code>&lt;vendor&gt;</code>, of
-model type <code>&lt;model&gt;</code> associated with Serial Number <code>&lt;sn&gt;</code>. Client must be
-enabled via <code>/provision/manage/model/&lt;model&gt;/&lt;sn&gt;</code>, the enabled state must not
-have expired, and the client must not have already been activated.</p>
+<p>Activates and returns <code>&lt;cik&gt;</code> of client administrated by Vendor <code>&lt;vendor&gt;</code>,
+identified my the model ID <code>&lt;model&gt;</code> associated with Serial Number <code>&lt;sn&gt;</code>.
+Client must be enabled via <code>/provision/manage/model/&lt;model&gt;/&lt;sn&gt;</code>, the enabled
+state must not have expired, and the client must not have already been
+activated.</p>
 <pre><code>POST /provision/activate HTTP/1.1
 Host: m2.exosite.com
 Content-Type: application/x-www-form-urlencoded; charset=utf-8
