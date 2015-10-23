@@ -67,12 +67,12 @@
         <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Application APIs</p>
           <li><a class="level-0" href="/rpc">Remote Procedure Call - RPC</a></li>
           <li><a class="level-0" href="/provision">Provision Management</a></li>
-          <li><a class="level-0" href="/scripting">One Platform Scripting</a></li>
           <li><a class="level-0" href="/widget">Portals Custom Widget</a></li>
           <li><a class="level-0" href="/portals">Portals API</a></li>
         </ul>
-        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Guides</p>
+        <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Reference Guides</p>
           <li><a class="level-0" href="/oneplatform">One Platform</a></li>
+          <li><a class="level-0" href="/scripting">One Platform Scripting</a></li>
           <li><a class="level-0" href="/exosite_ready">Exosite Ready</a></li>
           <li><a class="level-0" href="https://support.exosite.com/hc/en-us/sections/200072708">Portals Web Application</a></li>
           <li><a class="level-0" href="https://support.exosite.com/hc/en-us/sections/200054894">Portals Subdomain Admin</a></li>
@@ -86,28 +86,28 @@
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
     <div role='flatdoc-content' class='content'><h1 id="lua-scripting-api">Lua Scripting API</h1>
-<p>Exosite&#39;s One Platform can run Lua scripts on your behalf. These scripts have
-a rich set of capabilities and may be used to offload processing from your 
+<p>Exosite&#39;s <a href="/oneplatform/">One Platform</a> can run Lua scripts on your behalf. These scripts have
+a rich set of capabilities and may be used to offload processing from your
 device.</p>
 <p>If you&#39;re completely new to Exosite&#39;s APIs, you may want to read the <a href="../README.md">API overview</a> first.</p>
 <h2 id="overview">Overview</h2>
 <p>Scripts are written in Lua 5.2 scripting language. For general information
 about Lua 5.2, please reference the <a href="http://www.lua.org/manual/5.2/">online Lua manual</a>.</p>
-<p>Scripts may be added to an application either using Portals, or by 
+<p>Scripts may be added to an application either using Portals, or by
 using the <a href="https://github.com/exosite/docs/tree/master/rpc">Remote Procedure Call API</a>. In Portals,
 scripts are added on the <a href="https://portals.exosite.com/manage/scripts">script management page</a>.</p>
-<p>To use the RPC to create a script, use the 
-<a href="https://github.com/exosite/docs/tree/master/rpc#create-datarule">create</a> RPC 
-procedures. It&#39;s also possible to use the 
-<a href="https://github.com/dweaver/exoline">Exoline</a> utility to upload a script from 
+<p>To use the RPC to create a script, use the
+<a href="https://github.com/exosite/docs/tree/master/rpc#create-datarule">create</a> RPC
+procedures. It&#39;s also possible to use the
+<a href="https://github.com/dweaver/exoline">Exoline</a> utility to upload a script from
 the command line using the <code>script</code> Exoline command. Run this command for details:</p>
 <pre><code>$ exo script --help
-</code></pre><p>Scripts are associated with a client and may read, write, record and 
+</code></pre><p>Scripts are associated with a client and may read, write, record and
 subscribe to data for any resources that client owns. For example, in Portals,
-if a script A is added to a particular device client it may access 
-all of that device&#39;s datasources, but not the datasources of any other devices. 
-If script B is added to a portal, it will have access to portal-level 
-datasources as well as devices in that portal and their datasources. </p>
+if a script A is added to a particular device client it may access
+all of that device&#39;s datasources, but not the datasources of any other devices.
+If script B is added to a portal, it will have access to portal-level
+datasources as well as devices in that portal and their datasources.</p>
 <p>A script may also dispatch messages using transports such as HTTP, SMS, Email, and XMPP.</p>
 <h2 id="examples">Examples</h2>
 <p>Examples of One Platform Lua scripts are made available in this repository:
@@ -118,7 +118,7 @@ secure environment, complete with access to a set of Lua tables and functions,
 as well as a set of One Platform API functions, the &#39;alias&#39; table and Global
 properties and functions.</p>
 <p>Scripts are scheduled to run with a limited number of execution ticks.
-When these ticks are consumed, the script is suspended until subsequently 
+When these ticks are consumed, the script is suspended until subsequently
 rescheduled.</p>
 <p>Scripts also have memory usage limits, which if completely consumed
 terminates the script with a &#39;not enough memory&#39; error.  Please reference the
@@ -135,13 +135,13 @@ scripts. They operate exactly as described in the Lua 5.2 reference manual.</p>
 <ul>
 <li><p><a href="http://www.lua.org/manual/5.2/manual.html#6.7"><code>bit32</code></a></p>
 </li>
-<li><p><a href="http://www.lua.org/manual/5.2/manual.html#6.6"><code>math</code></a> (Note: 
+<li><p><a href="http://www.lua.org/manual/5.2/manual.html#6.6"><code>math</code></a> (Note:
   the <code>math.randomseed</code> function is not available to scripts.)</p>
 </li>
-<li><p><a href="http://www.lua.org/manual/5.2/manual.html#6.4"><code>string</code></a> (Note: 
+<li><p><a href="http://www.lua.org/manual/5.2/manual.html#6.4"><code>string</code></a> (Note:
   the <code>string.dump</code> and <code>string.gsub</code> functions are not available to scripts.)</p>
 </li>
-<li><p><a href="http://www.lua.org/manual/5.2/manual.html#6.5"><code>table</code></a> (Note: 
+<li><p><a href="http://www.lua.org/manual/5.2/manual.html#6.5"><code>table</code></a> (Note:
   the <code>table.sort</code> function is not available to scripts.)</p>
 </li>
 <li><p><a href="http://www.lua.org/manual/5.2/manual.html#pdf-ipairs"><code>ipairs()</code></a></p>
@@ -171,14 +171,14 @@ scripts. They operate exactly as described in the Lua 5.2 reference manual.</p>
 <ul>
 <li><a href="#the-json-global-table"><code>json</code></a></li>
 <li><a href="#utilities"><code>date()</code></a></li>
-<li><a href="#utilities"><code>debug()</code></a> </li>
+<li><a href="#utilities"><code>debug()</code></a></li>
 <li><a href="#utilities"><code>setlocale()</code></a></li>
 <li><a href="#utilities"><code>settimezone()</code></a></li>
 <li><code>now</code> holds the current UNIX timestamp. Note that <code>now</code> causes a One Platform API call behind the scenes so that it stays in step with the One Platform time. For best performance we recommend calling this at most once per iteration of a looping script. For example, if three different variables are to be initialized to the current timestamp in a row, <code>now</code> should be called once, its value stored in a local variable and subsequently used to initialize the variables.</li>
 </ul>
 <h2 id="the-alias-table">The alias table</h2>
 <p>Every script is owned by a One Platform client, and has access to that client
-and all of its resources through the <code>alias</code> table. </p>
+and all of its resources through the <code>alias</code> table.</p>
 <ul>
 <li>The client: <code>alias[&#39;&#39;]</code></li>
 <li>The client&#39;s owned resource (by alias): <code>alias[&#39;myAlias&#39;]</code></li>
@@ -190,7 +190,7 @@ in the script, e.g.:</p>
 </code></pre><p>Each alias has properties and functions through which the script can interact
 with the aliased resource (for example to read from a dataport or write to a dataport)</p>
 <ul>
-<li><p><code>.alias</code> </p>
+<li><p><code>.alias</code></p>
 <p>  This sub alias table is only available if the referenced alias is a client.
   It provides the same functionality as the global alias table but for the
   referenced client.</p>
@@ -199,13 +199,13 @@ with the aliased resource (for example to read from a dataport or write to a dat
 <p>  The manage table is only available if the referenced alias is a client. For
   the functionality provided, see <a href="#the-manage-table">The manage table</a>.</p>
 </li>
-<li><p><code>.meta</code> </p>
+<li><p><code>.meta</code></p>
 <p>  This provides read-only access to the <code>meta</code> field of the resource.</p>
 </li>
-<li><p><code>.name</code> </p>
+<li><p><code>.name</code></p>
 <p>  This provides read-only access to the <code>name</code> field of the resource.</p>
 </li>
-<li><p><code>.status</code> </p>
+<li><p><code>.status</code></p>
 <p>  Indicates the outcome of the most recent activity performed on the Alias.
   Actions include the reading or writing of any of the Alias properties and
   functions, excluding <code>.last</code> and <code>.status</code> itself.</p>
@@ -237,10 +237,10 @@ with the aliased resource (for example to read from a dataport or write to a dat
   Status:           &#39;ok&#39; :: string - accessing .value was successful
 </code></pre><ul>
 <li><p><code>.last</code></p>
-<p>  When read, it returns the timestamp returned by the most recent call to 
-  <code>.wait</code> function.  When written, the current time, as the script perceives 
-  it, will be changed to the given timestamp. Thus it is possible to set 
-  <code>.last</code> to a point in the past and iterate through historical data using 
+<p>  When read, it returns the timestamp returned by the most recent call to
+  <code>.wait</code> function.  When written, the current time, as the script perceives
+  it, will be changed to the given timestamp. Thus it is possible to set
+  <code>.last</code> to a point in the past and iterate through historical data using
   <code>.wait</code>. When the script starts <code>.last</code> is initialized to the value of
   <code>.timestamp</code>.</p>
 </li>
@@ -296,7 +296,7 @@ script owner client. When invoked on an alias object, they will act on the
 alias object owner&#39;s behalf.
 </code></pre><ul>
 <li><p><code>manage.activate(rid | {alias = &lt;alias&gt;}, type, code)</code></p>
-<p>  Given an activation code, the associated entity is activated for the 
+<p>  Given an activation code, the associated entity is activated for the
   client specified in rid.</p>
 </li>
 </ul>
@@ -364,7 +364,7 @@ alias object owner&#39;s behalf.
         count = &lt;non_neg_integer&gt; | &quot;infinity&quot;,
         duration = &lt;non_neg_integer&gt; | &quot;infinity&quot;
       },
-      subscribe = &lt;rid&gt; | nil 
+      subscribe = &lt;rid&gt; | nil
     }
 
   &quot;datarule&quot; description ::
@@ -437,7 +437,7 @@ alias object owner&#39;s behalf.
         duration = &lt;non_neg_integer&gt; | &quot;infinity&quot;
       },
       subject = &lt;string&gt;,
-      subscribe = &lt;rid&gt; | nil 
+      subscribe = &lt;rid&gt; | nil
     }
 
   ------------------------------------------------------------------------------
@@ -597,7 +597,7 @@ alias object owner&#39;s behalf.
   Arguments:        rid :: string - Client ID under which to list resources
                                     Note: an earlier form of this function
                                     allowed omitting this argument. That
-                                    form is deprecated and should no 
+                                    form is deprecated and should no
                                     longer be used.
                   alias :: string - Alias for resource ID.
                    type :: table - List of resource types.
@@ -718,7 +718,7 @@ alias object owner&#39;s behalf.
   Arguments:        rid :: string - Client ID under which to unmap the mapping
                                     Note: an earlier form of this function
                                     allowed omitting this argument. That
-                                    form is deprecated and should no 
+                                    form is deprecated and should no
                                     longer be used.
                    type :: string - Type of mapping: alias only.
                 mapping :: string - The mapped string to be removed.
@@ -776,7 +776,7 @@ alias object owner&#39;s behalf.
 <ul>
 <li><p><code>json.array(table)</code></p>
 <p>  Initializes a Lua table to represent a JSON array.  A JSON array is
-  represented as a Lua table having a sequence <code>{1..N}</code>, such that the 
+  represented as a Lua table having a sequence <code>{1..N}</code>, such that the
   only keys in the table are the numerical set <code>{1..N}</code>.</p>
 </li>
 </ul>
