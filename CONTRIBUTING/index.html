@@ -108,37 +108,30 @@ files in place.</p>
 basically a set of variables that the generator uses to change exactly how it
 processes the file. It must be the first thing in the file and be formatted
 like:</p>
-<pre><code>```
-
-There are two variables that are currently supported. `title` is used to set the
-HTML title tag in the template. `template` is used to set the HTML template that
+<pre><code>---
+title: UDP Single Shot
+template: two-column
+---
+</code></pre><p>There are two variables that are currently supported. <code>title</code> is used to set the
+HTML title tag in the template. <code>template</code> is used to set the HTML template that
 is used, it can either be set to &quot;two-column&quot; or &quot;default&quot; (which is the
-default).
-
-Frontmatter is optional.
-
-## Developing
-
-When making changes that are more substantial than a technical or grammar fix
+default).</p>
+<p>Frontmatter is optional.</p>
+<h2 id="developing">Developing</h2>
+<p>When making changes that are more substantial than a technical or grammar fix
 you&#39;ll probably want to fix preview your changes locally. You&#39;ll need three
-tools to generate the site, Node.js, Node Package Manager, and Gulp.
-
-Use your platform&#39;s tools to install Node and NPM, on OSX this can be done with:
-</code></pre><p>brew install npm</p>
-<pre><code>
-Then install gulp globally with
-</code></pre><p>npm install -g gulp</p>
-<pre><code>
-To actually build the site, first install the dependencies with
-</code></pre><p>npm install</p>
-<pre><code>
-and finally build the site with
-</code></pre><p>gulp</p>
-<pre><code>
-You can also startup a local server to see your changes in the browser with
-</code></pre><p>gulp serve
-```</p>
-</div>
+tools to generate the site, Node.js, Node Package Manager, and Gulp.</p>
+<p>Use your platform&#39;s tools to install Node and NPM, on OSX this can be done with:</p>
+<pre><code>brew install npm
+</code></pre><p>Then install gulp globally with</p>
+<pre><code>npm install -g gulp
+</code></pre><p>To actually build the site, first install the dependencies with </p>
+<pre><code>npm install
+</code></pre><p>and finally build the site with </p>
+<pre><code>gulp
+</code></pre><p>You can also startup a local server to see your changes in the browser with</p>
+<pre><code>gulp serve
+</code></pre></div>
   </div>
 
   <div id="markdown" style="display:none;">
