@@ -78,6 +78,7 @@
           <li><a class="level-0" href="/portals">Portals API</a></li>
         </ul>
         <ul style="padding-bottom:0.5em;"><p style="font-size:larger;">Other</p>
+          <li><a class="level-0" href="https://support.exosite.com/hc/en-us/categories/200011008-Hardware-Platform" target="_blank">Supported Hardware Platforms</a></li>
           <li><a class="level-0" href="https://github.com/exosite/exoline/blob/master/README.md">Command Line Interface - Exoline</a></li>
           <li><a class="level-0" href="https://github.com/exosite-labs">Libraries</a></li>
           <li><a class="level-0" href="/udp">UDP Single Shot API</a></li>
@@ -89,7 +90,7 @@
     <div role='flatdoc-content' class='content'><h1 id="introduction">Introduction</h1>
 <p>Exosite&#39;s most basic concept is to make internet connected physical things useful to people.  The services and products provided are to help developers, companies, and organizations to build IoT (Internet of Things) solutions - providing technology from the physical devices through to the end points - people and applications.</p>
 <h2 id="basic-device-communication">Basic Device Communication</h2>
-<p>For starters, Let&#39;s look at basic concept of a device using standard <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol" target="_blank">HTTP</a>  messages might send a packet like this.  We will pick it a part here to help give some context to the Exosite <a href="/oneplatform">One Platform</a> which it is communicating to.</p>
+<p>For starters, let&#39;s look at basic concept of a device using standard <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol" target="_blank">HTTP</a>  messages might send a packet like this.  We will pick it a part here to help give some context to the Exosite <a href="/oneplatform">One Platform</a> which it is communicating to.</p>
 <pre><code>POST /onep:v1/stack/alias HTTP/1.1
 Host: m2.exosite.com
 X-Exosite-CIK: af027fe792f0fc74cedbe3777f5a22961e7b8384
@@ -101,11 +102,11 @@ temperature=44
 <pre><code>Host: m2.exosite.com
 </code></pre><p>The device is communicating with Exosite&#39;s <a href="/http">HTTP Data API</a>, which can be found at this address: m2.exosite.com.  (Note: This is an API, you can not ping this address).  Want to quick try out the API - the current unix timestamp is hosted (without auth) at this address: <a href="https://m2.exosite.com/timestamp">https://m2.exosite.com/timestamp</a></p>
 <pre><code>/onep:v1/stack/alias
-</code></pre><p>This is the URL for the Exosite API being used, in this case, it is the <a href="/http">HTTP Data API</a>.  In this case, we are writing data to an alias that represents the piece of data in the platform, otherwise known as a dataport.</p>
+</code></pre><p>This is the URL for the Exosite <a href="/http">HTTP Data API</a>.  In this case, we are writing data to an alias that represents the piece of data in the platform, otherwise known as a dataport.</p>
 <pre><code>X-EXOSITE-CIK: af027fe792f0fc74cedbe3777f5a22961e7b8384
 </code></pre><p>This long 40 character hexadecimal number is a Client Interface Key or CIK.  This is the authorization for this HTTP message to be accepted.  Each device in the platform has an associated CIK.  This CIK typically comes the the Provisioning activation call, where the Platform sends the CIK down to the device after the proper provision steps have occurred and the device has made it&#39;s activate request.  For getting started though, the Portals evaluation tool (<a href="https://portals.exosite.com">https://portals.exosite.com</a>) allows you to create <code>generic</code> devices with a activated CIK to copy over to your device.  </p>
 <ul>
-<li><a href="http://localhost:3000/tutorials/get-started">Getting Started using Portals</a></li>
+<li><a href="/tutorials/get-started">Getting Started using Portals</a></li>
 </ul>
 <pre><code>temperature=44
 </code></pre><p>Finally, the body of the message is temperature=44.  This will write a value of 44 to dataport in the One Platform.  Dataports store historical values, each with a unix timestamp.  </p>
