@@ -165,8 +165,8 @@
 <li><a href="#delete-device">Delete device</a></li>
 <li><a href="#get-device">Get device</a></li>
 <li><a href="#get-multiple-devices">Get multiple devices</a></li>
-<li><a href="#update-device">Update device</a></li>
-<li><a href="#bulk-update-device">bulk update device</a></li>
+<li><a href="#update-multiple-devices">Update multiple devices</a></li>
+<li><a href="#bulk-update-devices">Bulk update devices</a></li>
 </ul>
 <h4 id="domain">Domain</h4>
 <ul>
@@ -3613,19 +3613,20 @@ Content-Type: application/json; charset=UTF-8
     &quot;type&quot;: &quot;generic&quot;,
     &quot;vendor&quot;: null
 }
-</code></pre><h4 id="bulk-update-device">Bulk Update device</h4>
+</code></pre><h4 id="bulk-update-devices">Bulk update devices</h4>
 <p><code>PUT /api/portals/v1/devices/[{device-rid},{device-rid}..]</code></p>
-<p>Update a device</p>
+<p>Update multiple devices</p>
 <h5 id="permissions">Permissions</h5>
 <ul>
-<li>User must have at least <code>d_update</code> <a href="#permission-object">permission</a> to the device.</li>
+<li>User must have at least <code>d_update</code> <a href="#permission-object">permission</a> to the devices.</li>
 </ul>
 <h5 id="request">Request</h5>
 <ul>
-<li><p>Request body is a object of <a href="#device-object">device object</a>. Currently only the following keys may be updated:</p>
+<li><p>Request body is an object of <a href="#device-object">device objects</a>. Currently only the following keys may be updated:</p>
 <ul>
-<li><code>&quot;info&quot;: {&quot;description&quot;: ...}</code> - description under info (optional)
-If you send any keys besides these, it will do nothing.</li>
+<li><p><code>&quot;info&quot;: {&quot;description&quot;: ...}</code> - description under info (optional)</p>
+<p>If you send any keys besides these, it will do nothing.</p>
+</li>
 </ul>
 </li>
 <li><p>Requires authentication.</p>
@@ -3633,7 +3634,7 @@ If you send any keys besides these, it will do nothing.</li>
 </ul>
 <h5 id="response">Response</h5>
 <ul>
-<li><code>200 OK</code>: Returned along with a body containing an object <a href="#device-object">device object</a> if the device is updated successfully. However if any devices fails to update it would still return 200 OK along with an error object included in the response body. (see error exmaple)</li>
+<li><code>200 OK</code>: Returned along with a body containing an object of <a href="#device-object">device objects</a> if the devices were updated successfully. However, if any device(s) failed to update, 200 OK will still be returned, with an additional error object at the top of the response body. This error object will provide error details for each device (see error example).</li>
 <li><code>403 Forbidden</code>: one of the following:<ul>
 <li>Returned if the caller user is not authenticated.</li>
 <li>Returned if the caller user does not have permission to update the device.</li>
@@ -5056,7 +5057,7 @@ Content-Type: application/json; charset=UTF-8
 <li><p>Request body is a <a href="#portal-object">portal object</a>.  Currently only the following keys may be updated:</p>
 <ul>
 <li><code>&quot;info&quot;</code> - Info is an object. Possible values are:<ul>
-<li><code>&quot;aliases&quot;</code> - Aliases under info is an array.(optional) Possible values are:<ul>
+<li><code>&quot;aliases&quot;</code> - Aliases under info is an array. NOTE: this will replace the existing aliases-- not append to them. To prevent loss of data, be sure to include all aliases in the request body. (optional) Possible values are:<ul>
 <li><code>{rid}</code> - The under this portal&#39;s data-sources/ device rid. Possible values are:<ul>
 <li><code>&quot;{aliases}&quot;</code> - The under this portal&#39;s data-sources/ device aliases is an array.</li>
 </ul>
