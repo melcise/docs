@@ -262,8 +262,7 @@
       |                        |
       |   ACK Changed (2.04)   |
       |&lt;-----------------------+
-</code></pre><p><code>&lt;alias&gt;</code>: The alias of the datasource that is being written to.<br><code>&lt;value&gt;</code>: The value to be written at the current time as a UTF-8 string.
-<code>&lt;CIK&gt;</code>: The client identification key. This can either be a UTF-8 string or the binary representation of the cik as a hexidecimal value sent in network byte order. However note that using the binary representation may technically violate protocol when used in the uri query option.</p>
+</code></pre><p><code>&lt;alias&gt;</code>: The alias of the datasource that is being written to.<br><code>&lt;value&gt;</code>: The value to be written at the current time as a UTF-8 string.<br><code>&lt;CIK&gt;</code>: The client identification key. This can either be a UTF-8 string or the binary representation of the cik as a hexidecimal value sent in network byte order. However note that using the binary representation may technically violate protocol when used in the uri query option.</p>
 <h3 id="responses">Responses</h3>
 <ul>
 <li>2.04 Changed: The value has been written.</li>
@@ -284,9 +283,7 @@
       |   ACK Content (2.05)   |
       |   &quot;&lt;value&gt;&quot;            |
       |&lt;-----------------------+
-</code></pre><p><code>&lt;alias&gt;</code>: The alias of the datasource that is be read. 
-<code>&lt;value&gt;</code>: The latest value that has been written to the given dataport as a UTF-8 string.
-<code>&lt;CIK&gt;</code>: The client identification key. This can either be a UTF-8 string or the binary representation of the cik as a hexadecimal value sent in network byte order. However note that using the binary representation may technically violate protocol when used in the uri query option.</p>
+</code></pre><p><code>&lt;alias&gt;</code>: The alias of the datasource that is be read.<br><code>&lt;value&gt;</code>: The latest value that has been written to the given dataport as a UTF-8 string.<br><code>&lt;CIK&gt;</code>: The client identification key. This can either be a UTF-8 string or the binary representation of the cik as a hexadecimal value sent in network byte order. However note that using the binary representation may technically violate protocol when used in the uri query option.</p>
 <h3 id="responses">Responses</h3>
 <ul>
 <li>2.05 Content: The value is returned.</li>
