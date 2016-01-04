@@ -250,18 +250,20 @@
 <h2 id="write">Write</h2>
 <p>Write one dataport of alias <code>&lt;alias&gt;</code> with given <code>&lt;value&gt;</code>. Data is written with the server timestamp as of the time the data was received by the server. Data cannot be written faster than a rate of once per second.</p>
 <pre><code>POST: coap://coap.exosite.com/1a/&lt;alias&gt;?&lt;CIK&gt;
-&lt;value&gt;
+&quot;&lt;value&gt;&quot;
 </code></pre><pre><code>  Client                    Server
       |                        |
       |   CON POST             |
       |   uri_path: &quot;1a&quot;       |
       |   uri_path: &quot;&lt;alias&gt;&quot;  |
       |   uri_query: &quot;&lt;CIK&gt;&quot;   |
+      |   &quot;&lt;value&gt;&quot;            |
       +-----------------------&gt;|
       |                        |
       |   ACK Changed (2.04)   |
       |&lt;-----------------------+
-</code></pre><p><code>&lt;alias&gt;</code>: The alias of the datasource that is being written to.<br><code>&lt;value&gt;</code>: The value to be written at the current time.<br><code>&lt;CIK&gt;</code>: The client identification key. This can either be a UTF-8 string or the binary representation of the cik as a hexidecimal value sent in network byte order. However note that using the binary representation may technically violate protocol when used in the uri query option.</p>
+</code></pre><p><code>&lt;alias&gt;</code>: The alias of the datasource that is being written to.<br><code>&lt;value&gt;</code>: The value to be written at the current time as a UTF-8 string.
+<code>&lt;CIK&gt;</code>: The client identification key. This can either be a UTF-8 string or the binary representation of the cik as a hexidecimal value sent in network byte order. However note that using the binary representation may technically violate protocol when used in the uri query option.</p>
 <h3 id="responses">Responses</h3>
 <ul>
 <li>2.04 Changed: The value has been written.</li>
@@ -282,7 +284,9 @@
       |   ACK Content (2.05)   |
       |   &quot;&lt;value&gt;&quot;            |
       |&lt;-----------------------+
-</code></pre><p><code>&lt;alias&gt;</code>: The alias of the datasource that is to have the latest value read.<br><code>&lt;CIK&gt;</code>: The client identification key. This can either be a UTF-8 string or the binary representation of the cik as a hexadecimal value sent in network byte order. However note that using the binary representation may technically violate protocol when used in the uri query option.</p>
+</code></pre><p><code>&lt;alias&gt;</code>: The alias of the datasource that is be read. 
+<code>&lt;value&gt;</code>: The latest value that has been written to the given dataport as a UTF-8 string.
+<code>&lt;CIK&gt;</code>: The client identification key. This can either be a UTF-8 string or the binary representation of the cik as a hexadecimal value sent in network byte order. However note that using the binary representation may technically violate protocol when used in the uri query option.</p>
 <h3 id="responses">Responses</h3>
 <ul>
 <li>2.05 Content: The value is returned.</li>
