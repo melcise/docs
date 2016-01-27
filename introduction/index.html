@@ -85,9 +85,13 @@
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
     <div role='flatdoc-content' class='content'><h1 id="introduction-to-device-connectivity">Introduction to Device Connectivity</h1>
-<p>Exosite&#39;s most basic concept is to make internet connected physical things useful to people.  The services and products provided are to help developers, companies, and organizations to build IoT (Internet of Things) solutions - providing technology from the physical devices through to the end points - people and applications.</p>
+<p>Exosite&#39;s most basic concept is to make internet connected physical things useful to people and businesses.  Exosite&#39;s products help developers, companies, and organizations build IoT (Internet of Things) product solutions - providing pieces of the IoT system including device code, a device connectivity / application platform, and hosted applications and services.</p>
 <h2 id="basic-device-communication">Basic Device Communication</h2>
-<p>For starters, let&#39;s look at basic concept of a device using standard <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol" target="_blank">HTTP</a>  messages might send a packet like this.  We will pick it a part here to help give some context to the Exosite <a href="/oneplatform">One Platform</a> which it is communicating to.</p>
+<p>The first goal of device connectivity is to have the device interact with Exosite&#39;s <a href="/oneplatform">One Platform</a>, which provides a virtual representation of that thing in the cloud.  The most common way for devices to interact is via Exosite&#39;s <a href="/http">HTTP Device API</a> (Application Programming Interface).  Using this API, a standard message would like the following, which is in <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol" target="_blank">HTTP</a> format.  We will pick it a part here to help give some context to the Exosite <a href="/oneplatform">One Platform</a> which it is communicating to.</p>
+<ul>
+<li><a href="/oneplatform">One Platform Reference</a></li>
+<li><a href="/http">HTTP Device API</a></li>
+</ul>
 <pre><code>POST /onep:v1/stack/alias HTTP/1.1
 Host: m2.exosite.com
 X-Exosite-CIK: af027fe792f0fc74cedbe3777f5a22961e7b8384
@@ -143,9 +147,9 @@ Request-Timeout: 300
 <ul>
 <li><a href="https://github.com/exosite-labs">https://github.com/exosite-labs</a></li>
 </ul>
-<p>For devices, there are many embedded development kits that are supported with <a href="../exosite_ready">ExositeReady™</a> or have had reference code ported to them.  These can best be found here on our support site, each has an overview of where to get the source, buy a kit, etc:</p>
+<p>For devices, there are a number of embedded development kits that are supported with <a href="../exosite_ready">ExositeReady™</a> or have had reference code ported to them.  </p>
 <ul>
-<li><a href="../exosite_ready">ExositeReady™ Device SDK</a> - Production Quality Device Client SDK</li>
+<li><a href="../exosite_ready">ExositeReady™ Embedded Device SDK</a> - Links to supported hardware platforms</li>
 <li><a href="https://support.exosite.com/hc/en-us/categories/200011008-Hardware-Platform" target="_blank">Other Reference Hardware Platform Support</a></li>
 </ul>
 <p>If you have a question about a specific embedded module, microcontroller, gateway, or development kit - please feel free to ask us through support.  </p>
