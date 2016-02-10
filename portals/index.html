@@ -4967,8 +4967,8 @@ Content-Type: application/json; charset=UTF-8
 <ul>
 <li><p>Request body is a <a href="#portal-object">portal object</a>.  Currently only the following keys may be included:</p>
 <ul>
-<li><code>&quot;planId&quot;</code> - portals plan ID from signup page, e.g. <a href="https://portals.exosite.com/signup?plan=3676938388">https://portals.exosite.com/signup?plan=3676938388</a>. Plan must allow free signups.(optional)
-If you send any keys besides these, it will do nothing.</li>
+<li><code>&quot;planId&quot;</code> - portals plan ID as found in the URL of your signup page, e.g. <a href="https://yourdomain.exosite.com/signup?plan=1234567890">https://yourdomain.exosite.com/signup?plan=1234567890</a>. Plan must allow free signups.</li>
+<li>If you send any keys besides &quot;planId&quot;, it will do nothing.</li>
 </ul>
 </li>
 <li><p>Requires authentication.</p>
@@ -4977,6 +4977,7 @@ If you send any keys besides these, it will do nothing.</li>
 <h5 id="response">Response</h5>
 <ul>
 <li><code>201 Created</code>: Returned along with a body containing a <a href="#portal-object">portal object</a> if the portal is created successfully.</li>
+<li><code>400 Bad Request</code>: Returned when the planId is missing or invalid, or the body of the request is malformed.</li>
 <li><code>403 Forbidden</code>: one of the following:<ul>
 <li>Returned if the caller user is not authenticated.</li>
 <li>Returned if the caller user does not have permission to create the portal.</li>
