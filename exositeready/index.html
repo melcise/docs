@@ -84,36 +84,35 @@
       </ul>
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
-    <div role='flatdoc-content' class='content'><h1 id="introduction">Introduction</h1>
-<p>This document registers a CoAP Option Number that can be used for
-authentication from a client to a server.</p>
-<h1 id="status">Status</h1>
+    <div role='flatdoc-content' class='content'><p><img src="assets/exosite_ready_logo_wide.png" alt="ExositeReady™ Logo"></p>
+<p>Production quality IoT device client code created, certified, and supported by Exosite.</p>
 <ul>
-<li>This draft specification has been sent to the IANA for review. (2014-07-22)</li>
+<li><a href="#embedded-sdk">Embedded SDK</a></li>
+<li><a href="#exositeready-for-partners">For Partners</a></li>
+<li><a href="#support-inquiries">Support</a></li>
+<li><a href="#other-hardware-development-kit-support">Other Hardware &amp; Development Kit Support</a></li>
 </ul>
-<h1 id="option-number-definition">Option Number Definition</h1>
-<pre><code>+-----+---+---+---+---+----------------+--------+--------+----------+
-| No. | C | U | N | R | Name           | Format | Length | Default  |
-+-----+---+---+---+---+----------------+--------+--------+----------+
-| -?- | x |   |   |   | Access-Token   | opaque | 0-255  | (none)   |
-+-----+---+---+---+---+----------------+--------+--------+----------+
+<h1 id="embedded-sdk">EMBEDDED SDK</h1>
+<p>The ExositeReady™ Embedded open-source SDK contains a framework, platform porting level, and utilities written in C for embedded devices. This SDK implements Exosite platform specific APIs and platform interactions in addition to providing an example application for each hardware platform port. The SDK is for engineers developing firmware for their embedded device products.</p>
+<ul>
+<li><a href="https://github.com/exositeready/er_sdk">SDK Source Code</a> - Note that hardware ports are listed below</li>
+<li><a href="http://exositeready.github.io/">SDK Documentation</a> - Includes application API, porting guide, and examples</li>
+</ul>
+<h3 id="hardware-ports">Hardware Ports</h3>
+<p>Ports to specific hardware platforms can be found by clicking on our partner below. Each port contains platform specific source code, instructions for building, a binary for evaluation, and instructions for using the example application.</p>
+<table width="100%">
+    <tr>
+        <td><a href="microchip"><img src="assets/microchip_logo.png" alt="Microchip"></a></td>
+        <td><a href="microchip">Microchip Platform SDK Ports</a></td>
+    </tr>
+</table>
 
-         C=Critical, U=Unsafe, N=NoCacheKey, R=Repeatable
-</code></pre><p>This option is to be used as a temporary authentication token to authenticate
-a client to a server in a similar manner to an HTTP cookie.</p>
-<p>When this option appears in a request it is to be used to authenticate the
-requester. A request with a zero-length Access-Token is to be interpreted as a
-a request for a token and should be accompanied by other (usually much more
-verbose) information to identify the device to the server.</p>
-<p>When this option appears in a response it is to be saved by the requester,
-replacing any existing Access-Token and be used for all further requests to the
-responding server. A zero length Access-Token in a response has no definition
-and must be processed as a message format error.</p>
-<p>The format of the token is up to the server that assigns it and is to be treated
-as an opaque byte string by the client.</p>
-<p>This option must not appear more than once in a request or response.</p>
-<h1 id="references">References</h1>
-<p><a href="http://tools.ietf.org/html/rfc7252">RFC7252 - The Constrained Application Protocol</a></p>
+<h1 id="exositeready-for-partners">ExositeReady™ for Partners</h1>
+<p>For vendors who are interested in partnering with Exosite on providing ExositeReady™ enabled hardware and development kits, please contact <a href="mailto:support@exosite.com">support@exosite.com</a>. Exosite allows vendors to contribute ports that meet the requirements of the ExositeReady program.</p>
+<h1 id="support-inquiries">Support &amp; Inquiries</h1>
+<p>The <a href="https://community.exosite.com/c/hardware-platforms">developer forum</a> is the best place to get and find help.</p>
+<h1 id="other-hardware-development-kit-support">Other hardware / development kit support</h1>
+<p>Looking for code for hardware not covered with ExositeReady? Exosite has provided reference code for a number of hardware platforms, development kits, and open source platforms, including Arduino. Information on these may be found in <a href="https://support.exosite.com/hc/en-us/categories/200011008-Hardware-Platform">Supported Platforms</a> and <a href="https://github.com/exosite-garage">Exosite Garage</a>.</p>
 </div>
   </div>
 
