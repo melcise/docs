@@ -84,7 +84,9 @@
       </ul>
       <div class='menu section' role='flatdoc-menu'></div>
     </div>
-    <div role='flatdoc-content' class='content'><h1 id="udp-single-shot-api">UDP Single Shot API</h1>
+    <div role='flatdoc-content' class='content'><div class="messagebox warning">This API has been deprecated and should not be used for new designs.</div>
+
+<h1 id="udp-single-shot-api">UDP Single Shot API</h1>
 <p>The UDP API provides a low-overhead interface that allows clients with strict data bandwidth requirements (e.g. cellular data) to send data to the One Platform. This API uses a simple UDP packet that encapsulates both identification information and data payload. If you&#39;re completely new to Exosite&#39;s APIs, you may want to read the <a href="../README.md">API       overview</a> first.</p>
 <p>Note: This API does not include a response from the server.  For this reason it is not recommended for applications where the device needs to take action when the server may not be receiving messages or if a device&#39;s CIK may have changed.  </p>
 <h2 id="conventions">Conventions</h2>
