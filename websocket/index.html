@@ -148,6 +148,7 @@
 }]
 </code></pre><p>This response acknowledges the successful creation of a subscription.</p>
 <ul>
+<li><code>&lt;RID/Alias&gt;</code> specifies which resource to subscribe to: an RID string or alias in the form <code>{&quot;alias&quot;: &lt;alias&gt;}</code></li>
 <li><p><code>since</code> indicates that data received after <code>&lt;timestamp&gt;</code> should be returned first. After that it will continuously receive new data as it is updated.</p>
 </li>
 <li><p><code>timeout</code> is a duration after which the client will not receive new data. The default value is <code>never</code>.</p>
@@ -159,7 +160,7 @@
 <pre><code>[{
   &quot;id&quot;: &lt;id|subs_id&gt;,
   &quot;status&quot;: &quot;ok&quot;,
-  &quot;result&quot;: [[1376709527, 64.2]]
+  &quot;result&quot;: [[&lt;timestamp&gt;, &lt;value&gt;]]
 }]
 </code></pre><p>These data updates can happen anytime while the subscription is active. If a <code>subs_id</code> has been provided in the initial subscribe call the <code>id</code> value will correspond to the <code>subs_id</code>, otherwise it will correspond to the <code>id</code> of the initial subscribe call.</p>
 <h2 id="unsubscribe">Unsubscribe</h2>
@@ -173,7 +174,7 @@
     ]
 }]
 </code></pre><ul>
-<li><p><code>&lt;RID/Alias&gt;</code> is used to specify the unsubscribing resource.  If a client doesn&#39;t give this field, <code>unsubscribe</code> call will unsubscribe all resources subscribed to <code>&lt;subs_id&gt;</code>.</p>
+<li><p><code>&lt;RID/Alias&gt;</code> is used to specify the unsubscribing resource: an RID string or alias in the form <code>{&quot;alias&quot;: &lt;alias&gt;}</code>.  If a client doesn&#39;t give this field, <code>unsubscribe</code> call will unsubscribe all resources subscribed to <code>&lt;subs_id&gt;</code>. </p>
 </li>
 <li><p><code>&lt;id|subs_id&gt;</code> is the subscription <code>id</code> that is to be cancelled. If the initial <code>subscribe</code> call specified a <code>subs_id</code> this value is to be used. If not, the initial <code>id</code> value should be referenced here.</p>
 </li>
